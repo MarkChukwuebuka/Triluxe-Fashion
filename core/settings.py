@@ -18,7 +18,6 @@ import cloudinary.uploader
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
-
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/5.0/howto/deployment/checklist/
 
@@ -32,7 +31,6 @@ ALLOWED_HOSTS = config('ALLOWED_HOSTS', default='', cast=lambda v: [s.strip() fo
 
 # CSRF_TRUSTED_ORIGINS
 CSRF_TRUSTED_ORIGINS = config('CSRF_TRUSTED_ORIGINS', default='', cast=lambda v: [s.strip() for s in v.split(',')])
-
 
 # Application definition
 
@@ -80,7 +78,6 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'core.wsgi.application'
 
-
 # Database
 # https://docs.djangoproject.com/en/5.0/ref/settings/#databases
 
@@ -117,7 +114,6 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
-
 # Internationalization
 # https://docs.djangoproject.com/en/5.0/topics/i18n/
 
@@ -129,32 +125,31 @@ USE_I18N = True
 
 USE_TZ = True
 
-
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/5.0/howto/static-files/
 
-# STATIC_ROOT = str(BASE_DIR/'staticfiles')
-#
-# STATIC_URL = '/static/'
-#
-# MEDIA_URL = '/media/'
-#
-# if DEBUG:
-#     STATICFILES_DIRS = [str(BASE_DIR / 'static'),]
-# else:
-#     STATIC_ROOT = str(BASE_DIR / 'static')
-#
-# MEDIA_ROOT = str(BASE_DIR / 'media')
+STATIC_ROOT = str(BASE_DIR / 'staticfiles')
 
-STATIC_URL = "static/"
-MEDIA_URL = "media/"
+STATIC_URL = '/static/'
 
-STATIC_ROOT = os.path.join(BASE_DIR, "static")
-MEDIA_ROOT = os.path.join(BASE_DIR, "media")
+MEDIA_URL = '/media/'
 
-STATICFILES_DIRS = (
-    os.path.join(BASE_DIR, "static"),
-)
+if DEBUG:
+    STATICFILES_DIRS = [str(BASE_DIR / 'static'), ]
+else:
+    STATIC_ROOT = str(BASE_DIR / 'static')
+
+MEDIA_ROOT = str(BASE_DIR / 'media')
+
+# STATIC_URL = "static/"
+# MEDIA_URL = "media/"
+#
+# STATIC_ROOT = os.path.join(BASE_DIR, "static")
+# MEDIA_ROOT = os.path.join(BASE_DIR, "media")
+#
+# STATICFILES_DIRS = (
+#     os.path.join(BASE_DIR, "static"),
+# )
 
 
 # Default primary key field type
@@ -164,17 +159,19 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 AUTH_USER_MODEL = "account.User"
 
-
 cloudinary.config(
-    cloud_name = 'dpsfxqcw1',
-    api_key =  '453476783146887',
-    api_secret =  'L0X5dpeJUHCYy_POAsAiCskHCsk',
+    cloud_name=config('CLOUD_NAME'),
+    api_key=config('API_KEY'),
+    api_secret=config('API_SECRET'),
 )
 
-
 EMAIL_BACKEND = 'django_smtp_ssl.SSLEmailBackend'
-EMAIL_HOST = 'smtppro.zoho.com' # zoho
-EMAIL_HOST_USER = 'support@triluxe.online'
-EMAIL_HOST_PASSWORD = 'Pass2002word$'
+EMAIL_HOST = 'smtppro.zoho.com'  # zoho
+EMAIL_HOST_USER = config('EMAIL_HOST_USER')
+EMAIL_HOST_PASSWORD = config('EMAIL_HOST_PASSWORD')
 EMAIL_PORT = 465
 EMAIL_USE_TLS = True
+
+AUTHENTICATION_BACKENDS = [
+    "core.backends.email_or_username_auth_backend.EmailOrUsernameModelBackend"
+]
