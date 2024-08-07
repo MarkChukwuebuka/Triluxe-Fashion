@@ -1,10 +1,11 @@
+{% load static %}
 <footer id="footer" class="footer">
     <div class="section-036">
         <div class="container">
             <div class="row">
                 <div class="col-md-12 col-lg-2">
                     <div class="logo-footer">
-                        <img src="assets/images/logo-light.png"
+                        <img src="{% static 'assets/images/logo.png' %}"
                              class="az_single_image-img attachment-full" alt="img">
                     </div>
                 </div>
@@ -38,7 +39,7 @@
                             <h5 class="title">Information </h5>
                             <ul class="listitem-list">
                                 <li>
-                                    <a href="about.html" target="_self">
+                                    <a href="{% url 'about' %}" target="_self">
                                         About </a>
                                 </li>
                                 <li>
@@ -50,7 +51,7 @@
                                         Orders and Returns </a>
                                 </li>
                                 <li>
-                                    <a href="contact.html" target="_self">
+                                    <a href="{% url 'contact' %}" target="_self">
                                         Contact </a>
                                 </li>
                                 <li>
@@ -90,7 +91,7 @@
         <div class="container">
             <div class="row">
                 <div class="col-md-6">
-                    <p>© 2022 <a href="#">Rustrot</a>. All Rights Reserved.</p>
+                    <p>© 2022 <a href="#">Triluxe Fashion</a>. All Rights Reserved.</p>
                 </div>
                 <div class="col-md-6">
                     <div class="rustrot-listitem style-02">

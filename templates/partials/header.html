@@ -1,3 +1,4 @@
+{% load static %}
 <header id="header" class="header header-light header-transparent">
     <div class="header-wrap-stick">
         <div class="header-position">
@@ -5,8 +6,8 @@
                 <div class="rustrot-menu-wapper"></div>
                 <div class="header-middle-inner">
                     <div class="header-logo">
-                        <a class="logo" href="index-2.html">
-                            <img alt="Rustrot" src="assets/images/logo.png">
+                        <a class="logo" href="{% url 'home' %}">
+                            <img alt="Rustrot" src="{% static 'assets/images/logo.png' %}" height="60" width="60">
                         </a>
                     </div>
                     <div class="header-control">
@@ -24,7 +25,7 @@
                                         class="clone-main-menu rustrot-clone-mobile-menu rustrot-nav main-menu">
                                         <li id="menu-item-230"
                                             class="menu-item menu-item-type-post_type menu-item-object-megamenu menu-item-230">
-                                            <a class="rustrot-menu-item-title" title="Home" href="index-2.html">Home</a>
+                                            <a class="rustrot-menu-item-title" title="Home" href="{% url 'home' %}">Home</a>
                                         </li>
                                         <li id="menu-item-228"
                                             class="menu-item menu-item-type-post_type menu-item-object-megamenu menu-item-228 parent parent-megamenu item-megamenu menu-item-has-children">
