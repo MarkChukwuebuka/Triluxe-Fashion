@@ -1,0 +1,63 @@
+
+<!DOCTYPE html>
+<html lang="en">
+{% load static %}
+
+<head>
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="shortcut icon" type="image/x-icon" href="assets/images/favicon.png"/>
+    <link href="https://fonts.googleapis.com/css2?family=Heebo:wght@100;200;300;400;500;600;700;800;900&amp;display=swap"
+          rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="{% static 'assets/css/bootstrap.min.css' %}"/>
+    <link rel="stylesheet" type="text/css" href="{% static 'assets/css/animate.css' %}"/>
+    <link rel="stylesheet" type="text/css" href="{% static 'assets/css/chosen.min.css' %}"/>
+    <link rel="stylesheet" type="text/css" href="{% static 'assets/css/font-awesome.min.css' %}"/>
+    <link rel="stylesheet" type="text/css" href="{% static 'assets/css/pe-icon-7-stroke.css' %}"/>
+    <link rel="stylesheet" type="text/css" href="{% static 'assets/css/jquery.scrollbar.css' %}"/>
+    <link rel="stylesheet" type="text/css" href="{% static 'assets/css/lightbox.min.css' %}"/>
+    <link rel="stylesheet" type="text/css" href="{% static 'assets/css/magnific-popup.css' %}"/>
+    <link rel="stylesheet" type="text/css" href="{% static 'assets/css/slick.min.css' %}"/>
+    <link rel="stylesheet" type="text/css" href="{% static 'assets/fonts/flaticon.css' %}"/>
+    <link rel="stylesheet" type="text/css" href="{% static 'assets/css/megamenu.css' %}"/>
+    <link rel="stylesheet" type="text/css" href="{% static 'assets/css/dreaming-attribute.css' %}"/>
+    <link rel="stylesheet" type="text/css" href="{% static 'assets/css/style.css' %}"/>
+    <title>{{title}} | Triluxe </title>
+</head>
+
+<body>
+
+    {% include 'partials/header.html' %}
+
+    {% block content %}
+    {% endblock content %}
+
+
+    {% include 'partials/footer.html' %}
+
+
+
+
+
+<div class="progress-wrap">
+    <svg class="progress-circle svg-content" width="100%" height="100%" viewBox="-1 -1 102 102">
+        <path d="M50,1 a49,49 0 0,1 0,98 a49,49 0 0,1 0,-98"/>
+    </svg>
+</div>
+<script src="{% static 'assets/js/jquery-1.12.4.min.js' %}"></script>
+<script src="{% static 'assets/js/bootstrap.min.js' %}"></script>
+<script src="{% static 'assets/js/chosen.min.js' %}"></script>
+<script src="{% static 'assets/js/countdown.min.js' %}"></script>
+<script src="{% static 'assets/js/jquery.scrollbar.min.js' %}"></script>
+<script src="{% static 'assets/js/lightbox.min.js' %}"></script>
+<script src="{% static 'assets/js/magnific-popup.min.js' %}"></script>
+<script src="{% static 'assets/js/slick.min.js' %}"></script>
+<script src="{% static 'assets/js/jquery.zoom.min.js' %}"></script>
+<script src="{% static 'assets/js/threesixty.min.js' %}"></script>
+<script src="{% static 'assets/js/jquery-ui.min.js' %}"></script>
+<script src="{% static 'assets/js/jarallax.min.js' %}"></script>
+<script src="{% static 'assets/js/mobilemenu.js' %}"></script>
+<script src="{% static 'assets/js/functions.js' %}"></script>
+</body>
+
+</html>
