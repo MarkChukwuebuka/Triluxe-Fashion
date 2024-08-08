@@ -13,7 +13,8 @@ import os
 from pathlib import Path
 import dj_database_url
 from decouple import config
-import cloudinary.uploader
+import cloudinary
+import cloudinary_storage
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -41,6 +42,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'django.contrib.humanize',
 
     # local
     'account',
@@ -177,5 +179,6 @@ AUTHENTICATION_BACKENDS = [
     "core.backends.email_or_username_auth_backend.EmailOrUsernameModelBackend"
 ]
 
-STATICFILES_STORAGE="whitenoise.storage.CompressedStaticFilesStorage"
+STATICFILES_STORAGE = "whitenoise.storage.CompressedStaticFilesStorage"
 
+DEFAULT_FILE_STORAGE = 'cloudinary_storage.storage.MediaCloudinaryStorage'
