@@ -94,7 +94,7 @@ if DEBUG:
 else:
     DATABASES = {
         'default': dj_database_url.config(
-            default=config('DATABASE_URL')
+            default=config('DATABASE_PUBLIC_URL')
 
         )
     }
