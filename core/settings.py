@@ -50,6 +50,7 @@ INSTALLED_APPS = [
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
+    "whitenoise.middleware.WhiteNoiseMiddleware",
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
@@ -175,3 +176,6 @@ EMAIL_USE_TLS = True
 AUTHENTICATION_BACKENDS = [
     "core.backends.email_or_username_auth_backend.EmailOrUsernameModelBackend"
 ]
+
+STATICFILES_STORAGE="whitenoise.storage.CompressedStaticFilesStorage"
+
