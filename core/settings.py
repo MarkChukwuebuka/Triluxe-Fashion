@@ -23,15 +23,22 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/5.0/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = config('SECRET_KEY')
+# SECRET_KEY = config('SECRET_KEY')
+#
+# DEBUG = config('DEBUG', cast=bool)
+#
+# # ALLOWED_HOSTS
+# ALLOWED_HOSTS = config('ALLOWED_HOSTS', default='', cast=lambda v: [s.strip() for s in v.split(',')])
+#
+# # CSRF_TRUSTED_ORIGINS
+# CSRF_TRUSTED_ORIGINS = config('CSRF_TRUSTED_ORIGINS', default='', cast=lambda v: [s.strip() for s in v.split(',')])
 
-DEBUG = config('DEBUG', cast=bool)
 
-# ALLOWED_HOSTS
-ALLOWED_HOSTS = config('ALLOWED_HOSTS', default='', cast=lambda v: [s.strip() for s in v.split(',')])
-
-# CSRF_TRUSTED_ORIGINS
-CSRF_TRUSTED_ORIGINS = config('CSRF_TRUSTED_ORIGINS', default='', cast=lambda v: [s.strip() for s in v.split(',')])
+DEBUG = False
+SECRET_KEY = 'django-insecure-*=pd)6fjb9nz_bb)i#dv^33+4n*dwsozy1ei=urq&t__2zh$87'
+DATABASE_PUBLIC_URL = 'postgresql://postgres:XecHNizcWOuPLfBfoXnYGhcGKNfBYdbR@monorail.proxy.rlwy.net:24009/railway'
+ALLOWED_HOSTS = ["localhost", "www.triluxe.online"]
+CSRF_TRUSTED_ORIGINS = ["https://www.triluxe.online/", "https://www.triluxe.online/admin", "https://www.triluxe.online"]
 
 # Application definition
 
@@ -94,7 +101,8 @@ if DEBUG:
 else:
     DATABASES = {
         'default': dj_database_url.config(
-            default=config('DATABASE_PUBLIC_URL')
+            default="postgresql://postgres:XecHNizcWOuPLfBfoXnYGhcGKNfBYdbR@monorail.proxy.rlwy.net:24009/railway"
+            # default=config('DATABASE_PUBLIC_URL')
 
         )
     }
@@ -162,18 +170,18 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 AUTH_USER_MODEL = "account.User"
 
-cloudinary.config(
-    cloud_name=config('CLOUD_NAME'),
-    api_key=config('API_KEY'),
-    api_secret=config('API_SECRET'),
-)
-
-EMAIL_BACKEND = 'django_smtp_ssl.SSLEmailBackend'
-EMAIL_HOST = 'smtppro.zoho.com'  # zoho
-EMAIL_HOST_USER = config('EMAIL_HOST_USER')
-EMAIL_HOST_PASSWORD = config('EMAIL_HOST_PASSWORD')
-EMAIL_PORT = 465
-EMAIL_USE_TLS = True
+# cloudinary.config(
+#     cloud_name=config('CLOUD_NAME'),
+#     api_key=config('API_KEY'),
+#     api_secret=config('API_SECRET'),
+# )
+#
+# EMAIL_BACKEND = 'django_smtp_ssl.SSLEmailBackend'
+# EMAIL_HOST = 'smtppro.zoho.com'  # zoho
+# EMAIL_HOST_USER = config('EMAIL_HOST_USER')
+# EMAIL_HOST_PASSWORD = config('EMAIL_HOST_PASSWORD')
+# EMAIL_PORT = 465
+# EMAIL_USE_TLS = True
 
 AUTHENTICATION_BACKENDS = [
     "core.backends.email_or_username_auth_backend.EmailOrUsernameModelBackend"
