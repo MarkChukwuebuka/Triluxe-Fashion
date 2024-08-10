@@ -9,10 +9,9 @@ https://docs.djangoproject.com/en/5.0/topics/settings/
 For the full list of settings and their values, see
 https://docs.djangoproject.com/en/5.0/ref/settings/
 """
-import os
+
 from pathlib import Path
 import dj_database_url
-from decouple import config
 import cloudinary
 import cloudinary_storage
 from dotenv import load_dotenv
@@ -31,13 +30,17 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = os.getenv("SECRET_KEY")
 
 
-DEBUG = config('DEBUG', cast=bool)
+DEBUG = os.getenv('DEBUG')
 
 # ALLOWED_HOSTS
-ALLOWED_HOSTS = config('ALLOWED_HOSTS', default='', cast=lambda v: [s.strip() for s in v.split(',')])
+ALLOWED_HOSTS = os.getenv('ALLOWED_HOSTS', '')
+
+ALLOWED_HOSTS = [host.strip() for host in ALLOWED_HOSTS.split(',')] if ALLOWED_HOSTS else []
 
 # CSRF_TRUSTED_ORIGINS
-CSRF_TRUSTED_ORIGINS = config('CSRF_TRUSTED_ORIGINS', default='', cast=lambda v: [s.strip() for s in v.split(',')])
+CSRF_TRUSTED_ORIGINS = os.getenv('CSRF_TRUSTED_ORIGINS', '')
+
+CSRF_TRUSTED_ORIGINS = [origin.strip() for origin in CSRF_TRUSTED_ORIGINS.split(',')] if CSRF_TRUSTED_ORIGINS else []
 
 # Application definition
 
@@ -100,7 +103,7 @@ if DEBUG:
 else:
     DATABASES = {
         'default': dj_database_url.config(
-            default=config('DATABASE_PUBLIC_URL')
+            default=os.getenv('DATABASE_PUBLIC_URL')
 
         )
     }
@@ -169,15 +172,15 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 AUTH_USER_MODEL = "account.User"
 
 cloudinary.config(
-    cloud_name=config('CLOUD_NAME'),
-    api_key=config('API_KEY'),
-    api_secret=config('API_SECRET'),
+    cloud_name=os.getenv('CLOUD_NAME'),
+    api_key=os.getenv('API_KEY'),
+    api_secret=os.getenv('API_SECRET'),
 )
 
 EMAIL_BACKEND = 'django_smtp_ssl.SSLEmailBackend'
 EMAIL_HOST = 'smtppro.zoho.com'  # zoho
-EMAIL_HOST_USER = config('EMAIL_HOST_USER')
-EMAIL_HOST_PASSWORD = config('EMAIL_HOST_PASSWORD')
+EMAIL_HOST_USER = os.getenv('EMAIL_HOST_USER')
+EMAIL_HOST_PASSWORD = os.getenv('EMAIL_HOST_PASSWORD')
 EMAIL_PORT = 465
 EMAIL_USE_TLS = True
 
