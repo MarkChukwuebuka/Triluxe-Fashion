@@ -38,6 +38,8 @@ class CustomRequestUtil(CustomPermissionRequired):
     context_object_name = None
     template_name = None
     template_on_error = None
+    extra_context_data: dict = None
+    page_size = 100
 
     def __init__(self, request):
         self.request = request

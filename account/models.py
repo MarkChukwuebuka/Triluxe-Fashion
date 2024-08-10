@@ -1,8 +1,30 @@
+from django.contrib.auth.base_user import BaseUserManager
 from django.contrib.auth.models import AbstractUser
 from django.db import models
 from django.db.models import TextChoices, Q
 
 from crm.models import BaseModel
+
+
+class CustomUserManager(BaseUserManager):
+    def create_user(self, email, password=None, **extra_fields):
+        if not email:
+            raise ValueError('The Email field must be set')
+        email = self.normalize_email(email)
+        user = self.model(email=email, **extra_fields)
+        user.set_password(password)
+        user.save(using=self._db)
+        return user
+
+    def create_superuser(self, email, password):
+        if password is None:
+            raise TypeError('Superusers must have a password.')
+
+        user = self.create_user(email, password)
+        user.is_superuser = True
+        user.is_staff = True
+        user.save(using=self._db)
+        return user
 
 
 class UserTypes(TextChoices):
@@ -11,19 +33,19 @@ class UserTypes(TextChoices):
 
 
 class User(AbstractUser, BaseModel):
-    username = models.CharField(max_length=60, unique=True)
     first_name = models.CharField(max_length=255)
     last_name = models.CharField(max_length=255)
-    other_names = models.CharField(max_length=255, null=True, blank=True)
-    email = models.EmailField()
+    email = models.EmailField(unique=True)
     phone_number = models.CharField(max_length=70, null=True, blank=True)
     image_url = models.URLField(null=True)
     user_type = models.CharField(
         max_length=255, default=UserTypes.admin, choices=UserTypes.choices
     )
 
-    USERNAME_FIELD = "username"
+    USERNAME_FIELD = "email"
     REQUIRED_FIELDS = []
+
+    objects = CustomUserManager()
 
     date_joined = None
 
@@ -42,7 +64,6 @@ class User(AbstractUser, BaseModel):
             [
                 self.first_name or "",
                 self.last_name or "",
-                self.other_names or "",
             ]
         ).replace("\s+", " ").strip()
 
@@ -55,7 +76,7 @@ class User(AbstractUser, BaseModel):
         return self.roles.filter(q).exists()
 
     def __str__(self):
-        return self.get_full_name() + f" ({self.username})"
+        return self.get_full_name() + f" ({self.email})"
 
 
 class Permission(BaseModel):

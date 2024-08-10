@@ -1,6 +1,7 @@
 from django.shortcuts import render
 from django.views import View
 
+from product.services.product_service import ProductService
 from services.util import CustomRequestUtil
 
 
@@ -12,7 +13,11 @@ class HomeView(View, CustomRequestUtil):
     }
 
     def get(self, request, *args, **kwargs):
+        product_service = ProductService(self.request)
+        products = product_service.fetch_list()[:10]
+        self.extra_context_data["products"] = products
         return self.process_request(request)
+
 
 class ContactView(View, CustomRequestUtil):
     template_name = "contact.html"
@@ -22,6 +27,7 @@ class ContactView(View, CustomRequestUtil):
 
     def get(self, request, *args, **kwargs):
         return self.process_request(request)
+
 
 class AboutView(View, CustomRequestUtil):
     template_name = "about.html"

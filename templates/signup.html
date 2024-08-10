@@ -16,14 +16,30 @@
                         <div class="rustrot-notices-wrapper"></div>
                         <div class="u-columns col2-set" id="customer_login">
                             <div class="u-column col-1" style="margin-left:30%;">
-                                <h2>Login</h2>
+                                <h2>Sign Up</h2>
                                 <form class="rustrot-form rustrot-form-login login" method="POST">
                                     {% csrf_token %}
                                     <p class="rustrot-form-row rustrot-form-row--wide form-row form-row-wide">
-                                        <label for="username">Email address&nbsp;<span
+                                        <label for="first-name">First Name&nbsp;<span
                                                 class="required">*</span></label>
                                         <input type="text" class="rustrot-Input rustrot-Input--text input-text"
-                                               name="email" id="username" autocomplete="username" value=""></p>
+                                               name="first-name" id="first-name" value="">
+                                    </p>
+
+                                    <p class="rustrot-form-row rustrot-form-row--wide form-row form-row-wide">
+                                        <label for="last-name">Last Name <span
+                                                class="required">*</span></label>
+                                        <input type="text" class="rustrot-Input rustrot-Input--text input-text"
+                                               name="last-name" id="last-name" value="">
+                                    </p>
+
+                                    <p class="rustrot-form-row rustrot-form-row--wide form-row form-row-wide">
+                                        <label for="email">Email address<span
+                                                class="required">*</span></label>
+                                        <input type="email" class="rustrot-Input rustrot-Input--text input-text"
+                                               name="email" id="email"  value="">
+                                    </p>
+
                                     <p class="rustrot-form-row rustrot-form-row--wide form-row form-row-wide">
                                         <label for="password">Password&nbsp;<span class="required">*</span></label>
                                         <input class="rustrot-Input rustrot-Input--text input-text"
@@ -35,21 +51,14 @@
                                                value="832993cb93"><input type="hidden" name="_wp_http_referer"
                                                                          value="/rustrot/my-account/">
                                         <button type="submit" class="rustrot-Button button" name="login"
-                                                value="Log in">Log in
+                                                value="Log in">Sign Up
                                         </button>
-                                        <label class="rustrot-form__label rustrot-form__label-for-checkbox inline">
-                                            <input class="rustrot-form__input rustrot-form__input-checkbox"
-                                                   name="rememberme" type="checkbox" id="rememberme" value="forever">
-                                            <span>Remember me</span>
-                                        </label>
+
                                     </p>
-                                    <p class="rustrot-LostPassword lost_password">
-                                        <a href="#">Lost your
-                                            password?</a>
-                                    </p>
+
                                     <div class="rustrot-social-login">
-                                        <h6>Don't have an account?</h6>
-                                        <a href="{% url 'signup' %}">Sign Up</a>
+                                        <h6>Already have an account?</h6>
+                                        <a href="{% url 'login' %}">Sign In</a>
                                     </div>
                                 </form>
                             </div>

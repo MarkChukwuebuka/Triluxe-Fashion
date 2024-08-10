@@ -97,16 +97,3 @@ class ActivityLog(AppDbModel):
         return "{} by {} - {}".format(self.activity_type, self.user, self.note)
 
 
-
-class Upload(BaseModel):
-    file_url = models.URLField()
-    file_name = models.CharField(max_length=255)
-    file_size = models.IntegerField()
-    file_type = models.CharField(max_length=255)
-    duration = models.BigIntegerField(null=True, blank=True)
-
-    class Meta:
-        ordering = ["-created_at"]
-
-    def __str__(self):
-        return self.file_url
