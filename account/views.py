@@ -57,3 +57,13 @@ class UserSignupView(View, CustomRequestUtil):
         return self.process_request(
             request, target_view="dashboard", target_function=user_service.create_single, payload=payload
         )
+
+
+class UserDashboardView(View, CustomRequestUtil):
+    template_name = 'dashboard.html'
+    extra_context_data = {
+        "title": "Dashboard",
+    }
+
+    def get(self, request, *args, **kwargs):
+        return self.process_request(request)
