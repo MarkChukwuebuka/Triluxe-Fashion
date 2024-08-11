@@ -29,14 +29,13 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # SECRET_KEY = config('SECRET_KEY')
 SECRET_KEY = os.getenv("SECRET_KEY")
 
-
 DEBUG = os.getenv('DEBUG')
 
 # ALLOWED_HOSTS
-ALLOWED_HOSTS = ['*']
-# ALLOWED_HOSTS = os.getenv('ALLOWED_HOSTS', '')
-#
-# ALLOWED_HOSTS = [host.strip() for host in ALLOWED_HOSTS.split(',')] if ALLOWED_HOSTS else []
+
+ALLOWED_HOSTS = os.getenv('ALLOWED_HOSTS', '')
+
+ALLOWED_HOSTS = [host.strip() for host in ALLOWED_HOSTS.split(',')] if ALLOWED_HOSTS else []
 
 # CSRF_TRUSTED_ORIGINS
 CSRF_TRUSTED_ORIGINS = os.getenv('CSRF_TRUSTED_ORIGINS', '')
@@ -94,42 +93,21 @@ WSGI_APPLICATION = 'core.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/5.0/ref/settings/#databases
 
-# if DEBUG:
-#     DATABASES = {
-#         'default': {
-#             'ENGINE': 'django.db.backends.sqlite3',
-#             'NAME': BASE_DIR / 'db.sqlite3',
-#         }
-#     }
-# else:
-# DATABASES = {
-#     'default': {
-#         'ENGINE': 'django.db.backends.postgresql_psycopg2',
-#         'NAME': os.getenv('POSTGRES_DB'),
-#         'USER': os.getenv('POSTGRES_USER'),
-#         'PASSWORD': os.getenv('POSTGRES_PASSWORD'),
-#         'HOST': os.getenv('PG_HOST'),
-#         'PORT': os.getenv('PG_PORT'),
-#     }
-# }
+if DEBUG:
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.sqlite3',
+            'NAME': BASE_DIR / 'db.sqlite3',
+        }
+    }
+else:
 
-# DATABASES = {
-#     'default': {
-#         'ENGINE': 'django.db.backends.postgresql_psycopg2',
-#         'NAME': 'railway',
-#         'USER': 'postgres',
-#         'PASSWORD': "glXsmvqJYsgfTZkFmTnnbnEfVKQjGvlH",
-#         'HOST': 'monorail.proxy.rlwy.net',
-#         'PORT': '54152',
-#     }
-# }
+    DATABASES = {
+        'default': dj_database_url.config(
+            default=os.getenv('DATABASE_URL')
 
-DATABASES = {
-    'default': dj_database_url.config(
-        default=os.getenv('DATABASE_URL')
-
-    )
-}
+        )
+    }
 
 # Password validation
 # https://docs.djangoproject.com/en/5.0/ref/settings/#auth-password-validators
