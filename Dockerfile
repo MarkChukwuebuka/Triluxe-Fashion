@@ -25,6 +25,12 @@ COPY . /app/
 # Collect static files (if you have any)
 RUN python manage.py collectstatic --no-input
 
+# Create migration files for any model changes
+RUN python manage.py makemigrations --no-input
+
+# Apply database migrations
+RUN python manage.py migrate --no-input
+
 # Expose the port your Django app runs on
 EXPOSE 8000
 
