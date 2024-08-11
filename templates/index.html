@@ -201,268 +201,70 @@
                         <div class="response-product product-list-owl owl-slick equal-container better-height"
                              data-slick="{&quot;arrows&quot;:true,&quot;slidesMargin&quot;:30,&quot;dots&quot;:false,&quot;infinite&quot;:false,&quot;speed&quot;:300,&quot;slidesToShow&quot;:1,&quot;rows&quot;:3}"
                              data-responsive="[{&quot;breakpoint&quot;:480,&quot;settings&quot;:{&quot;slidesToShow&quot;:1,&quot;slidesMargin&quot;:&quot;10&quot;}},{&quot;breakpoint&quot;:768,&quot;settings&quot;:{&quot;slidesToShow&quot;:1,&quot;slidesMargin&quot;:&quot;10&quot;}},{&quot;breakpoint&quot;:992,&quot;settings&quot;:{&quot;slidesToShow&quot;:2,&quot;slidesMargin&quot;:&quot;20&quot;}},{&quot;breakpoint&quot;:1200,&quot;settings&quot;:{&quot;slidesToShow&quot;:1,&quot;slidesMargin&quot;:&quot;20&quot;}},{&quot;breakpoint&quot;:1500,&quot;settings&quot;:{&quot;slidesToShow&quot;:1,&quot;slidesMargin&quot;:&quot;30&quot;}}]">
+                            {% for product in products %}
                             <div class="product-item best-selling style-06 rows-space-30 post-25 product type-product status-publish has-post-thumbnail product_cat-light product_cat-chair product_cat-specials product_tag-light product_tag-sock first instock sale featured shipping-taxable purchasable product-type-simple">
                                 <div class="product-inner">
                                     <div class="product-thumb">
                                         <a class="thumb-link"
-                                           href="single-product.html"
+                                           href="{% url 'product-detail' product.id  %}"
                                            tabindex="0">
                                             <img class="img-responsive"
-                                                 src="{% static 'assets/images/apro151-1-90x90.jpg' %}"
+                                                 src="{{product.cover_image.url}}"
                                                  alt="Modern Cardigans" width="90" height="90">
                                         </a>
                                     </div>
                                     <div class="product-info">
                                         <h3 class="product-name product_title">
-                                            <a href="single-product.html"
-                                               tabindex="0">Modern Cardigans</a>
+                                            <a href="{% url 'product-detail' product.id  %}"
+                                               tabindex="0">{{product.name}}</a>
                                         </h3>
                                         <div class="rating-wapper nostar">
                                             <div class="star-rating"><span
                                                     style="width:0%">Rated <strong
                                                     class="rating">0</strong> out of 5</span></div>
                                             <span class="review">(0)</span></div>
-                                        <span class="price"><del><span
-                                                class="rustrot-Price-amount amount"><span
-                                                class="rustrot-Price-currencySymbol">$</span>89.00</span></del> <ins><span
-                                                class="rustrot-Price-amount amount"><span
-                                                class="rustrot-Price-currencySymbol">$</span>79.00</span></ins></span>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="product-item best-selling style-06 rows-space-30 post-23 product type-product status-publish has-post-thumbnail product_cat-chair product_cat-lamp product_cat-sofas product_tag-hat  instock shipping-taxable purchasable product-type-variable has-default-attributes">
-                                <div class="product-inner">
-                                    <div class="product-thumb">
-                                        <a class="thumb-link"
-                                           href="single-product.html"
-                                           tabindex="0">
-                                            <img class="img-responsive"
-                                                 src="assets/images/apro171-1-90x90.jpg"
-                                                 alt="Wool polo shirt" width="90" height="90">
-                                        </a>
-                                    </div>
-                                    <div class="product-info">
-                                        <h3 class="product-name product_title">
-                                            <a href="single-product.html"
-                                               tabindex="0">Wool polo shirt</a>
-                                        </h3>
-                                        <div class="rating-wapper nostar">
-                                            <div class="star-rating"><span
-                                                    style="width:0%">Rated <strong
-                                                    class="rating">0</strong> out of 5</span></div>
-                                            <span class="review">(0)</span></div>
-                                        <span class="price"><span
-                                                class="rustrot-Price-amount amount"><span
-                                                class="rustrot-Price-currencySymbol">$</span>105.00</span> – <span
-                                                class="rustrot-Price-amount amount"><span
-                                                class="rustrot-Price-currencySymbol">$</span>110.00</span></span>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="product-item best-selling style-06 rows-space-30 post-32 product type-product status-publish has-post-thumbnail product_cat-light product_cat-chair product_cat-sofas product_tag-hat product_tag-sock last instock sale featured shipping-taxable purchasable product-type-simple">
-                                <div class="product-inner">
-                                    <div class="product-thumb">
-                                        <a class="thumb-link"
-                                           href="single-product.html"
-                                           tabindex="0">
-                                            <img class="img-responsive"
-                                                 src="assets/images/apro71-1-90x90.jpg"
-                                                 alt="Black Jacket " width="90" height="90">
-                                        </a>
-                                    </div>
-                                    <div class="product-info">
-                                        <h3 class="product-name product_title">
-                                            <a href="single-product.html"
-                                               tabindex="0">Black Jacket </a>
-                                        </h3>
-                                        <div class="rating-wapper nostar">
-                                            <div class="star-rating"><span
-                                                    style="width:0%">Rated <strong
-                                                    class="rating">0</strong> out of 5</span></div>
-                                            <span class="review">(0)</span></div>
-                                        <span class="price"><del><span
-                                                class="rustrot-Price-amount amount"><span
-                                                class="rustrot-Price-currencySymbol">$</span>109.00</span></del> <ins><span
-                                                class="rustrot-Price-amount amount"><span
-                                                class="rustrot-Price-currencySymbol">$</span>89.00</span></ins></span>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="product-item best-selling style-06 rows-space-30 post-20 product type-product status-publish has-post-thumbnail product_cat-light product_cat-new-arrivals product_cat-specials product_tag-table product_tag-hat product_tag-sock first instock sale featured shipping-taxable purchasable product-type-simple">
-                                <div class="product-inner">
-                                    <div class="product-thumb">
-                                        <a class="thumb-link"
-                                           href="single-product.html"
-                                           tabindex="-1">
-                                            <img class="img-responsive"
-                                                 src="assets/images/apro201-1-90x90.jpg"
-                                                 alt="Wide Leg Jeans" width="90" height="90">
-                                        </a>
-                                    </div>
-                                    <div class="product-info">
-                                        <h3 class="product-name product_title">
-                                            <a href="single-product.html"
-                                               tabindex="-1">Wide Leg Jeans</a>
-                                        </h3>
-                                        <div class="rating-wapper nostar">
-                                            <div class="star-rating"><span
-                                                    style="width:0%">Rated <strong
-                                                    class="rating">0</strong> out of 5</span></div>
-                                            <span class="review">(0)</span></div>
-                                        <span class="price"><del><span
-                                                class="rustrot-Price-amount amount"><span
-                                                class="rustrot-Price-currencySymbol">$</span>150.00</span></del> <ins><span
-                                                class="rustrot-Price-amount amount"><span
-                                                class="rustrot-Price-currencySymbol">$</span>139.00</span></ins></span>
+                                            {% if product.percentage_discount %}
+                                                <span class="price">
+                                                    <del><span class="rustrot-Price-amount amount">
+                                                        <span class="rustrot-Price-currencySymbol"><del>N</del></span>
+                                                        {{product.price|floatformat:2|intcomma}}</span>
+                                                    </del>
+                                                    <ins>
+                                                        <span class="rustrot-Price-amount amount">
+                                                            <span class="rustrot-Price-currencySymbol"><del>N</del></span>
+                                                            {{product.discounted_price|floatformat:2|intcomma}}
+                                                        </span>
+                                                    </ins>
+                                                </span>
+                                            {% else %}
+                                                <span class="price">
+                                                    <span class="rustrot-Price-amount amount">
+                                                        <span class="rustrot-Price-currencySymbol"><del>N</del></span>
+                                                        {{product.price|floatformat:2|intcomma}}
+                                                    </span>
+                                                </span>
+                                            {% endif %}
                                     </div>
                                 </div>
                             </div>
 
+                            {% empty %}
 
+                            <h3>There are no products at this time...please check back later</h3>
 
+                            {% endfor %}
 
-                            <div class="product-item best-selling style-06 rows-space-30 post-36 product type-product status-publish has-post-thumbnail product_cat-table product_cat-bed product_tag-light product_tag-table product_tag-sock  instock sale shipping-taxable purchasable product-type-simple">
-                                <div class="product-inner">
-                                    <div class="product-thumb">
-                                        <a class="thumb-link"
-                                           href="single-product.html"
-                                           tabindex="-1">
-                                            <img class="img-responsive"
-                                                 src="assets/images/apro51012-1-90x90.jpg"
-                                                 alt="Gray Light Jacket" width="90" height="90">
-                                        </a>
-                                    </div>
-                                    <div class="product-info">
-                                        <h3 class="product-name product_title">
-                                            <a href="single-product.html"
-                                               tabindex="-1">Gray Light Jacket</a>
-                                        </h3>
-                                        <div class="rating-wapper nostar">
-                                            <div class="star-rating"><span
-                                                    style="width:0%">Rated <strong
-                                                    class="rating">0</strong> out of 5</span></div>
-                                            <span class="review">(0)</span></div>
-                                        <span class="price"><del><span
-                                                class="rustrot-Price-amount amount"><span
-                                                class="rustrot-Price-currencySymbol">$</span>125.00</span></del> <ins><span
-                                                class="rustrot-Price-amount amount"><span
-                                                class="rustrot-Price-currencySymbol">$</span>99.00</span></ins></span>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="product-item best-selling style-06 rows-space-30 post-49 product type-product status-publish has-post-thumbnail product_cat-light product_cat-bed product_cat-sofas product_tag-multi product_tag-lamp last instock shipping-taxable purchasable product-type-simple">
-                                <div class="product-inner">
-                                    <div class="product-thumb">
-                                        <a class="thumb-link"
-                                           href="single-product.html"
-                                           tabindex="-1">
-                                            <img class="img-responsive"
-                                                 src="assets/images/apro302-90x90.jpg"
-                                                 alt="Print Pleated Skirt" width="90" height="90">
-                                        </a>
-                                    </div>
-                                    <div class="product-info">
-                                        <h3 class="product-name product_title">
-                                            <a href="single-product.html"
-                                               tabindex="-1">Print Pleated Skirt</a>
-                                        </h3>
-                                        <div class="rating-wapper nostar">
-                                            <div class="star-rating"><span
-                                                    style="width:0%">Rated <strong
-                                                    class="rating">0</strong> out of 5</span></div>
-                                            <span class="review">(0)</span></div>
-                                        <span class="price"><span
-                                                class="rustrot-Price-amount amount"><span
-                                                class="rustrot-Price-currencySymbol">$</span>79.00</span></span>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="product-item best-selling style-06 rows-space-30 post-93 product type-product status-publish has-post-thumbnail product_cat-light product_cat-table product_cat-new-arrivals product_tag-table product_tag-sock first instock shipping-taxable purchasable product-type-simple">
-                                <div class="product-inner">
-                                    <div class="product-thumb">
-                                        <a class="thumb-link"
-                                           href="single-product.html"
-                                           tabindex="-1">
-                                            <img class="img-responsive"
-                                                 src="assets/images/apro13-1-90x90.jpg"
-                                                 alt="Damen Kleider" width="90" height="90">
-                                        </a>
-                                    </div>
-                                    <div class="product-info">
-                                        <h3 class="product-name product_title">
-                                            <a href="single-product.html"
-                                               tabindex="-1">Damen Kleider</a>
-                                        </h3>
-                                        <div class="rating-wapper nostar">
-                                            <div class="star-rating"><span
-                                                    style="width:0%">Rated <strong
-                                                    class="rating">0</strong> out of 5</span></div>
-                                            <span class="review">(0)</span></div>
-                                        <span class="price"><span
-                                                class="rustrot-Price-amount amount"><span
-                                                class="rustrot-Price-currencySymbol">$</span>109.00</span></span>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="product-item best-selling style-06 rows-space-30 post-28 product type-product status-publish has-post-thumbnail product_cat-light product_cat-chair product_cat-sofas product_tag-light product_tag-sock  instock sale featured shipping-taxable purchasable product-type-simple">
-                                <div class="product-inner">
-                                    <div class="product-thumb">
-                                        <a class="thumb-link"
-                                           href="single-product.html"
-                                           tabindex="-1">
-                                            <img class="img-responsive"
-                                                 src="assets/images/apro1211-2-90x90.jpg"
-                                                 alt="Plain Cotton Socks" width="90" height="90">
-                                        </a>
-                                    </div>
-                                    <div class="product-info">
-                                        <h3 class="product-name product_title">
-                                            <a href="single-product.html"
-                                               tabindex="-1">Plain Cotton Socks</a>
-                                        </h3>
-                                        <div class="rating-wapper ">
-                                            <div class="star-rating"><span
-                                                    style="width:100%">Rated <strong
-                                                    class="rating">5.00</strong> out of 5</span></div>
-                                            <span class="review">(1)</span></div>
-                                        <span class="price"><del><span
-                                                class="rustrot-Price-amount amount"><span
-                                                class="rustrot-Price-currencySymbol">$</span>138.00</span></del> <ins><span
-                                                class="rustrot-Price-amount amount"><span
-                                                class="rustrot-Price-currencySymbol">$</span>119.00</span></ins></span>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="product-item best-selling style-06 rows-space-30 post-22 product type-product status-publish has-post-thumbnail product_cat-table product_cat-bed product_cat-lamp product_tag-table product_tag-hat product_tag-sock last instock featured downloadable shipping-taxable purchasable product-type-simple">
-                                <div class="product-inner">
-                                    <div class="product-thumb">
-                                        <a class="thumb-link"
-                                           href="single-product.html"
-                                           tabindex="-1">
-                                            <img class="img-responsive"
-                                                 src="assets/images/apro181-2-90x90.jpg"
-                                                 alt="Stretch Cotton Dress" width="90" height="90">
-                                        </a>
-                                    </div>
-                                    <div class="product-info">
-                                        <h3 class="product-name product_title">
-                                            <a href="single-product.html"
-                                               tabindex="-1">Stretch Cotton Dress</a>
-                                        </h3>
-                                        <div class="rating-wapper nostar">
-                                            <div class="star-rating"><span
-                                                    style="width:0%">Rated <strong
-                                                    class="rating">0</strong> out of 5</span></div>
-                                            <span class="review">(0)</span></div>
-                                        <span class="price"><span
-                                                class="rustrot-Price-amount amount"><span
-                                                class="rustrot-Price-currencySymbol">$</span>98.00</span></span>
-                                    </div>
-                                </div>
-                            </div>
                         </div>
                     </div>
                 </div>
+
+
+
+
+
+
+
+
                 <div class="col-md-12 col-lg-4">
                     <div class="rustrot-products style-06">
                         <h3 class="title">
@@ -471,22 +273,23 @@
                         <div class="response-product product-list-owl owl-slick equal-container better-height"
                              data-slick="{&quot;arrows&quot;:true,&quot;slidesMargin&quot;:30,&quot;dots&quot;:false,&quot;infinite&quot;:false,&quot;speed&quot;:300,&quot;slidesToShow&quot;:1,&quot;rows&quot;:3}"
                              data-responsive="[{&quot;breakpoint&quot;:480,&quot;settings&quot;:{&quot;slidesToShow&quot;:1,&quot;slidesMargin&quot;:&quot;10&quot;}},{&quot;breakpoint&quot;:768,&quot;settings&quot;:{&quot;slidesToShow&quot;:1,&quot;slidesMargin&quot;:&quot;10&quot;}},{&quot;breakpoint&quot;:992,&quot;settings&quot;:{&quot;slidesToShow&quot;:2,&quot;slidesMargin&quot;:&quot;20&quot;}},{&quot;breakpoint&quot;:1200,&quot;settings&quot;:{&quot;slidesToShow&quot;:1,&quot;slidesMargin&quot;:&quot;20&quot;}},{&quot;breakpoint&quot;:1500,&quot;settings&quot;:{&quot;slidesToShow&quot;:1,&quot;slidesMargin&quot;:&quot;30&quot;}}]">
-                            {% for products in products %}
+                            {% for product in products %}
+
                             <div class="product-item on_sale style-06 rows-space-30 post-36 product type-product status-publish has-post-thumbnail product_cat-table product_cat-bed product_tag-light product_tag-table product_tag-sock first instock sale shipping-taxable purchasable product-type-simple">
                                 <div class="product-inner">
                                     <div class="product-thumb">
                                         <a class="thumb-link"
-                                           href="single-product.html"
+                                           href="{% url 'product-detail' product.id  %}"
                                            tabindex="0">
                                             <img class="img-responsive"
-                                                 src="assets/images/apro51012-1-90x90.jpg"
-                                                 alt="Gray Light Jacket" width="90" height="90">
+                                                 src="{{product.cover_image.url}}"
+                                                 alt="{{product.name}}" width="90" height="90">
                                         </a>
                                     </div>
                                     <div class="product-info">
                                         <h3 class="product-name product_title">
-                                            <a href="single-product.html"
-                                               tabindex="0">Gray Light Jacket</a>
+                                            <a href="{% url 'product-detail' product.id  %}"
+                                               tabindex="0">{{product.name}}</a>
                                         </h3>
                                         <div class="rating-wapper nostar">
                                             <div class="star-rating"><span
@@ -494,26 +297,26 @@
                                                     class="rating">0</strong> out of 5</span></div>
                                             <span class="review">(0)</span></div>
                                             {% if product.percentage_discount %}
-                                        <span class="price">
-                                            <del><span class="rustrot-Price-amount amount">
-                                                <span class="rustrot-Price-currencySymbol"><del>N</del></span>
-                                                {{product.price|floatformat:2|intcomma}}</span>
-                                            </del>
-                                            <ins>
-                                                <span class="rustrot-Price-amount amount">
-                                                    <span class="rustrot-Price-currencySymbol"><del>N</del></span>
-                                                    {{product.discounted_price|floatformat:2|intcomma}}
+                                                <span class="price">
+                                                    <del><span class="rustrot-Price-amount amount">
+                                                        <span class="rustrot-Price-currencySymbol"><del>N</del></span>
+                                                        {{product.price|floatformat:2|intcomma}}</span>
+                                                    </del>
+                                                    <ins>
+                                                        <span class="rustrot-Price-amount amount">
+                                                            <span class="rustrot-Price-currencySymbol"><del>N</del></span>
+                                                            {{product.discounted_price|floatformat:2|intcomma}}
+                                                        </span>
+                                                    </ins>
                                                 </span>
-                                            </ins>
-                                        </span>
-                                    {% else %}
-                                    <span class="price">
-                                        <span class="rustrot-Price-amount amount">
-                                            <span class="rustrot-Price-currencySymbol"><del>N</del></span>
-                                            {{product.price|floatformat:2|intcomma}}
-                                        </span>
-                                    </span>
-                                    {% endif %}
+                                            {% else %}
+                                                <span class="price">
+                                                    <span class="rustrot-Price-amount amount">
+                                                        <span class="rustrot-Price-currencySymbol"><del>N</del></span>
+                                                        {{product.price|floatformat:2|intcomma}}
+                                                    </span>
+                                                </span>
+                                            {% endif %}
                                     </div>
                                 </div>
                             </div>
@@ -533,7 +336,7 @@
                             <div class="rustrot-banner style-12 left-center">
                                 <div class="banner-inner">
                                     <figure class="banner-thumb">
-                                        <img src="assets/images/banner4-6.jpg"
+                                        <img src="{% static 'assets/images/banner4-6.jpg' %}"
                                              class="attachment-full size-full" alt="img"></figure>
                                     <div class="banner-info ">
                                         <div class="banner-content">
@@ -555,7 +358,7 @@
                             <div class="rustrot-banner style-12 left-center">
                                 <div class="banner-inner">
                                     <figure class="banner-thumb">
-                                        <img src="assets/images/banner4-7.jpg"
+                                        <img src="{% static 'assets/images/banner4-7.jpg' %}"
                                              class="attachment-full size-full" alt="img"></figure>
                                     <div class="banner-info ">
                                         <div class="banner-content">
@@ -588,29 +391,29 @@
                                 <div class="product-gallery">
                                     <div class="product-gallery-slick">
                                         <figure class="product-gallery-image"><img
-                                                src="assets/images/apro1211-2-592x592.jpg"
+                                                src="{% static 'assets/images/apro1211-2-592x592.jpg' %}"
                                                 class="img-responsive attachment-592x592 size-592x592" alt="img"
                                                 width="592" height="592"></figure>
                                         <figure class="product-gallery-image"><img
-                                                src="assets/images/apro1221-2-592x592.jpg"
+                                                src="{% static 'assets/images/apro1221-2-592x592.jpg' %}"
                                                 class="img-responsive attachment-592x592 size-592x592" alt="img"
                                                 width="592" height="592"></figure>
                                         <figure class="product-gallery-image"><img
-                                                src="assets/images/apro1231-2-592x592.jpg"
+                                                src="{% static 'assets/images/apro1231-2-592x592.jpg' %}"
                                                 class="img-responsive attachment-592x592 size-592x592" alt="img"
                                                 width="592" height="592"></figure>
                                     </div>
                                     <div class="gallery-dots">
                                         <figure><img
-                                                src="assets/images/apro1211-2-90x90.jpg"
+                                                src="{% static 'assets/images/apro1211-2-90x90.jpg' %}"
                                                 class="img-responsive attachment-90x90 size-90x90" alt="img"
                                                 width="90" height="90"></figure>
                                         <figure><img
-                                                src="assets/images/apro1221-2-90x90.jpg"
+                                                src="{% static 'assets/images/apro1221-2-90x90.jpg' %}"
                                                 class="img-responsive attachment-90x90 size-90x90" alt="img"
                                                 width="90" height="90"></figure>
                                         <figure><img
-                                                src="assets/images/apro1231-2-90x90.jpg"
+                                                src="{% static 'assets/images/apro1231-2-90x90.jpg' %}"
                                                 class="img-responsive attachment-90x90 size-90x90" alt="img"
                                                 width="90" height="90"></figure>
                                     </div>
@@ -662,117 +465,7 @@
             </div>
         </div>
     </div>
-    <div class="section-001">
-        <div class="container">
-            <div class="rustrot-heading style-01">
-                <div class="heading-inner">
-                    <h2 class="title">From Our Blog<span></span></h2>
-                </div>
-            </div>
-            <div class="rustrot-blog style-01">
-                <div class="blog-list-owl owl-slick"
-                     data-slick="{&quot;arrows&quot;:false,&quot;slidesMargin&quot;:30,&quot;dots&quot;:true,&quot;infinite&quot;:false,&quot;speed&quot;:300,&quot;slidesToShow&quot;:2,&quot;rows&quot;:1}"
-                     data-responsive="[{&quot;breakpoint&quot;:480,&quot;settings&quot;:{&quot;slidesToShow&quot;:1,&quot;slidesMargin&quot;:&quot;10&quot;}},{&quot;breakpoint&quot;:768,&quot;settings&quot;:{&quot;slidesToShow&quot;:1,&quot;slidesMargin&quot;:&quot;10&quot;}},{&quot;breakpoint&quot;:992,&quot;settings&quot;:{&quot;slidesToShow&quot;:2,&quot;slidesMargin&quot;:&quot;20&quot;}},{&quot;breakpoint&quot;:1200,&quot;settings&quot;:{&quot;slidesToShow&quot;:2,&quot;slidesMargin&quot;:&quot;20&quot;}},{&quot;breakpoint&quot;:1500,&quot;settings&quot;:{&quot;slidesToShow&quot;:2,&quot;slidesMargin&quot;:&quot;30&quot;}}]">
-                    <article
-                            class="post-item post-grid rows-space-0 post-195 post type-post status-publish format-standard has-post-thumbnail hentry category-light category-table category-life-style tag-light tag-life-style">
-                        <div class="post-inner">
-                            <h4 class="post-title"><a
-                                    href="single-post.html"
-                                    tabindex="0">Lorem ipsum dolor sit amet conubia urna consec .</a></h4>
-                            <div class="post-content">
-                                Porttitor sem facilisis laoreet vel leo sagittis, pharetra vestibulum lacus in et cum
-                                mattis facilisi sociis.Eleifend accumsan praesent purus ultrices natoque montes torquent
-                                conubia, urna aenean in volutpat condimentum erat egestas.
-                            </div>
-                            <div class="post-meta">
-                                <div class="categories">
-                                    <a href="#">Fashionable</a>
-                                </div>
-                                <div class="post-author">
-                                    By: <a href="#">admin </a>
-                                </div>
-                                <div class="date">
-                                    <a href="#">June 15, 2022 </a>
-                                </div>
-                            </div>
-                        </div>
-                    </article>
-                    <article
-                            class="post-item post-grid rows-space-0 post-192 post type-post status-publish format-standard has-post-thumbnail hentry category-light category-fashion category-multi category-life-style tag-light tag-fashion tag-multi">
-                        <div class="post-inner">
-                            <h4 class="post-title"><a
-                                    href="single-post.html"
-                                    tabindex="0">Venenatis urna proin hac per congue imperdiet sed.</a></h4>
-                            <div class="post-content">
-                                Tincidunt varius natoque ad semper metus cursus curae, litora quis risus malesuada
-                                integer fusce eleifend rutrum, ullamcorper bibendum parturient tempus id pharetra.
-                                Aptent ligula aliquet eleifend turpis dui auctor cubilia.
-                            </div>
-                            <div class="post-meta">
-                                <div class="categories">
-                                    <a href="#">Life Style</a>
-                                </div>
-                                <div class="post-author">
-                                    By: <a href="#">admin </a>
-                                </div>
-                                <div class="date">
-                                    <a href="#">May 17, 2022 </a>
-                                </div>
-                            </div>
-                        </div>
-                    </article>
-                    <article
-                            class="post-item post-grid rows-space-0 post-189 post type-post status-publish format-video has-post-thumbnail hentry category-table category-life-style tag-multi tag-life-style post_format-post-format-video">
-                        <div class="post-inner">
-                            <h4 class="post-title"><a
-                                    href="single-post.html"
-                                    tabindex="0">Dis diam magnis massa porttitor rutrum est cubilia .</a></h4>
-                            <div class="post-content">
-                                Varius orci ornare nisi posuere convallis dignissim tortor ac fames. Tortor taciti massa
-                                laoreet phasellus dignissim ridiculus primis dis habitant maecenas leo, nunc mollis
-                                varius velit himenaeos lacus accumsan at sagittis ornare.
-                            </div>
-                            <div class="post-meta">
-                                <div class="categories">
-                                    <a href="#">Model</a>
-                                </div>
-                                <div class="post-author">
-                                    By: <a href="#">admin </a>
-                                </div>
-                                <div class="date">
-                                    <a href="#">December 19, 2022 </a>
-                                </div>
-                            </div>
-                        </div>
-                    </article>
-                    <article
-                            class="post-item post-grid rows-space-0 post-186 post type-post status-publish format-standard has-post-thumbnail hentry category-light category-life-style tag-life-style">
-                        <div class="post-inner">
-                            <h4 class="post-title"><a
-                                    href="single-post.html"
-                                    tabindex="0">Urna conubia arcu leo vivamus lacinia nulla tinc.</a></h4>
-                            <div class="post-content">
-                                Arcu lacus vehicula sociosqu dui nec aliquet massa, est urna tempor magna hendrerit quam
-                                sagittis, odio justo nisi orci conubia convallis. Ullamcorper sociosqu magna class a
-                                sollicitudin arcu malesuada ornare tempor,
-                            </div>
-                            <div class="post-meta">
-                                <div class="categories">
-                                    <a href="#">Fashionable</a>
-                                </div>
-                                <div class="post-author">
-                                    By: <a href="#">admin </a>
-                                </div>
-                                <div class="date">
-                                    <a href="#">December 22, 2022 </a>
-                                </div>
-                            </div>
-                        </div>
-                    </article>
-                </div>
-            </div>
-        </div>
-    </div>
+
     <div class="section-033">
         <div class="container">
             <div class="section-034">
@@ -798,7 +491,7 @@
                                                 </div>
                                             </div>
                                             <div class="thumb">
-                                                <img src="assets/images/avatar1.png"
+                                                <img src="{% static 'assets/images/avatar1.png' %}"
                                                      class="attachment-full size-full" alt="img" width="97"
                                                      height="97"></div>
                                         </div>
@@ -820,7 +513,7 @@
                                                 </div>
                                             </div>
                                             <div class="thumb">
-                                                <img src="assets/images/avatar3.png"
+                                                <img src="{% static 'assets/images/avatar3.png' %}"
                                                      class="attachment-full size-full" alt="img" width="97"
                                                      height="97"></div>
                                         </div>
@@ -842,7 +535,7 @@
                                                 </div>
                                             </div>
                                             <div class="thumb">
-                                                <img src="assets/images/avatar2.png"
+                                                <img src="{% static 'assets/images/avatar2.png' %}"
                                                      class="attachment-full size-full" alt="img" width="97"
                                                      height="97"></div>
                                         </div>
@@ -866,7 +559,7 @@
                             </div>
                             <div class="content">
                                 <h4 class="title">Free Delivery</h4>
-                                <div class="desc">On order over $90.00</div>
+                                <div class="desc">On order over <del>N</del>100,000.00</div>
                             </div>
                         </div>
                     </div>
@@ -907,7 +600,7 @@
                  data-responsive="[{&quot;breakpoint&quot;:480,&quot;settings&quot;:{&quot;slidesToShow&quot;:2,&quot;slidesMargin&quot;:&quot;0&quot;}},{&quot;breakpoint&quot;:768,&quot;settings&quot;:{&quot;slidesToShow&quot;:3,&quot;slidesMargin&quot;:&quot;0&quot;}},{&quot;breakpoint&quot;:992,&quot;settings&quot;:{&quot;slidesToShow&quot;:3,&quot;slidesMargin&quot;:&quot;0&quot;}},{&quot;breakpoint&quot;:1200,&quot;settings&quot;:{&quot;slidesToShow&quot;:4,&quot;slidesMargin&quot;:&quot;0&quot;}},{&quot;breakpoint&quot;:1500,&quot;settings&quot;:{&quot;slidesToShow&quot;:5,&quot;slidesMargin&quot;:&quot;0&quot;}}]">
                 <div class="rows-space-0">
                     <a target="_blank" href="#" class="item" tabindex="0">
-                        <img class="img-responsive lazy" src="assets/images/insta1.jpg" alt="Home 03">
+                        <img class="img-responsive lazy" src="{% static 'assets/images/insta1.jpg' %}" alt="Home 03">
                         <span class="instagram-info">
                              <span class="social-wrap">
                                 <span class="social-info">1
@@ -922,7 +615,7 @@
                 </div>
                 <div class="rows-space-0">
                     <a target="_blank" href="#" class="item" tabindex="0">
-                        <img class="img-responsive lazy" src="assets/images/insta2.jpg" alt="Home 03">
+                        <img class="img-responsive lazy" src="{% static 'assets/images/insta2.jpg' %}" alt="Home 03">
                         <span class="instagram-info">
                                  <span class="social-wrap">
                                     <span class="social-info">1
@@ -937,7 +630,7 @@
                 </div>
                 <div class="rows-space-0">
                     <a target="_blank" href="#" class="item" tabindex="0">
-                        <img class="img-responsive lazy" src="assets/images/insta3.jpg" alt="Home 03">
+                        <img class="img-responsive lazy" src="{% static 'assets/images/insta3.jpg' %}" alt="Home 03">
                         <span class="instagram-info">
                                  <span class="social-wrap">
                                     <span class="social-info">1
@@ -952,7 +645,7 @@
                 </div>
                 <div class="rows-space-0">
                     <a target="_blank" href="#" class="item" tabindex="0">
-                        <img class="img-responsive lazy" src="assets/images/insta4.jpg" alt="Home 03">
+                        <img class="img-responsive lazy" src="{% static 'assets/images/insta4.jpg' %}" alt="Home 03">
                         <span class="instagram-info">
                                  <span class="social-wrap">
                                     <span class="social-info">1
@@ -967,7 +660,7 @@
                 </div>
                 <div class="rows-space-0">
                     <a target="_blank" href="#" class="item" tabindex="0">
-                        <img class="img-responsive lazy" src="assets/images/insta5.jpg" alt="Home 03">
+                        <img class="img-responsive lazy" src="{% static 'assets/images/insta5.jpg' %}" alt="Home 03">
                         <span class="instagram-info">
                                  <span class="social-wrap">
                                     <span class="social-info">1
@@ -982,7 +675,7 @@
                 </div>
                 <div class="rows-space-0">
                     <a target="_blank" href="#" class="item" tabindex="0">
-                        <img class="img-responsive lazy" src="assets/images/insta6.jpg" alt="Home 03">
+                        <img class="img-responsive lazy" src="{% static 'assets/images/insta6.jpg' %}" alt="Home 03">
                         <span class="instagram-info">
                              <span class="social-wrap">
                                 <span class="social-info">1
