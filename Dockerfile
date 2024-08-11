@@ -12,6 +12,7 @@ WORKDIR /app
 RUN apt-get update && apt-get install -y \
     libpq-dev \
     gcc \
+    netcat \
     && rm -rf /var/lib/apt/lists/*
 
 # Install Python dependencies
@@ -21,18 +22,15 @@ RUN pip install --no-cache-dir -r requirements.txt
 # Copy the project files to the working directory
 COPY . /app/
 
+# Copy the wait script
+COPY wait-for-postgres.sh /wait-for-postgres.sh
+RUN chmod +x /wait-for-postgres.sh
 
 # Collect static files (if you have any)
 RUN python manage.py collectstatic --no-input
 
-# Create migration files for any model changes
-RUN python manage.py makemigrations --no-input
-
-# Apply database migrations
-RUN python manage.py migrate --no-input
-
 # Expose the port your Django app runs on
 EXPOSE 8000
 
-# Command to run the Django app
-CMD ["gunicorn", "--bind", "0.0.0.0:8000", "core.wsgi:application"]
+# Command to wait for PostgreSQL, then run migrations, and start the app
+CMD ["sh", "/wait-for-postgres.sh"]
