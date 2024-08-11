@@ -113,6 +113,17 @@ DATABASES = {
     }
 }
 
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.postgresql_psycopg2',
+#         'NAME': 'railway',
+#         'USER': 'postgres',
+#         'PASSWORD': "glXsmvqJYsgfTZkFmTnnbnEfVKQjGvlH",
+#         'HOST': 'monorail.proxy.rlwy.net',
+#         'PORT': '54152',
+#     }
+# }
+
     # DATABASES = {
     #     'default': dj_database_url.config(
     #         default=os.getenv('DATABASE_URL')
