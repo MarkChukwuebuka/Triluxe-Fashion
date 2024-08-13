@@ -1,11 +1,14 @@
 from cloudinary.models import CloudinaryField
 from django.db import models
+
+from account.models import User
 from crm.models import BaseModel
 
 
 class Availability(models.TextChoices):
     in_stock = "In Stock"
     out_of_stock = "Out of Stock"
+
 
 class Category(BaseModel):
     name = models.CharField(max_length=255)
@@ -42,3 +45,20 @@ class Product(BaseModel):
 
     def __str__(self):
         return self.name
+
+
+class ProductReview(BaseModel):
+    product = models.ForeignKey(Product, on_delete=models.CASCADE)
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    rating = models.IntegerField()
+    review = models.CharField(max_length=500, null=True, blank=True)
+
+    def __str__(self):
+        return f"{self.user__first_name}'s Review on {self.product}"
+
+
+class UserWishlist(BaseModel):
+    product = models.ForeignKey(Product, on_delete=models.CASCADE)
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    def __str__(self):
+        return f"{self.user__first_name}'s Review on {self.product}"
