@@ -1,6 +1,7 @@
-from django.db.models import Count, Case, When, ExpressionWrapper, DecimalField, F, Q
+from django.db.models import Count, Case, When, ExpressionWrapper, DecimalField, F, Q, Value
+from django.db.models.functions import Coalesce
 
-from product.models import Product, ProductReview
+from product.models import Product, ProductReview, Wishlist
 from services.util import CustomRequestUtil
 
 
@@ -19,13 +20,18 @@ class ProductService(CustomRequestUtil):
 
         qs = qs.annotate(
             discounted_price=Case(
-                When(percentage_discount__gt=0, then=ExpressionWrapper(
-                    F('price') * (1 - F('percentage_discount') / 100),
-                    output_field=DecimalField(max_digits=15, decimal_places=2)
-                )),
+                When(
+                    percentage_discount__isnull=False,
+                    percentage_discount__gt=0,
+                    then=ExpressionWrapper(
+                        F('price') - ((F('percentage_discount') * F("price")) / 100),
+                        output_field=DecimalField(max_digits=15, decimal_places=2)
+                    )
+                ),
                 default=F('price'),
                 output_field=DecimalField(max_digits=15, decimal_places=2)
             ),
+
             reviews_count=Count('reviews')
         )
 
@@ -59,6 +65,33 @@ class ProductReviewService(CustomRequestUtil):
             return None, self.make_error("You've already reviewed this product")
 
         message = "You've successfully reviewed this product"
+
+        return message, None
+
+    def fetch_list(self, product_id):
+        q = Q(product_id=product_id)
+
+        return ProductReview.available_objects.filter(q).values(
+            "review", "rating", "updated_at",
+            first_name=F("user__first_name"),
+            last_name=F("user__last_name")
+        ).order_by('-created_at')
+
+
+class WishlistService(CustomRequestUtil):
+
+    def create_single(self, payload):
+        product = payload.get("product")
+
+        wishlist, is_created = Wishlist.available_objects.get_or_create(
+            user=self.auth_user,
+            product=product,
+        )
+
+        if is_created:
+            message = "Added to wishlist"
+        else:
+            message = "Removed from wishlist"
 
         return message, None
 

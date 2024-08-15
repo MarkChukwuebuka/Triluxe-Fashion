@@ -18,6 +18,7 @@ class RetrieveUpdateDeleteProductView(View, CustomRequestUtil):
         self.extra_context_data = {
             "title": product.name
         }
+        print(product.discounted_price)
         return self.process_request(
             request, target_function=product_service.fetch_single, product_id=kwargs.get("product_id")
         )
@@ -62,3 +63,12 @@ class CreateListProductView(View, CustomRequestUtil):
         return self.process_request(
             request, target_function=product_service.fetch_list
         )
+
+
+class AddOrRemoveFromWishlistView(View):
+    def post(self, request, *args, **kwargs):
+        product_id = request.POST.get('product_id')
+        product = Product.objects.get(id=product_id)
+
+
+        return JsonResponse({'message': message})
