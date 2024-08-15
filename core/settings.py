@@ -184,9 +184,9 @@ EMAIL_HOST_PASSWORD = os.getenv('EMAIL_HOST_PASSWORD')
 EMAIL_PORT = 465
 EMAIL_USE_TLS = True
 
-AUTHENTICATION_BACKENDS = [
-    "core.backends.email_or_username_auth_backend.EmailOrUsernameModelBackend"
-]
+# AUTHENTICATION_BACKENDS = [
+#     "core.backends.email_or_username_auth_backend.EmailOrUsernameModelBackend"
+# ]
 
 STATICFILES_STORAGE = "whitenoise.storage.CompressedStaticFilesStorage"
 

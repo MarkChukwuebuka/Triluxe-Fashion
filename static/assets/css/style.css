@@ -310,8 +310,8 @@ input[type="reset"].disabled,
 input[type="reset"]:disabled,
 input[type="submit"].disabled,
 input[type="submit"]:disabled {
-    opacity: 0.65 !important;
-    cursor: not-allowed;
+    opacity: 1 !important;
+    cursor: pointer;
 }
 .return-message {
     line-height: 20px;

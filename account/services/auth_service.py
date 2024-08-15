@@ -1,4 +1,6 @@
 from django.contrib.auth import authenticate, login
+
+from account.services.user_service import UserService
 from services.util import CustomRequestUtil
 
 
@@ -13,20 +15,16 @@ class AuthService(CustomRequestUtil):
             return None, self.make_error("Email/Password is not correct!")
 
         login(self.request, user)
+        message = "Login successful"
 
-        return user, None
+        return message, None
 
     def signup(self, payload):
-        email = payload.get("email")
-        first_name = payload.get("first-name")
-        last_name = payload.get("last-name")
-        password = payload.get("password")
 
-        user = authenticate(self.request, email=email, password=password)
+        user, error = UserService(self.request).create_single(payload)
+        if error:
+            return None, error
 
-        if not user:
-            return None, self.make_error("Email/Password is not correct!")
+        message = "Your signup was successful"
 
-        login(self.request, user)
-
-        return user, None
+        return message, None

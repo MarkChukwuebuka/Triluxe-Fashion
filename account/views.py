@@ -27,7 +27,7 @@ class UserLoginView(View, CustomRequestUtil):
         }
 
         return self.process_request(
-            request, target_view="dashboard", target_function=auth_service.login, payload=payload
+            request, target_view="home", target_function=auth_service.login, payload=payload
         )
 
 
@@ -41,13 +41,11 @@ class UserSignupView(View, CustomRequestUtil):
         return self.process_request(request)
 
     def post(self, request, *args, **kwargs):
-        user_service = UserService(self.request)
-
+        auth_service = AuthService(self.request)
         self.template_name = None
         self.template_on_error = 'signup.html'
 
         payload = {
-
             'email': request.POST.get('email'),
             'password': request.POST.get('password'),
             'first_name': request.POST.get('first-name'),
@@ -55,7 +53,7 @@ class UserSignupView(View, CustomRequestUtil):
         }
 
         return self.process_request(
-            request, target_view="dashboard", target_function=user_service.create_single, payload=payload
+            request, target_view="login", target_function=auth_service.signup, payload=payload
         )
 
 

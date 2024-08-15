@@ -17,6 +17,9 @@
                         <div class="u-columns col2-set" id="customer_login">
                             <div class="u-column col-1" style="margin-left:30%;">
                                 <h2>Login</h2>
+
+                                {% include 'partials/messages.html' %}
+
                                 <form class="rustrot-form rustrot-form-login login" method="POST">
                                     {% csrf_token %}
                                     <p class="rustrot-form-row rustrot-form-row--wide form-row form-row-wide">

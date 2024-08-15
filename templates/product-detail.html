@@ -292,7 +292,7 @@
                                 <a href="#tab-additional_information">Additional information</a>
                             </li>
                             <li class="reviews_tab" id="tab-title-reviews" role="tab" aria-controls="tab-reviews">
-                                <a href="#tab-reviews">Reviews (0)</a>
+                                <a href="#tab-reviews">Reviews ({{product.reviews_count}})</a>
                             </li>
                         </ul>
                         <div class="rustrot-Tabs-panel rustrot-Tabs-panel--description panel entry-content rustrot-tab"
@@ -324,25 +324,19 @@
                              id="tab-reviews" role="tabpanel" aria-labelledby="tab-title-reviews">
                             <div id="reviews" class="rustrot-Reviews">
                                 <div id="comments">
-                                    <h2 class="rustrot-Reviews-title">Reviews</h2>
+                                    <h2 class="rustrot-Reviews-title">Reviews({{product.reviews_count}})</h2>
+                                    {% if not product.reviews.all %}
                                     <p class="rustrot-noreviews">There are no reviews yet.</p>
+                                    {% endif %}
                                 </div>
                                 <div id="review_form_wrapper">
-                                    <div id="review_form">
+                                    <div id="review_for">
                                         <div id="respond" class="comment-respond">
-                                            <span id="reply-title" class="comment-reply-title">Be the first to review “T-shirt with skirt”</span>
-                                            <form id="commentform" class="comment-form">
-                                                <p class="comment-notes"><span id="email-notes">Your email address will not be published.</span>
-                                                    Required fields are marked <span class="required">*</span></p>
-                                                <p class="comment-form-author">
-                                                    <label for="author">Name&nbsp;<span
-                                                            class="required">*</span></label>
-                                                    <input id="author" name="author" value="" size="30" required=""
-                                                           type="text"></p>
-                                                <p class="comment-form-email"><label for="email">Email&nbsp;
-                                                    <span class="required">*</span></label>
-                                                    <input id="email" name="email" value="" size="30" required=""
-                                                           type="email"></p>
+                                            {% if not product.reviews.all %}
+                                            <span id="reply-title" class="comment-reply-title">Be the first to review {{product.name}}</span>
+                                            {% endif %}
+                                            <form method="POST">
+                                                {% csrf_token %}
                                                 <div class="comment-form-rating"><label for="rating">Your rating</label>
                                                     <p class="stars">
                                                         <span>
@@ -362,19 +356,26 @@
                                                         <option value="2">Not that bad</option>
                                                         <option value="1">Very poor</option>
                                                     </select></div>
-                                                <p class="comment-form-comment"><label for="comment">Your
-                                                    review&nbsp;<span class="required">*</span></label><textarea
-                                                        id="comment" name="comment" cols="45" rows="8"
-                                                        required=""></textarea></p><input name="wpml_language_code"
-                                                                                          value="en" type="hidden">
-                                                <p class="form-submit"><input name="submit" id="submit" class="submit"
-                                                                              value="Submit" type="submit"> <input
-                                                        name="comment_post_ID" value="27" id="comment_post_ID"
-                                                        type="hidden">
-                                                    <input name="comment_parent" id="comment_parent" value="0"
-                                                           type="hidden">
-                                                </p></form>
-                                        </div><!-- #respond -->
+                                                <p class="comment-form-comment">
+                                                    <label for="comment">Your
+                                                    review&nbsp;<span class="required">*</span></label>
+                                                    <textarea
+                                                        id="comment" name="review" cols="45" rows="8"
+                                                        required="">
+
+                                                    </textarea>
+                                                    <input name="product_id" value="{{product.id}}" type="hidden">
+
+                                                </p>
+
+                                                <p class="form-submit">
+
+                                                    <button type="submit" class="rustrot-Button button" name="submit"
+                                                            value="Submit">Submit
+                                                    </button>
+                                                </p>
+                                            </form>
+                                        </div>
                                     </div>
                                 </div>
                                 <div class="clear"></div>

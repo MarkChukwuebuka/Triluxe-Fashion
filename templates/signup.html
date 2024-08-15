@@ -17,6 +17,9 @@
                         <div class="u-columns col2-set" id="customer_login">
                             <div class="u-column col-1" style="margin-left:30%;">
                                 <h2>Sign Up</h2>
+
+                                {% include 'partials/messages.html' %}
+
                                 <form class="rustrot-form rustrot-form-login login" method="POST">
                                     {% csrf_token %}
                                     <p class="rustrot-form-row rustrot-form-row--wide form-row form-row-wide">
@@ -47,11 +50,9 @@
                                                autocomplete="current-password">
                                     </p>
                                     <p class="form-row">
-                                        <input type="hidden" id="rustrot-login-nonce" name="rustrot-login-nonce"
-                                               value="832993cb93"><input type="hidden" name="_wp_http_referer"
-                                                                         value="/rustrot/my-account/">
-                                        <button type="submit" class="rustrot-Button button" name="login"
-                                                value="Log in">Sign Up
+
+                                        <button type="submit" class="rustrot-Button button" name="signup"
+                                                value="Sign Up">Sign Up
                                         </button>
 
                                     </p>

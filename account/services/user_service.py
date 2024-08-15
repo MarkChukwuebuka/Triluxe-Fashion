@@ -1,4 +1,5 @@
 from django.contrib.auth import authenticate, login
+from django.contrib.auth.hashers import make_password
 from email_validator import validate_email
 
 from account.models import User
@@ -6,7 +7,7 @@ from services.util import CustomRequestUtil
 
 
 class UserService(CustomRequestUtil):
-    def create_single(self, payload, is_staff=False):
+    def create_single(self, payload):
         """Payload requirements:
         {
         email: String,
@@ -31,12 +32,17 @@ class UserService(CustomRequestUtil):
         if existing_user:
             return None, self.make_error("User with email already exist")
 
-        user, is_created = User.objects.create(
+        user, is_created = User.objects.get_or_create(
             email=email,
-            last_name=last_name,
-            first_name=first_name,
-            password=password
+            defaults=dict(
+                last_name=last_name,
+                first_name=first_name,
+                password=make_password(password)
+            )
         )
+
+        if not is_created:
+            return None, self.make_error("User already exist")
 
         return user, None
 

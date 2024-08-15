@@ -1,5 +1,4 @@
-from django.contrib.auth.base_user import BaseUserManager
-from django.contrib.auth.models import AbstractUser
+from django.contrib.auth.base_user import BaseUserManager, AbstractBaseUser
 from django.db import models
 from django.db.models import TextChoices, Q
 
@@ -32,7 +31,7 @@ class UserTypes(TextChoices):
     customer = "Customer"
 
 
-class User(AbstractUser, BaseModel):
+class User(AbstractBaseUser, BaseModel):
     first_name = models.CharField(max_length=255)
     last_name = models.CharField(max_length=255)
     email = models.EmailField(unique=True)
@@ -41,6 +40,10 @@ class User(AbstractUser, BaseModel):
     user_type = models.CharField(
         max_length=255, default=UserTypes.admin, choices=UserTypes.choices
     )
+
+    is_active = models.BooleanField(default=True)
+    is_staff = models.BooleanField(default=False)
+    is_superuser = models.BooleanField(default=False)
 
     USERNAME_FIELD = "email"
     REQUIRED_FIELDS = []
@@ -52,6 +55,14 @@ class User(AbstractUser, BaseModel):
     roles = models.ManyToManyField(
         "Role", related_query_name="roles", blank=True
     )
+
+    def has_perm(self, perm, obj=None):
+        """Does the user have a specific permission?"""
+        return True  # Can be more specific based on user permissions
+
+    def has_module_perms(self, app_label):
+        """Does the user have permissions to view the app `app_label`?"""
+        return True
 
     groups = None
     user_permissions = None
@@ -66,6 +77,7 @@ class User(AbstractUser, BaseModel):
                 self.last_name or "",
             ]
         ).replace("\s+", " ").strip()
+
 
     def has_permission(self, perm_name):
         if self.is_superuser:

@@ -48,8 +48,8 @@ class Product(BaseModel):
 
 
 class ProductReview(BaseModel):
-    product = models.ForeignKey(Product, on_delete=models.CASCADE)
-    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    product = models.ForeignKey(Product, on_delete=models.CASCADE, related_name="reviews")
+    user = models.ForeignKey(User, on_delete=models.CASCADE, related_name="product_reviews")
     rating = models.IntegerField()
     review = models.CharField(max_length=500, null=True, blank=True)
 
