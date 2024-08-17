@@ -66,3 +66,4 @@ class Wishlist(BaseModel):
 
     def __str__(self):
         return f"{self.user.first_name} - {self.product.name}"
+

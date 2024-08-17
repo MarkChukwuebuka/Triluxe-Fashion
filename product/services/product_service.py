@@ -1,7 +1,7 @@
 from django.db.models import Count, Case, When, ExpressionWrapper, DecimalField, F, Q, Value
 from django.db.models.functions import Coalesce
 
-from product.models import Product, ProductReview, Wishlist
+from product.models import Product, ProductReview, Wishlist, CartItem
 from services.util import CustomRequestUtil
 
 
@@ -103,3 +103,4 @@ class WishlistService(CustomRequestUtil):
             first_name=F("user__first_name"),
             last_name=F("user__last_name")
         ).order_by('-created_at')
+

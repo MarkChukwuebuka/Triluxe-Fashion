@@ -1,7 +1,8 @@
+from django.http import JsonResponse
 from django.shortcuts import render
 from django.views import View
 
-from product.services.product_service import ProductService, ProductReviewService
+from product.services.product_service import ProductService, ProductReviewService, WishlistService, CartItemService
 from services.util import CustomRequestUtil
 
 
@@ -65,10 +66,38 @@ class CreateListProductView(View, CustomRequestUtil):
         )
 
 
-class AddOrRemoveFromWishlistView(View):
+#
+# class AddOrRemoveFromWishlistView(View, CustomRequestUtil):
+#     def post(self, request, *args, **kwargs):
+#         product_id = request.POST.get('product_id')
+#         wishlist_service = WishlistService(self.request)
+#
+#         return self.process_request(
+#             request, target_function=wishlist_service.create_single
+#         )
+
+
+class AddOrRemoveFromWishlistView(View, CustomRequestUtil):
     def post(self, request, *args, **kwargs):
         product_id = request.POST.get('product_id')
-        product = Product.objects.get(id=product_id)
+        wishlist_service = WishlistService(self.request)
+
+        message, error = wishlist_service.create_single({"product": product_id})
+
+        if error:
+            return JsonResponse({"error": error}, status=400)
+
+        return JsonResponse({"message": message})
 
 
-        return JsonResponse({'message': message})
+class AddOrRemoveFromCartView(View, CustomRequestUtil):
+    def post(self, request, *args, **kwargs):
+        product_id = request.POST.get('product_id')
+        cart_item_service = CartItemService(self.request)
+
+        message, error = cart_item_service.create_single({"product": product_id})
+
+        if error:
+            return JsonResponse({"error": error}, status=400)
+
+        return JsonResponse({"message": message})

@@ -75,6 +75,8 @@
                 <div class=" auto-clear rustrot-products">
                     <ul class="row products columns-3">
 
+                        {% include 'partials/floating-messages.html' %}
+
                         {% for product in products %}
                         <li class="product-item wow fadeInUp product-item rows-space-30 col-bg-3 col-xl-3 col-lg-4 col-md-6 col-sm-6 col-ts-6 style-01 post-24 product type-product status-publish has-post-thumbnail product_cat-chair product_cat-table product_cat-new-arrivals product_tag-light product_tag-hat product_tag-sock first instock featured shipping-taxable purchasable product-type-variable has-default-attributes"
                             data-wow-duration="1s" data-wow-delay="0ms" data-wow="fadeInUp">
@@ -90,69 +92,15 @@
                                             <span class="onsale"><span class="number">-{{product.percentage_discount}}%</span></span>
                                         {% endif %}
                                         <span class="onnew"><span class="text">New</span></span></div>
-                                    <form class="variations_form cart">
-                                        <table class="variations">
-                                            <tbody>
-                                            <tr>
-                                                <td class="value">
-                                                    <select title="box_style" data-attributetype="box_style"
-                                                            data-id="pa_color"
-                                                            class="attribute-select " name="attribute_pa_color"
-                                                            data-attribute_name="attribute_pa_color"
-                                                            data-show_option_none="yes">
-                                                        <option data-type="" data-pa_color="" value="">Choose an
-                                                            option
-                                                        </option>
-                                                        <option data-width="30" data-height="30" data-type="color"
-                                                                data-pa_color="#3155e2" value="blue"
-                                                                class="attached enabled">Blue
-                                                        </option>
-                                                        <option data-width="30" data-height="30" data-type="color"
-                                                                data-pa_color="#52b745" value="green"
-                                                                class="attached enabled">Green
-                                                        </option>
-                                                        <option data-width="30" data-height="30" data-type="color"
-                                                                data-pa_color="#ffe59e" value="pink"
-                                                                class="attached enabled">Pink
-                                                        </option>
-                                                    </select>
-                                                    <div class="data-val attribute-pa_color"
-                                                         data-attributetype="box_style">
-                                                        <label>
-                                                            <input type="radio" name="color">
-                                                            <span class="change-value color"
-                                                                  style="background: #3155e2;" data-value="blue">
-                                                            </span>
-                                                        </label>
-                                                        <label>
-                                                            <input type="radio" name="color">
-                                                            <span class="change-value color"
-                                                                  style="background: #52b745;" data-value="green">
-                                                            </span>
-                                                        </label>
-                                                        <label>
-                                                            <input type="radio" name="color">
-                                                            <span class="change-value color"
-                                                                  style="background: #ffe59e;" data-value="pink">
-                                                            </span>
-                                                        </label>
-                                                    </div>
-                                                    <a class="reset_variations" href="#" style="visibility: hidden;">Clear</a>
-                                                </td>
-                                            </tr>
-                                            </tbody>
-                                        </table>
-                                    </form>
+
                                     <a href="#" class="button yith-wcqv-button" data-product_id="24">Quick View</a>
                                     <div class="group-button">
                                         <div class="yith-wcwl-add-to-wishlist">
                                             <div class="yith-wcwl-add-button show">
-                                                <a href="wishlist.html" class="add_to_wishlist">Add to Wishlist</a>
+                                                <a class="add_to_wishlist wishlist-btn" data-product-id="{{ product.id }}">Add to Wishlist</a>
                                             </div>
                                         </div>
-                                        <div class="rustrot product compare-button">
-                                            <a href="compare.html" class="compare button">Compare</a>
-                                        </div>
+
                                         <a href="#" class="button yith-wcqv-button">Quick View</a>
                                         <div class="add-to-cart">
                                             <a href="cart.html" class="button product_type_variable add_to_cart_button">Select
@@ -204,12 +152,10 @@
                                     <div class="group-button-inner">
                                         <div class="yith-wcwl-add-to-wishlist">
                                             <div class="yith-wcwl-add-button show">
-                                                <a href="wishlist.html" class="add_to_wishlist">Add to Wishlist</a>
+                                                <a href="#"  class="add_to_wishlist wishlist-btn" data-product-id="{{ product.id }}">Add to Wishlist</a>
                                             </div>
                                         </div>
-                                        <div class="rustrot product compare-button">
-                                            <a href="compare.html" class="compare button">Compare</a>
-                                        </div>
+
                                         <a href="#" class="button yith-wcqv-button">Quick View</a>
                                         <div class="add-to-cart">
                                             <a href="cart.html" class="button product_type_variable add_to_cart_button">Select
