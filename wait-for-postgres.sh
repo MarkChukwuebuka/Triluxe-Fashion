@@ -2,7 +2,7 @@
 
 echo "Waiting for postgres..."
 
-while ! nc -z $PG_HOST $PG_PORT; do
+while ! nc -z $PGHOST $PGPORT; do
   sleep 1
 done
 
