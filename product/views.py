@@ -2,7 +2,7 @@ from django.http import JsonResponse
 from django.shortcuts import render
 from django.views import View
 
-from product.services.product_service import ProductService, ProductReviewService, WishlistService, CartItemService
+from product.services.product_service import ProductService, ProductReviewService, WishlistService
 from services.util import CustomRequestUtil
 
 

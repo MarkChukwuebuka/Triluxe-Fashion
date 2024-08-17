@@ -1,7 +1,7 @@
 from django.db.models import Count, Case, When, ExpressionWrapper, DecimalField, F, Q, Value
 from django.db.models.functions import Coalesce
 
-from product.models import Product, ProductReview, Wishlist, CartItem
+from product.models import Product, ProductReview, Wishlist
 from services.util import CustomRequestUtil
 
 
