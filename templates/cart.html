@@ -1,0 +1,142 @@
+{% extends 'partials/base.html' %}
+
+{% load static %}
+
+{% load humanize %}
+
+{% block content %}
+
+{% include 'partials/breadcrumb.html' %}
+
+
+
+<main class="site-main main-container no-sidebar">
+    <div class="container">
+        <div class="row">
+            <div class="main-content col-md-12">
+                <div class="page-main-content">
+                    <div class="rustrot">
+                        <div class="rustrot-notices-wrapper"></div>
+                        <form class="rustrot-cart-form">
+                            {% if products %}
+                            <table class="shop_table shop_table_responsive cart rustrot-cart-form__contents">
+                                <thead>
+                                <tr>
+                                    <th class="product-remove">&nbsp;</th>
+                                    <th class="product-thumbnail">&nbsp;</th>
+                                    <th class="product-name">Product</th>
+                                    <th class="product-price">Price</th>
+                                    <th class="product-quantity">Quantity</th>
+                                    <th class="product-subtotal">Total</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                {% for product in products %}
+                                <tr class="rustrot-cart-form__cart-item cart_item">
+                                    <td class="product-remove">
+                                        <button type="button" class="remove delete-product" aria-label="Remove this item"
+                                           data-index="{{product.id}}">×</button>
+                                    </td>
+                                    <td class="product-thumbnail">
+                                        <a href="{% url 'product-detail' product.id %}"><img
+                                                src="{{ product.cover_image.url }}"
+                                                class="attachment-rustrot_thumbnail size-rustrot_thumbnail"
+                                                alt="img" width="600" height="778"></a>
+                                    </td>
+                                    <td class="product-name" data-title="Product">
+                                        <a href="{% url 'product-detail' product.id %}">{{ product.name }}</a>
+                                    </td>
+                                    <td class="product-price" data-title="Price">
+                                        <span class="rustrot-Price-amount amount">
+                                            {% if product.percentage_discount %}
+                                            <span class="price">
+                                                <del><span class="rustrot-Price-amount amount">
+                                                    <span class="rustrot-Price-currencySymbol"><del>N</del></span>
+                                                    {{product.price|floatformat:2|intcomma}}</span>
+                                                </del>
+                                                <ins>
+                                                    <span class="rustrot-Price-amount amount">
+                                                        <span class="rustrot-Price-currencySymbol"><del>N</del></span>
+                                                        {{product.discounted_price|floatformat:2|intcomma}}
+                                                    </span>
+                                                </ins>
+                                            </span>
+                                            {% else %}
+                                                <span class="price">
+                                                    <span class="rustrot-Price-amount amount">
+                                                        <span class="rustrot-Price-currencySymbol"><del>N</del></span>
+                                                        {{product.price|floatformat:2|intcomma}}
+                                                    </span>
+                                                </span>
+                                            {% endif %}
+                                        </span>
+                                    </td>
+                                    <td class="product-quantity" data-title="Quantity">
+                                        <div class="quantity">
+                                            <span class="qty-label">Quantity:</span>
+                                            <div class="control">
+                                                <a class="btn-number qtyminus quantity-minus" href="#">-</a>
+                                                {% for key, value in quantities.items %}
+                                                    {% if key == product.id|slugify %}
+                                                        <input type="text" id="select{{product.id}}"
+                                                       value="{{ value }}" title="Qty" class="input-qty input-text qty text">
+                                                    {% endif %}
+                                                {% endfor %}
+                                                <a class="btn-number qtyplus quantity-plus" href="#">+</a>
+                                            </div>
+                                        </div>
+                                    </td>
+                                    <td class="product-subtotal" data-title="Total">
+                                        <span class="rustrot-Price-amount amount">
+                                            <span class="rustrot-Price-currencySymbol"><strike>N</strike></span>
+                                            150.00
+                                        </span>
+                                    </td>
+                                </tr>
+                                {% endfor %}
+
+                                </tbody>
+                            </table>
+                            {% else %}
+
+                                <p>You have no item in your cart</p>
+
+                            {% endif %}
+
+                        </form>
+                        <div class="cart-collaterals">
+                            <div class="cart_totals ">
+                                <h2>Cart total</h2>
+                                <table class="shop_table shop_table_responsive">
+                                    <tbody>
+
+                                    <tr class="order-total">
+                                        <th>Total</th>
+                                        <td data-title="Total">
+                                            <strong>
+                                                <span class="rustrot-Price-amount amount">
+                                                    <span class="rustrot-Price-currencySymbol"> <strike>N</strike>
+                                                    </span>{{ totals|floatformat:2|intcomma }}
+                                                </span>
+                                            </strong>
+                                        </td>
+                                    </tr>
+                                    </tbody>
+                                </table>
+                                <div class="rustrot-proceed-to-checkout">
+                                    <a href="#"
+                                       class="checkout-button button alt rustrot-forward">
+                                        Proceed to checkout
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>
+
+
+{% endblock content %}

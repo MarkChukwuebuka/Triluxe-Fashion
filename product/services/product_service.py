@@ -11,9 +11,9 @@ class ProductService(CustomRequestUtil):
         pass
 
     def fetch_list(self):
-        return self.__get_base_query()
+        return self.get_base_query()
 
-    def __get_base_query(self):
+    def get_base_query(self):
         qs = Product.available_objects.prefetch_related(
             "categories", "tags"
         ).order_by("rating", "-updated_at")
@@ -38,7 +38,7 @@ class ProductService(CustomRequestUtil):
         return qs
 
     def fetch_single(self, product_id):
-        product = self.__get_base_query().filter(id=product_id).first()
+        product = self.get_base_query().filter(id=product_id).first()
         if not product:
             return None, self.make_error("Product does not exist")
 

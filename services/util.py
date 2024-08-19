@@ -45,6 +45,16 @@ class CustomRequestUtil(CustomPermissionRequired):
         self.request = request
         self.permission_required = None
 
+        # cart related
+        self.session = request.session
+        cart = self.session.get('session_key')
+        # if the user is new, no session key Create one
+        if 'session_key' not in request.session:
+            cart = self.session['session_key'] = {}
+
+        # Make sure cart is available on all page
+        self.cart = cart
+
     @property
     def auth_user(self):
         user = self.request.user if self.request and self.request.user else None

@@ -7,7 +7,6 @@
 {% block content %}
 
 
-
 <div class="banner-wrapper">
     <div class="container">
         <a href="{% url 'product-create-list' %}" class="parent-title">Shop</a>
@@ -133,12 +132,12 @@
                                             </ins>
                                         </span>
                                     {% else %}
-                                    <span class="price">
-                                        <span class="rustrot-Price-amount amount">
-                                            <span class="rustrot-Price-currencySymbol"><del>N</del></span>
-                                            {{product.price|floatformat:2|intcomma}}
+                                        <span class="price">
+                                            <span class="rustrot-Price-amount amount">
+                                                <span class="rustrot-Price-currencySymbol"><del>N</del></span>
+                                                {{product.price|floatformat:2|intcomma}}
+                                            </span>
                                         </span>
-                                    </span>
                                     {% endif %}
                                 </p>
                                 <p class="stock in-stock">
@@ -214,20 +213,18 @@
                                         <div class="rustrot-variation single_variation"></div>
                                         <div class="rustrot-variation-add-to-cart variations_button ">
                                             <div class="quantity">
-                                                <span class="qty-label">Quantiy:</span>
+                                                <span class="qty-label">Quantity:</span>
                                                 <div class="control">
                                                     <a class="btn-number qtyminus quantity-minus" href="#">-</a>
-                                                    <input type="text" data-step="1" name="quantity[25]" value="0" title="Qty" class="input-qty input-text qty text" size="4" pattern="[0-9]*">
+                                                    <input id="qty-cart" type="text" data-step="1" name="quantity[25]" value="1" title="Qty" class="input-qty input-text qty text" size="4" pattern="[0-9]*">
                                                     <a class="btn-number qtyplus quantity-plus" href="#">+</a>
                                                 </div>
                                             </div>
-                                            <button type="submit"
+                                            <button type="button" value="{{ product.id }}" id="add-cart" data-url="{% url 'cart_add' %}"
                                                     class="single_add_to_cart_button button alt rustrot-variation-selection-needed">
                                                 Add to cart
                                             </button>
-                                            <input name="add-to-cart" value="27" type="hidden">
-                                            <input name="product_id" value="27" type="hidden">
-                                            <input name="variation_id" class="variation_id" value="0" type="hidden">
+
                                         </div>
                                     </div>
                                 </form>

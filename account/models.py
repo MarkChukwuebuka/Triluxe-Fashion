@@ -1,6 +1,7 @@
 from django.contrib.auth.base_user import BaseUserManager, AbstractBaseUser
 from django.db import models
 from django.db.models import TextChoices, Q
+from django.db.models.signals import post_save
 
 from crm.models import BaseModel
 
@@ -78,7 +79,6 @@ class User(AbstractBaseUser, BaseModel):
             ]
         ).replace("\s+", " ").strip()
 
-
     def has_permission(self, perm_name):
         if self.is_superuser:
             return True
@@ -100,3 +100,27 @@ class Role(BaseModel):
     name = models.CharField(max_length=255, unique=True)
     description = models.TextField(null=True, blank=True)
     permissions = models.ManyToManyField(Permission, related_name="roles")
+
+
+class Profile(BaseModel):
+    user = models.OneToOneField(User, on_delete=models.CASCADE)
+    phone = models.CharField(max_length=20, blank=True)
+    address1 = models.CharField(max_length=200, blank=True)
+    address2 = models.CharField(max_length=200, blank=True)
+    city = models.CharField(max_length=200, blank=True)
+    state = models.CharField(max_length=200, blank=True)
+    zipcode = models.CharField(max_length=200, blank=True)
+    country = models.CharField(max_length=200, blank=True)
+    old_cart = models.CharField(max_length=200, blank=True, null=True)
+
+    def __str__(self):
+        return self.user.email
+
+
+def create_profile(sender, instance, created, **kwargs):
+    if created:
+        user_profile = Profile(user=instance)
+        user_profile.save()
+
+
+post_save.connect(create_profile, sender=User)

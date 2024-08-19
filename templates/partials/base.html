@@ -23,6 +23,9 @@
     <link rel="stylesheet" type="text/css" href="{% static 'assets/css/dreaming-attribute.css' %}"/>
     <link rel="stylesheet" type="text/css" href="{% static 'assets/css/style.css' %}"/>
     <title>{{title}} | Triluxe </title>
+
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
+
 </head>
 
 <body>
@@ -44,6 +47,12 @@
         <path d="M50,1 a49,49 0 0,1 0,98 a49,49 0 0,1 0,-98"/>
     </svg>
 </div>
+
+<script>
+    // Pass the CSRF token to JavaScript
+    const csrfToken = '{{ csrf_token }}';
+</script>
+
 <script src="{% static 'assets/js/jquery-1.12.4.min.js' %}"></script>
 <script src="{% static 'assets/js/bootstrap.min.js' %}"></script>
 <script src="{% static 'assets/js/chosen.min.js' %}"></script>
@@ -58,7 +67,7 @@
 <script src="{% static 'assets/js/jarallax.min.js' %}"></script>
 <script src="{% static 'assets/js/mobilemenu.js' %}"></script>
 <script src="{% static 'assets/js/functions.js' %}"></script>
-<script src="{% static 'assets/js/api.js' %}"></script>
+<script src="{% static 'assets/js/cart.js' %}"></script>
 </body>
 
 </html>
