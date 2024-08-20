@@ -7,6 +7,7 @@ from django.contrib.auth.models import AnonymousUser
 from django.shortcuts import render, redirect
 from django.contrib import messages
 
+from account.models import Profile
 
 T = TypeVar("T")
 
@@ -62,6 +63,13 @@ class CustomRequestUtil(CustomPermissionRequired):
             user = None
 
         return user
+
+    @property
+    def auth_profile(self):
+        if self.auth_user:
+            return self.auth_user.user_profile
+        else:
+            return None
 
     def log_activity(self, activity, data, note=None):
         from crm.services.activity_log import ActivityLogService

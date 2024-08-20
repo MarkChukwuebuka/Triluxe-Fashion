@@ -11,67 +11,66 @@ from services.util import CustomRequestUtil
 
 class CartView(View, CustomRequestUtil):
     template_name = "cart.html"
-    context_object_name = "products"
+    context_object_name = "cart_items"
 
     def get(self, request, *args, **kwargs):
         cart_service = CartService(request)
 
         self.extra_context_data = {
             "title": "Cart",
-            'quantities': cart_service.get_quants,
             'totals': cart_service.cart_total(),
         }
 
         return self.process_request(
-            request, target_function=cart_service.get_prods
+            request, target_function=cart_service.get_cart_items_with_totals
         )
 
+    def post(self, request, *args, **kwargs):
+        cart_service = CartService(request)
+        action = request.POST.get('action')
 
-def cart_add(request):
-    # Get the cart
-    cart = CartService(request)
+        if action == 'add':
 
-    if request.POST.get('action') == 'post':
+            product_id = int(request.POST.get('product_id'))
+            quantity = int(request.POST.get('product_qty'))
 
-        product_id = int(request.POST.get('product_id'))
-        product_qty = int(request.POST.get('product_qty'))
-        product_service = ProductService(request)
-        product, error = product_service.fetch_single(product_id)
-        if error:
-            return None, error
+            return self.process_request(
+                request, target_function=cart_service.add, quantity=quantity, product=product_id
+            )
 
-        cart.add(product=product, quantity=product_qty)
+        elif action == 'update':
 
-        cart_quantity = cart.__len__()
+            product_id = int(request.POST.get('product_id'))
+            quantity = int(request.POST.get('product_qty'))
 
-        response = JsonResponse({'qty': cart_quantity})
-        messages.success(request, "Product Added To Cart..")
-        return response
+            return self.process_request(
+                request, target_function=cart_service.update, quantity=quantity, product=product_id
+            )
 
+        elif action == 'delete':
 
-def cart_delete(request):
-    cart = CartService(request)
-    if request.POST.get('action') == 'post':
-        product_id = int(request.POST.get('product_id'))
+            product_id = int(request.POST.get('product_id'))
 
-        cart.delete(product=product_id)
+            return self.process_request(
+                request, target_function=cart_service.delete, product=product_id
+            )
 
-        response = JsonResponse({'product': product_id})
-
-        messages.success(request, "Item Deleted From Shopping Cart")
-        return response
+        else:
+            return JsonResponse({'error': 'Invalid action'}, status=400)
 
 
-def cart_update(request):
-    cart = CartService(request)
-    if request.POST.get('action') == 'post':
-        # Get stuff
-        product_id = int(request.POST.get('product_id'))
-        product_qty = int(request.POST.get('product_qty'))
+class CheckoutView(View, CustomRequestUtil):
+    template_name = "checkout.html"
+    context_object_name = "cart_items"
 
-        cart.update(product=product_id, quantity=product_qty)
+    def get(self, request, *args, **kwargs):
+        cart_service = CartService(request)
 
-        response = JsonResponse({'qty': product_qty})
+        self.extra_context_data = {
+            "title": "Checkout",
+            'totals': cart_service.cart_total(),
+        }
 
-        messages.success(request, "Your Cart Has Been Updated...")
-        return response
+        return self.process_request(
+            request, target_function=cart_service.get_cart_items_with_totals
+        )

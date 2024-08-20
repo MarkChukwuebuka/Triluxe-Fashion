@@ -18,7 +18,8 @@
                     <div class="rustrot">
                         <div class="rustrot-notices-wrapper"></div>
                         <form class="rustrot-cart-form">
-                            {% if products %}
+                            {% include 'partials/floating-messages.html' %}
+                            {% if cart_items %}
                             <table class="shop_table shop_table_responsive cart rustrot-cart-form__contents">
                                 <thead>
                                 <tr>
@@ -31,41 +32,41 @@
                                 </tr>
                                 </thead>
                                 <tbody>
-                                {% for product in products %}
+                                {% for item in cart_items %}
                                 <tr class="rustrot-cart-form__cart-item cart_item">
                                     <td class="product-remove">
-                                        <button type="button" class="remove delete-product" aria-label="Remove this item"
-                                           data-index="{{product.id}}">×</button>
+                                        <button type="button" data-url="{% url 'cart' %}" class="remove delete-product" aria-label="Remove this item"
+                                           data-index="{{item.product.id}}">×</button>
                                     </td>
                                     <td class="product-thumbnail">
-                                        <a href="{% url 'product-detail' product.id %}"><img
-                                                src="{{ product.cover_image.url }}"
+                                        <a href="{% url 'product-detail' item.product.id %}"><img
+                                                src="{{ item.product.cover_image.url }}"
                                                 class="attachment-rustrot_thumbnail size-rustrot_thumbnail"
                                                 alt="img" width="600" height="778"></a>
                                     </td>
                                     <td class="product-name" data-title="Product">
-                                        <a href="{% url 'product-detail' product.id %}">{{ product.name }}</a>
+                                        <a href="{% url 'product-detail' item.product.id %}">{{ item.product.name }}</a>
                                     </td>
                                     <td class="product-price" data-title="Price">
                                         <span class="rustrot-Price-amount amount">
-                                            {% if product.percentage_discount %}
+                                            {% if item.product.percentage_discount %}
                                             <span class="price">
                                                 <del><span class="rustrot-Price-amount amount">
-                                                    <span class="rustrot-Price-currencySymbol"><del>N</del></span>
-                                                    {{product.price|floatformat:2|intcomma}}</span>
+                                                    <span class="rustrot-Price-currencySymbol"><strike>N</strike></span>
+                                                    {{item.product.price|floatformat:2|intcomma}}</span>
                                                 </del>
                                                 <ins>
                                                     <span class="rustrot-Price-amount amount">
-                                                        <span class="rustrot-Price-currencySymbol"><del>N</del></span>
-                                                        {{product.discounted_price|floatformat:2|intcomma}}
+                                                        <span class="rustrot-Price-currencySymbol"><strike>N</strike></span>
+                                                        {{ item.product.discounted_price|floatformat:2|intcomma }}
                                                     </span>
                                                 </ins>
                                             </span>
                                             {% else %}
                                                 <span class="price">
                                                     <span class="rustrot-Price-amount amount">
-                                                        <span class="rustrot-Price-currencySymbol"><del>N</del></span>
-                                                        {{product.price|floatformat:2|intcomma}}
+                                                        <span class="rustrot-Price-currencySymbol"><strike>N</strike></span>
+                                                        {{ item.product.price|floatformat:2|intcomma }}
                                                     </span>
                                                 </span>
                                             {% endif %}
@@ -76,12 +77,10 @@
                                             <span class="qty-label">Quantity:</span>
                                             <div class="control">
                                                 <a class="btn-number qtyminus quantity-minus" href="#">-</a>
-                                                {% for key, value in quantities.items %}
-                                                    {% if key == product.id|slugify %}
-                                                        <input type="text" id="select{{product.id}}"
-                                                       value="{{ value }}" title="Qty" class="input-qty input-text qty text">
-                                                    {% endif %}
-                                                {% endfor %}
+
+                                                        <input type="text" id="select{{item.product.id}}"
+                                                       value="{{ item.quantity }}" title="Qty" class="input-qty input-text qty text">
+
                                                 <a class="btn-number qtyplus quantity-plus" href="#">+</a>
                                             </div>
                                         </div>
@@ -89,7 +88,7 @@
                                     <td class="product-subtotal" data-title="Total">
                                         <span class="rustrot-Price-amount amount">
                                             <span class="rustrot-Price-currencySymbol"><strike>N</strike></span>
-                                            150.00
+                                            {{ item.total }}
                                         </span>
                                     </td>
                                 </tr>

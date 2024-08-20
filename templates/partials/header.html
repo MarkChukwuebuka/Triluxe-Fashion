@@ -63,7 +63,7 @@
                                 <ul class=" block-minicart block-dreaming rustrot-mini-cart rustrot-dropdownn">
                                     <li class="shopcart-dropdownn block-cart-link" data-rustrot="rustrot-dropdownn">
                                         <a class="block-link " href="{% url 'cart' %}">
-                                            Cart<span class="count">3</span>
+                                            Cart<span id="cart_quantity" class="count">{{ cart|length }}</span>
                                         </a>
                                     </li>
 
