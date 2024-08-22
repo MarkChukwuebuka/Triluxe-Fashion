@@ -4,19 +4,21 @@ from django.dispatch import receiver
 import datetime
 
 from account.models import User
+from crm.models import BaseModel
 from product.models import Product
 
 
-class ShippingAddress(models.Model):
+class ShippingAddress(BaseModel):
     user = models.ForeignKey(User, on_delete=models.CASCADE, null=True, blank=True)
-    shipping_full_name = models.CharField(max_length=255)
-    shipping_email = models.CharField(max_length=255)
-    shipping_address1 = models.CharField(max_length=255)
-    shipping_address2 = models.CharField(max_length=255, null=True, blank=True)
-    shipping_city = models.CharField(max_length=255)
-    shipping_state = models.CharField(max_length=255, null=True, blank=True)
-    shipping_zipcode = models.CharField(max_length=255, null=True, blank=True)
-    shipping_country = models.CharField(max_length=255)
+    first_name = models.CharField(max_length=255)
+    last_name = models.CharField(max_length=255)
+    email = models.CharField(max_length=255)
+    address = models.CharField(max_length=255)
+    city = models.CharField(max_length=255, null=True, blank=True)
+    state = models.CharField(max_length=255, null=True, blank=True)
+    zipcode = models.CharField(max_length=255, null=True, blank=True)
+    country = models.CharField(max_length=255, null=True, blank=True)
+    phone = models.CharField(max_length=16, null=True, blank=True)
 
     # Don't pluralize address
     class Meta:
@@ -37,15 +39,13 @@ def create_shipping(sender, instance, created, **kwargs):
 post_save.connect(create_shipping, sender=User)
 
 
-# Create Order Model
-class Order(models.Model):
-    # Foreign Key
+class Order(BaseModel):
     user = models.ForeignKey(User, on_delete=models.CASCADE, null=True, blank=True)
     full_name = models.CharField(max_length=250)
     email = models.EmailField(max_length=250)
     shipping_address = models.TextField(max_length=15000)
     amount_paid = models.DecimalField(max_digits=7, decimal_places=2)
-    date_ordered = models.DateTimeField(auto_now_add=True)
+    date_ordered = models.DateTimeField(null=True, blank=True)
     shipped = models.BooleanField(default=False)
     date_shipped = models.DateTimeField(blank=True, null=True)
 
@@ -63,9 +63,7 @@ def set_shipped_date_on_update(sender, instance, **kwargs):
             instance.date_shipped = now
 
 
-# Create Order Items Model
-class OrderItem(models.Model):
-    # Foreign Keys
+class OrderItem(BaseModel):
     order = models.ForeignKey(Order, on_delete=models.CASCADE, null=True)
     product = models.ForeignKey(Product, on_delete=models.CASCADE, null=True)
     user = models.ForeignKey(User, on_delete=models.CASCADE, null=True, blank=True)

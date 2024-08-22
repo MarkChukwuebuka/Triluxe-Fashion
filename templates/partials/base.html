@@ -49,8 +49,9 @@
 </div>
 
 <script>
-    // Pass the CSRF token to JavaScript
+
     const csrfToken = '{{ csrf_token }}';
+    var paystack_key = '{{ paystack_key }}'
 </script>
 
 <script src="{% static 'assets/js/jquery-1.12.4.min.js' %}"></script>
@@ -68,6 +69,9 @@
 <script src="{% static 'assets/js/mobilemenu.js' %}"></script>
 <script src="{% static 'assets/js/functions.js' %}"></script>
 <script src="{% static 'assets/js/cart.js' %}"></script>
+
+<script src="https://js.paystack.co/v2/inline.js"></script>
+<script src="{% static 'assets/js/paystack.js' %}"></script>
 </body>
 
 </html>

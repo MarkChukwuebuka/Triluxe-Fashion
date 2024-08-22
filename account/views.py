@@ -26,8 +26,10 @@ class UserLoginView(View, CustomRequestUtil):
             'password': request.POST.get('password'),
         }
 
+        next_url = request.POST.get('next', request.GET.get('next', '/'))
+
         return self.process_request(
-            request, target_view="home", target_function=auth_service.login, payload=payload
+            request, target_view=next_url, target_function=auth_service.login, payload=payload
         )
 
 
@@ -65,3 +67,13 @@ class UserDashboardView(View, CustomRequestUtil):
 
     def get(self, request, *args, **kwargs):
         return self.process_request(request)
+
+
+class UserLogoutView(View, CustomRequestUtil):
+
+    def get(self, request, *args, **kwargs):
+        auth_service = AuthService(self.request)
+
+        return self.process_request(
+            request, target_function=auth_service.logout, target_view="home"
+        )

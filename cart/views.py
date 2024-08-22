@@ -59,18 +59,3 @@ class CartView(View, CustomRequestUtil):
             return JsonResponse({'error': 'Invalid action'}, status=400)
 
 
-class CheckoutView(View, CustomRequestUtil):
-    template_name = "checkout.html"
-    context_object_name = "cart_items"
-
-    def get(self, request, *args, **kwargs):
-        cart_service = CartService(request)
-
-        self.extra_context_data = {
-            "title": "Checkout",
-            'totals': cart_service.cart_total(),
-        }
-
-        return self.process_request(
-            request, target_function=cart_service.get_cart_items_with_totals
-        )

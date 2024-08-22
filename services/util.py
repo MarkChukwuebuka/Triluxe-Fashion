@@ -6,6 +6,7 @@ from django.contrib.auth.mixins import PermissionRequiredMixin
 from django.contrib.auth.models import AnonymousUser
 from django.shortcuts import render, redirect
 from django.contrib import messages
+import phonenumbers
 
 from account.models import Profile
 
@@ -137,4 +138,23 @@ class CustomRequestUtil(CustomPermissionRequired):
         if self.template_name:
             return render(self.request, self.template_name, self.context)
 
-        return redirect(target_view)
+        if target_view:
+            return redirect(target_view)
+
+        return redirect('/')
+
+
+
+def format_phone_number(phone_number, region_code=None):
+    if not region_code:
+        region_code = "NG"
+    try:
+        x = phonenumbers.parse(phone_number, region_code)
+        phone_number = phonenumbers.format_number(x, phonenumbers.PhoneNumberFormat.E164)
+
+        if phonenumbers.is_valid_number_for_region(x, region_code):
+            return phone_number
+    except:
+        pass
+
+    return None

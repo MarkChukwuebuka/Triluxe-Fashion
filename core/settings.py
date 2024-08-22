@@ -193,3 +193,9 @@ EMAIL_USE_TLS = True
 STATICFILES_STORAGE = "whitenoise.storage.CompressedStaticFilesStorage"
 
 DEFAULT_FILE_STORAGE = 'cloudinary_storage.storage.MediaCloudinaryStorage'
+
+
+PAYSTACK_KEY = os.getenv('PAYSTACK_KEY')
+
+LOGIN_URL='login'
+LOGOUT_URL='logout'

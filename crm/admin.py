@@ -7,3 +7,5 @@ class BaseAdmin(admin.ModelAdmin):
     autocomplete_fields = ["created_by", "updated_by", "deactivated_by", "deleted_by"]
     list_filter = []
     date_hierarchy = "created_at"
+
+

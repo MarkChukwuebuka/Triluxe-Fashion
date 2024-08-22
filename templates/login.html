@@ -22,6 +22,7 @@
 
                                 <form class="rustrot-form rustrot-form-login login" method="POST">
                                     {% csrf_token %}
+                                    <input type="hidden" name="next" value="{{ request.GET.next }}">
                                     <p class="rustrot-form-row rustrot-form-row--wide form-row form-row-wide">
                                         <label for="username">Email address&nbsp;<span
                                                 class="required">*</span></label>

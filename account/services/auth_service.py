@@ -1,4 +1,4 @@
-from django.contrib.auth import authenticate, login
+from django.contrib.auth import authenticate, login, logout
 
 from account.services.user_service import UserService
 from services.util import CustomRequestUtil
@@ -26,5 +26,12 @@ class AuthService(CustomRequestUtil):
             return None, error
 
         message = "Your signup was successful"
+
+        return message, None
+
+    def logout(self):
+
+        logout(self.request)
+        message = "Logout successful"
 
         return message, None

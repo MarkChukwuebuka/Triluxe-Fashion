@@ -1,4 +1,5 @@
 from django.db import models
+from django.utils import timezone
 
 
 class AvailableManager(models.Manager):
@@ -44,7 +45,7 @@ class BaseModel(AppDbModel):
     deactivation_reason = models.TextField(null=True, blank=True)
     deactivated_at = models.DateTimeField(null=True, blank=True)
     deleted_at = models.DateTimeField(null=True, blank=True)
-    created_at = models.DateTimeField(auto_now_add=True, blank=True)
+    created_at = models.DateTimeField(default=timezone.now, blank=True)
     updated_at = models.DateTimeField(auto_now=True, blank=True)
     created_by = models.ForeignKey(
         "account.User",

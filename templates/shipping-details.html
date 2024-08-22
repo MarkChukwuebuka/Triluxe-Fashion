@@ -16,90 +16,13 @@
                 <div class="page-main-content">
                     <div class="rustrot">
                         <div class="rustrot-notices-wrapper"></div>
-                        <div class="checkout-before-top">
                             {% include 'partials/floating-messages.html' %}
 
-                            <div class="rustrot-checkout-login">
-                                {% if not user.is_authenticated %}
-                                <div class="rustrot-form-login-toggle rustrot-form-toggle">
-                                    <div class="rustrot-info">
-                                        Returning customer? <a href="{% url 'login' %}" class="showlogin showbtn">Click here to
-                                        login</a>
-                                    </div>
-                                </div>
-                                <form class="rustrot-form rustrot-form-login login rustrot-form-show" method="POST"
-                                      style="display:none;">
-                                    {% csrf_token %}
-                                    <p>If you have shopped with us before, please enter your details below. If you are a
-                                        new customer, please proceed to the Billing &amp; Shipping section.</p>
-                                    <p class="form-row form-row-first">
-                                        <label for="email">Email&nbsp;<span
-                                                class="required">*</span></label>
-                                        <input type="text" class="input-text" name="email" id="email"
-                                               autocomplete="email">
-                                    </p>
-                                    <p class="form-row form-row-last">
-                                        <label for="password">Password&nbsp;<span class="required">*</span></label>
-                                        <input class="input-text" type="password" name="password" id="password"
-                                               autocomplete="current-password">
-                                    </p>
-                                    <div class="clear"></div>
-                                    <p class="form-row">
-                                        <input type="hidden" id="rustrot-login-nonce" name="rustrot-login-nonce"
-                                               value="832993cb93"><input type="hidden" name="_wp_http_referer"
-                                                                         value="/rustrot/checkout/">
-                                        <button type="submit" class="button" name="login" value="Login">Login</button>
-                                        <label class="rustrot-form__label rustrot-form__label-for-checkbox inline">
-                                            <input class="rustrot-form__input rustrot-form__input-checkbox"
-                                                   name="rememberme" type="checkbox" id="rememberme" value="forever">
-                                            <span>Remember me</span>
-                                        </label>
-                                    </p>
-                                    <p class="lost_password">
-                                        <a href="#">Lost your
-                                            password?</a>
-                                    </p>
-                                    <div class="clear"></div>
-                                </form>
-
-                            {% else %}
-
-                                <div class="rustrot-form-login-toggle rustrot-form-toggle">
-                                    <div class="rustrot-info">
-                                        <h2>Proceed to checkout</h2>
-                                    </div>
-                                </div>
-
-                            {% endif %}
-                            </div>
-                            <div class="rustrot-checkout-coupon">
-                                <div class="rustrot-notices-wrapper"></div>
-                                <div class="rustrot-form-coupon-toggle rustrot-form-toggle">
-                                    <div class="rustrot-info">
-                                        Have a coupon? <a href="#" class="showcoupon showbtn">Click here to enter your
-                                        code</a>
-                                    </div>
-                                </div>
-                                <form class="checkout_coupon rustrot-form-coupon rustrot-form-show" method="post"
-                                      style="display:none">
-                                    <p>If you have a coupon code, please apply it below.</p>
-                                    <p class="form-row form-row-first">
-                                        <input type="text" name="coupon_code" class="input-text"
-                                               placeholder="Coupon code" id="coupon_code" value="">
-                                    </p>
-                                    <p class="form-row form-row-last">
-                                        <button type="submit" class="button" name="apply_coupon" value="Apply coupon">
-                                            Apply coupon
-                                        </button>
-                                    </p>
-                                    <div class="clear"></div>
-                                </form>
-                            </div>
-                        </div>
                         <form name="checkout" method="POST" class="checkout rustrot-checkout"
                               enctype="multipart/form-data"
                               novalidate="novalidate">
                             {% csrf_token %}
+                            {% include 'partials/floating-messages.html' %}
                             <div class="col2-set" id="customer_details">
                                 <div class="col-1">
                                     <div class="rustrot-billing-fields">
@@ -323,7 +246,7 @@
                                                                                         name="billing_address_1"
                                                                                         id="billing_address_1"
                                                                                         placeholder="House number and street name"
-                                                                                        value="{{profile.address}}"
+                                                                                        value="{{shipping_detail.address}}"
                                                                                         autocomplete="address-line1"
                                                                                         data-placeholder="House number and street name"></span>
                                             </p>
@@ -337,7 +260,7 @@
                                                                                         class="input-text "
                                                                                         name="billing_postcode"
                                                                                         id="billing_postcode"
-                                                                                        value="{{user.user_profile.zipcode}}"
+                                                                                        value="{{shipping_detail.zipcode}}"
                                                                                         autocomplete="postal-code"></span>
                                             </p>
                                             <p class="form-row form-row-wide address-field validate-required"
@@ -349,7 +272,7 @@
                                                                                         class="input-text "
                                                                                         name="billing_city"
                                                                                         id="billing_city"
-                                                                                        value="{{ user.user_profile.city }}"
+                                                                                        value="{{ shipping_detail.city }}"
                                                                                         autocomplete="address-level2"></span>
                                             </p>
                                             <p class="form-row form-row-wide address-field validate-required"
@@ -360,7 +283,7 @@
                                                     class="rustrot-input-wrapper"><input type="text"
                                                                                         class="input-text "
                                                                                         name="billing_city"
-                                                                                        value="{{ user.user_profile.state }}"
+                                                                                        value="{{ shipping_detail.state }}"
                                                                                         autocomplete="address-level2"></span>
                                             </p>
 
@@ -372,7 +295,7 @@
                                                                                         class="input-text "
                                                                                         name="billing_phone"
                                                                                         id="billing_phone"
-                                                                                        value="{{ user.user_profile.phone }}"
+                                                                                        value="{{ shipping_detail.phone }}"
                                                                                         autocomplete="tel"></span>
                                             </p>
                                             <p class="form-row form-row-wide validate-required validate-email"
@@ -388,13 +311,7 @@
                                             </p></div>
                                     </div>
                                     <div class="rustrot-account-fields">
-                                        <p class="form-row form-row-wide create-account rustrot-validated">
-                                            <label class="rustrot-form__label rustrot-form__label-for-checkbox checkbox">
-                                                <input class="rustrot-form__input rustrot-form__input-checkbox input-checkbox"
-                                                       id="createaccount" type="checkbox" name="createaccount"
-                                                       value="1"> <span>Create an account?</span>
-                                            </label>
-                                        </p>
+                                        <button type="submit" class="button" name="continue" value="Continue">Continue</button>
                                     </div>
                                 </div>
 
@@ -440,70 +357,7 @@
                                     </tfoot>
                                 </table>
                                 <input type="hidden" name="lang" value="en">
-                                <div id="payment" class="rustrot-checkout-payment">
-                                    <ul class="wc_payment_methods payment_methods methods">
-                                        <li class="wc_payment_method payment_method_bacs">
-                                            <input id="payment_method_bacs" type="radio" class="input-radio"
-                                                   name="payment_method" value="bacs" checked="checked"
-                                                   data-order_button_text="">
-                                            <label for="payment_method_bacs">
-                                                Direct bank transfer </label>
-                                            <div class="payment_box payment_method_bacs">
-                                                <p>Make your payment directly into our bank account. Please use your
-                                                    Order ID as the payment reference. Your order will not be shipped
-                                                    until the funds have cleared in our account.</p>
-                                            </div>
-                                        </li>
 
-                                        <li class="wc_payment_method payment_method_cod">
-                                            <input id="payment_method_cod" type="radio" class="input-radio"
-                                                   name="payment_method" value="cod" data-order_button_text="">
-                                            <label for="payment_method_cod">
-                                                Cash on delivery </label>
-                                            <div class="payment_box payment_method_cod" style="display:none;">
-                                                <p>Pay with cash upon delivery.</p>
-                                            </div>
-                                        </li>
-                                        <li class="wc_payment_method payment_method_card">
-                                            <input id="payment_method_card" type="radio" class="input-radio"
-                                                   name="payment_method" value="card" data-order_button_text="">
-                                            <label for="payment_method_card">
-                                                Pay with Card </label>
-                                            <div class="payment_box payment_method_card" style="display:none;">
-                                                <p>Pay with Card</p>
-                                            </div>
-                                        </li>
-
-                                    </ul>
-                                    <div class="form-row place-order">
-                                        <noscript>
-                                            Since your browser does not support JavaScript, or it is disabled, please
-                                            ensure you click the <em>Update Totals</em> button before placing your
-                                            order. You may be charged more than the amount stated above if you fail to
-                                            do so. <br/>
-                                            <button type="submit" class="button alt"
-                                                    name="rustrot_checkout_update_totals" value="Update totals">
-                                                Update totals
-                                            </button>
-                                        </noscript>
-                                        <div class="rustrot-terms-and-conditions-wrapper">
-                                            <div class="rustrot-privacy-policy-text"><p>Your personal data will be
-                                                used to process your order, support your experience throughout this
-                                                website, and for other purposes described in our <a
-                                                        href="#"
-                                                        class="rustrot-privacy-policy-link" target="_blank">privacy
-                                                    policy</a>.</p>
-                                            </div>
-                                        </div>
-                                        <button type="submit" onclick="makePaystackPayment()" class="button alt" name="rustrot_checkout_place_order"
-                                                id="place_order" value="Place order" data-value="Place order">Place
-                                            order
-                                        </button>
-                                        <input type="hidden" id="rustrot-process-checkout-nonce"
-                                               name="rustrot-process-checkout-nonce" value="634590c981"><input
-                                            type="hidden" name="_wp_http_referer"
-                                            value="/rustrot/?rustrot-ajax=update_order_review"></div>
-                                </div>
                             </div>
                         </form>
                     </div>
