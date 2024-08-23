@@ -18,9 +18,7 @@
                         <div class="rustrot-notices-wrapper"></div>
                             {% include 'partials/floating-messages.html' %}
 
-                        <form name="checkout" method="POST" class="checkout rustrot-checkout"
-                              enctype="multipart/form-data"
-                              novalidate="novalidate">
+                        <form method="POST" class="checkou rustrot-checkou">
                             {% csrf_token %}
                             {% include 'partials/floating-messages.html' %}
                             <div class="col2-set" id="customer_details">
@@ -28,35 +26,35 @@
                                     <div class="rustrot-billing-fields">
                                         <h3>Billing details</h3>
                                         <div class="rustrot-billing-fields__field-wrapper">
-                                            <p class="form-row form-row-first validate-required"
+                                            <p class="form-row form-row-first "
                                                id="billing_first_name_field" data-priority="10"><label
                                                     for="billing_first_name" class="">First name&nbsp;<abbr
                                                     class="required" title="required">*</abbr></label><span
                                                     class="rustrot-input-wrapper"><input type="text"
                                                                                         class="input-text "
-                                                                                        name="billing_first_name"
+                                                                                        name="first_name"
                                                                                         id="billing_first_name"
                                                                                         value="{{user.first_name}}"
                                                                                         autocomplete="given-name"></span>
                                             </p>
-                                            <p class="form-row form-row-last validate-required"
+                                            <p class="form-row form-row-last "
                                                id="billing_last_name_field" data-priority="20"><label
                                                     for="billing_last_name" class="">Last name&nbsp;<abbr
                                                     class="required" title="required">*</abbr></label><span
                                                     class="rustrot-input-wrapper"><input type="text"
                                                                                         class="input-text "
-                                                                                        name="billing_last_name"
+                                                                                        name="last_name"
                                                                                         id="billing_last_name"
                                                                                         value="{{user.last_name}}"
                                                                                         autocomplete="family-name"></span>
                                             </p>
 
-                                            <p class="form-row form-row-wide address-field update_totals_on_change validate-required"
+                                            <p class="form-row form-row-wide address-field update_totals_on_change "
                                                id="billing_country_field" data-priority="40"><label
                                                     for="billing_country" class="">Country&nbsp;<abbr class="required"
                                                                                                       title="required">*</abbr></label>
                                                 <span class="rustrot-input-wrapper">
-                                                <select name="billing_country"
+                                                <select name="country"
                                                         id="billing_country"
                                                         class="country_to_state country_select"
                                                         autocomplete="country"
@@ -237,13 +235,13 @@
                                                 </select>
                                                 </span>
                                             </p>
-                                            <p class="form-row form-row-wide address-field validate-required"
+                                            <p class="form-row form-row-wide address-field "
                                                id="billing_address_1_field" data-priority="50"><label
                                                     for="billing_address_1" class="">Street address&nbsp;<abbr
                                                     class="required" title="required">*</abbr></label><span
                                                     class="rustrot-input-wrapper"><input type="text"
                                                                                         class="input-text "
-                                                                                        name="billing_address_1"
+                                                                                        name="address"
                                                                                         id="billing_address_1"
                                                                                         placeholder="House number and street name"
                                                                                         value="{{shipping_detail.address}}"
@@ -253,65 +251,68 @@
 
                                             <p class="form-row form-row-wide address-field validate-postcode"
                                                id="billing_postcode_field" data-priority="65"
-                                               data-o_class="form-row form-row-wide address-field validate-postcode">
+                                               data-o_class="form-row form-row-wide address-field">
                                                 <label for="billing_postcode" class="">Postcode / ZIP&nbsp;<span
                                                         class="optional">(optional)</span></label><span
                                                     class="rustrot-input-wrapper"><input type="text"
                                                                                         class="input-text "
-                                                                                        name="billing_postcode"
+                                                                                        name="zipcode"
                                                                                         id="billing_postcode"
                                                                                         value="{{shipping_detail.zipcode}}"
                                                                                         autocomplete="postal-code"></span>
                                             </p>
-                                            <p class="form-row form-row-wide address-field validate-required"
+                                            <p class="form-row form-row-wide address-field "
                                                id="billing_city_field" data-priority="70"
-                                               data-o_class="form-row form-row-wide address-field validate-required">
+                                               data-o_class="form-row form-row-wide address-field ">
                                                 <label for="billing_city" class="">Town / City&nbsp;<abbr
                                                         class="required" title="required">*</abbr></label><span
                                                     class="rustrot-input-wrapper"><input type="text"
                                                                                         class="input-text "
-                                                                                        name="billing_city"
+                                                                                        name="city"
                                                                                         id="billing_city"
                                                                                         value="{{ shipping_detail.city }}"
                                                                                         autocomplete="address-level2"></span>
                                             </p>
-                                            <p class="form-row form-row-wide address-field validate-required"
+                                            <p class="form-row form-row-wide address-field "
                                                data-priority="70"
-                                               data-o_class="form-row form-row-wide address-field validate-required">
+                                               data-o_class="form-row form-row-wide address-field ">
                                                 <label for="billing_city" class="">State<abbr
                                                         class="required" title="required">*</abbr></label><span
                                                     class="rustrot-input-wrapper"><input type="text"
                                                                                         class="input-text "
-                                                                                        name="billing_city"
+                                                                                        name="state"
                                                                                         value="{{ shipping_detail.state }}"
                                                                                         autocomplete="address-level2"></span>
                                             </p>
 
-                                            <p class="form-row form-row-wide validate-required validate-phone"
+                                            <p class="form-row form-row-wide"
                                                id="billing_phone_field" data-priority="100"><label for="billing_phone"
                                                                                                    class="">Phone&nbsp;<abbr
                                                     class="required" title="required">*</abbr></label><span
                                                     class="rustrot-input-wrapper"><input type="tel"
                                                                                         class="input-text "
-                                                                                        name="billing_phone"
+                                                                                        name="phone"
                                                                                         id="billing_phone"
                                                                                         value="{{ shipping_detail.phone }}"
-                                                                                        autocomplete="tel"></span>
+                                                                                        autocomplete="tel"
+                                                                                        placeholder="+2348134625958"></span>
                                             </p>
-                                            <p class="form-row form-row-wide validate-required validate-email"
+                                            <p class="form-row form-row-wide"
                                                id="billing_email_field" data-priority="110"><label for="billing_email"
                                                                                                    class="">Email
                                                 address&nbsp;<abbr class="required"
                                                                    title="required">*</abbr></label><span
                                                     class="rustrot-input-wrapper"><input type="email"
                                                                                         class="input-text "
-                                                                                        name="billing_email"
+                                                                                        name="email"
                                                                                         id="billing_email"
                                                                                         value="{{user.email}}"></span>
                                             </p></div>
                                     </div>
                                     <div class="rustrot-account-fields">
-                                        <button type="submit" class="button" name="continue" value="Continue">Continue</button>
+                                        <button type="submit" class="rustrot-Button button" name="save"
+                                                value="save">Save
+                                        </button>
                                     </div>
                                 </div>
 

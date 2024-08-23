@@ -1,129 +1,87 @@
-from account.models import Profile
+from django.conf import settings
+
 from product.models import Product
-from product.services.product_service import ProductService
 from services.util import CustomRequestUtil
 
 
-class CartService(CustomRequestUtil):
+class Cart(object, CustomRequestUtil):
+    def __init__(self, request):
+        self.session = request.session
+        cart = self.session.get(settings.CART_SESSION_ID)
 
-    def add(self, product, quantity):
+        if not cart:
+            cart = self.session[settings.CART_SESSION_ID] = {}
 
-        product_id = str(product)
-        product_qty = str(quantity)
+        self.cart = cart
+        # It first checks if there's an existing cart in the session.
+        #  If not, it creates an empty cart in the session.
+        # The cart is stored in the self.cart attribute for further use.
 
-        if product_id in self.cart:
-            error = "This item is already in your cart"
-            return None, error
-        else:
-            self.cart[product_id] = int(product_qty)
-            message = "This item has been added to your cart successfully"
+    def __iter__(self):
+        for p in self.cart.keys():
+            self.cart[str(p)]['product'] = Product.objects.get(pk=p)
 
-        self.session.modified = True
+        for item in self.cart.values():
+            item['total_price'] = int(item['product'].price * item['quantity'])
 
-        # if self.auth_user:
-        #     current_user = self.auth_profile
-        #     # Convert {'3':1, '2':4} to {"3":1, "2":4}
-        #     old_cart = str(self.cart)
-        #     old_cart = old_cart.replace("\'", "\"")
-        #     current_user.update(old_cart=str(old_cart))
-
-        return message, None
-
-    def cart_total(self):
-        product_ids = self.cart.keys()
-
-        product_service = ProductService(self.request)
-        products = product_service.get_base_query().filter(id__in=product_ids)
-        quantities = self.cart
-        total = 0
-        for key, value in quantities.items():
-            key = int(key)
-            for product in products:
-                if product.id == key:
-                    if product.percentage_discount:
-                        total = total + (product.discounted_price * value)
-                    else:
-                        total = total + (product.price * value)
-        return total
+            yield item
+        # This method makes the Cart class iterable,
+        # meaning you can loop through the items in the cart using a for loop.
 
     def __len__(self):
-        return len(self.cart)
+        return sum(item['quantity'] for item in self.cart.values())
+        # This method returns the total number of items in the cart.
 
-    def get_prods(self):
-        product_ids = self.cart.keys()
-
-        product_service = ProductService(self.request)
-        products = product_service.get_base_query().filter(id__in=product_ids)
-
-        return products
-
-    def get_cart_items_with_totals(self):
-        """
-        Returns a list of products in the cart with their associated quantities and totals.
-        """
-        product_ids = self.cart.keys()
-        product_service = ProductService(self.request)
-        products = product_service.get_base_query().filter(id__in=product_ids)
-
-        cart_quants_totals = []
-        for product in products:
-            product_id_str = str(product.id)
-            quantity = self.cart[product_id_str]
-            if product.percentage_discount:
-                total = product.discounted_price * quantity
-            else:
-                total = product.price * quantity
-
-            cart_quants_totals.append({
-                'product': product,
-                'quantity': quantity,
-                'total': total,
-            })
-
-        return cart_quants_totals
-
-    def get_quants(self):
-        quantities = self.cart
-        return quantities
-
-    def update(self, product, quantity):
-
-        product_id = str(product)
-        product_qty = int(quantity)
-
-        cart = self.cart
-        cart[product_id] = product_qty
-
+    def save(self):
+        self.session[settings.CART_SESSION_ID] = self.cart
         self.session.modified = True
-        message = "you've successfully update your cart"
+        #  This method saves the cart back to the user's session after making changes.
 
-        if self.auth_user:
-            current_user = self.auth_profile
-            # Convert {'3':1, '2':4} to {"3":1, "2":4}
-            old_cart = str(self.cart)
-            old_cart = old_cart.replace("\'", "\"")
-            # Save old_cart to the Profile Model
-            current_user.update(old_cart=str(old_cart))
+    def add(self, product_id, quantity=1, update_quantity=False):
+        # This method is used to add products to the cart.
+        product_id = str(product_id)
 
+        if product_id not in self.cart:
+            self.cart[product_id] = {'quantity': 1, 'id': product_id}
+
+        if update_quantity:
+            self.cart[product_id]['quantity'] += int(quantity)
+
+            if self.cart[product_id]['quantity'] == 0:
+                self.remove(product_id)
+
+        self.save()
+        message = "Item has been added to cart"
         return message, None
 
-    def delete(self, product):
-        product_id = str(product)
-
+    def remove(self, product_id):
+        product_id = str(product_id)  # Ensure data type compatibility
         if product_id in self.cart:
             del self.cart[product_id]
-
-        self.session.modified = True
-        message = "Item was successfully removed from cart"
-
-        if self.request.user.is_authenticated:
-            # Get the current user profile
-            current_user = Profile.objects.filter(user__id=self.request.user.id)
-            # Convert {'3':1, '2':4} to {"3":1, "2":4}
-            old_cart = str(self.cart)
-            old_cart = old_cart.replace("\'", "\"")
-            # Save old_cart to the Profile Model
-            current_user.update(old_cart=str(old_cart))
-
+            self.save()  # Ensure cart data is saved to the session
+        message = "Item was removed from cart"
         return message, None
 
+        #  This method removes a product from the cart based on its product_id.
+
+    def clear(self):
+        del self.session[settings.CART_SESSION_ID]
+        self.session.modified = True
+        # This method clears the entire cart by deleting it from the session.
+
+    def get_total_cost(self):
+        for p in self.cart.keys():
+            self.cart[str(p)]['product'] = Product.objects.get(pk=p)
+
+        total = int(sum(item['product'].price * item['quantity'] for item in self.cart.values()))
+
+        return total
+
+    # This method calculates the total cost of all items in the cart.
+
+    def get_item(self, product_id):
+        if str(product_id) in self.cart:
+            return self.cart[str(product_id)]
+        else:
+            return None
+    # This method retrieves an item from the cart based on its product_id and returns it

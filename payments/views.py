@@ -1,11 +1,9 @@
 from django.conf import settings
 from django.contrib.auth.mixins import LoginRequiredMixin
-from django.shortcuts import render
 from django.views import View
 
 from cart.services.cart_service import CartService
 from payments.services.shipping_address_service import ShippingAddressService
-# from payments.services.shipping_address_service import ShippingAddressService
 from services.util import CustomRequestUtil
 
 
@@ -47,13 +45,14 @@ class ShippingDetailView(LoginRequiredMixin, View, CustomRequestUtil):
     def post(self, request, *args, **kwargs):
         shipping_details_service = ShippingAddressService(self.request)
         self.template_on_error = 'shipping-details.html'
+        self.template_name = None
 
         payload = {
             'email': request.POST.get('email'),
             'state': request.POST.get('state'),
             'address': request.POST.get('address'),
-            'first_name': request.POST.get('first-name'),
-            'last_name': request.POST.get('last-name'),
+            'first_name': request.POST.get('first_name'),
+            'last_name': request.POST.get('last_name'),
             'country': request.POST.get('country'),
             'zipcode': request.POST.get('zipcode'),
             'phone': request.POST.get('phone'),

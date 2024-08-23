@@ -1,5 +1,3 @@
-from django.utils import timezone
-
 from payments.models import ShippingAddress
 from services.util import CustomRequestUtil, format_phone_number
 
@@ -11,12 +9,11 @@ class ShippingAddressService(CustomRequestUtil):
 
         _, _ = ShippingAddress.available_objects.update_or_create(
             user=self.auth_user,
-            email=payload.get("email"),
             defaults=dict(
+                email=payload.get("email"),
                 first_name=payload.get("first_name"),
                 last_name=payload.get("last_name"),
-                address1=payload.get("address1"),
-                address2=payload.get("address2"),
+                address=payload.get("address"),
                 city=payload.get("city"),
                 state=payload.get("state"),
                 country=payload.get("country"),

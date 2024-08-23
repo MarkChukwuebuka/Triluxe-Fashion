@@ -1,6 +1,5 @@
-from cart.services.cart_service import CartService
+from cart.services.cart_service import Cart
 
 
 def cart(request):
-    # Return The default data from our Cart
-    return {'cart': CartService(request)}
+    return {'cart': Cart(request)}

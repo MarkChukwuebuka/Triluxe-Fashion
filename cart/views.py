@@ -1,61 +1,60 @@
-from django.shortcuts import render, get_object_or_404
-from django.http import JsonResponse
-from django.contrib import messages
-from django.views import View
+from django.conf import settings
+from django.contrib.auth.decorators import login_required
+from django.shortcuts import render, redirect
 
-from cart.services.cart_service import CartService
+from cart.services.cart_service import Cart
 from product.models import Product
-from product.services.product_service import ProductService
-from services.util import CustomRequestUtil
 
 
-class CartView(View, CustomRequestUtil):
-    template_name = "cart.html"
-    context_object_name = "cart_items"
+def add_to_cart(request, product_id):
+    cart = Cart(request)
+    cart.add(product_id)
 
-    def get(self, request, *args, **kwargs):
-        cart_service = CartService(request)
+    return redirect('shop')
 
-        self.extra_context_data = {
-            "title": "Cart",
-            'totals': cart_service.cart_total(),
+
+def cart(request):
+    return render(request, 'cart/cart.html')
+
+
+def update_cart(request, product_id):
+    cart = Cart(request)
+    action = request.GET.get('action')
+    quantity = int(request.GET.get('quantity', 1))
+
+    if action == 'increment':
+        cart.add(product_id, quantity, True)
+
+        return redirect('cart')
+    elif action == 'decrement':
+        cart.add(product_id, -quantity, True)
+
+        return redirect('cart')
+    elif action == 'remove':
+        cart.remove(product_id)
+
+        return redirect('cart')
+
+    product = Product.objects.get(pk=product_id)
+    quantity = cart.get_item(product_id)
+
+    if quantity:
+        quantity = quantity['quantity']
+
+        item = {
+            'product': {
+                'id': product.id,
+                'name': product.name,
+                'image': product.image,
+                'get_thumbnail': product.get_thumbnail(),
+                'price': product.price,
+            },
+            'total_price': (quantity * product.price),
+            'quantity': quantity,
         }
+    else:
+        item = None
 
-        return self.process_request(
-            request, target_function=cart_service.get_cart_items_with_totals
-        )
+    response = render(request, 'cart/components/cart_item.html', {'item': item})
 
-    def post(self, request, *args, **kwargs):
-        cart_service = CartService(request)
-        action = request.POST.get('action')
-
-        if action == 'add':
-
-            product_id = int(request.POST.get('product_id'))
-            quantity = int(request.POST.get('product_qty'))
-
-            return self.process_request(
-                request, target_function=cart_service.add, quantity=quantity, product=product_id
-            )
-
-        elif action == 'update':
-
-            product_id = int(request.POST.get('product_id'))
-            quantity = int(request.POST.get('product_qty'))
-
-            return self.process_request(
-                request, target_function=cart_service.update, quantity=quantity, product=product_id
-            )
-
-        elif action == 'delete':
-
-            product_id = int(request.POST.get('product_id'))
-
-            return self.process_request(
-                request, target_function=cart_service.delete, product=product_id
-            )
-
-        else:
-            return JsonResponse({'error': 'Invalid action'}, status=400)
-
-
+    return response

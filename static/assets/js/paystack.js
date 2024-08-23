@@ -3,11 +3,12 @@ function makePaystackPayment() {
 
     paystack.newTransaction({
         key: paystack_key,
-        email: "",
-        amount:"",
+        email: "m1@mailinator.com",
+        amount:5000,
 
         onSuccess: (transaction) => {
-            console.log(transaction);
+            console.log(key);
+            console.log(email);
             window.location.href = ""
         },
 
