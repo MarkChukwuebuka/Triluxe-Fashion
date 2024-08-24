@@ -5,7 +5,7 @@ from django.contrib import messages
 
 from cart.services.cart_service import CartService
 from product.services.product_service import ProductService
-from .models import Payment, OrderItem
+from .models import Payment, OrderItem, Order
 
 from django.http import JsonResponse
 
@@ -13,39 +13,39 @@ from .services.order_service import OrderService
 
 
 def verify_payment(request, ref):
-    try:
-        cart = CartService(request)
-        payment = Payment.available_objects.filter(ref=ref).first()
-        verified = payment.verify_payment()
+    # try:
+    cart = CartService(request)
+    payment = Payment.available_objects.filter(ref=ref).first()
+    verified = payment.verify_payment()
 
-        if verified:
-            last_order = Order.objects.latest('created_at')
+    if verified:
+        last_order = Order.objects.latest('created_at')
 
-            if last_order:
-                order = get_object_or_404(Order, pk=last_order.id)
-                order.paid = True
-                order.save()
+        if last_order:
+            order = get_object_or_404(Order, pk=last_order.id)
+            order.paid = True
+            order.save()
 
-                order_info = {
-                    'id': order.id,
-                    'total_cost': order.total_cost
-                }
+            order_info = {
+                'id': order.id,
+                'total_cost': order.total_cost
+            }
 
-                context = {
-                    'placed_order': order_info,
-                    'payment': payment
-                }
-                cart.clear()
-                return render(request, 'core/thankyou.html', context)
-            else:
-                messages.warning(request, 'Order ID not found')
-                return JsonResponse({'error_message': 'Order ID not found'})
+            context = {
+                'placed_order': order_info,
+                'payment': payment
+            }
+            cart.clear()
+            return render(request, 'thank-you.html', context)
         else:
-            messages.warning(request, 'Oops, your order was not processed, please contact support.')
-            return redirect('/')
-    except Payment.DoesNotExist:
-        messages.warning(request, 'Payment not found for this ref.')
-        return JsonResponse({'error_message': 'Payment not found.'})
+            messages.warning(request, 'Order ID not found')
+            return JsonResponse({'error_message': 'Order ID not found'})
+    else:
+        messages.warning(request, 'Oops, your order was not processed, please contact support.')
+        return redirect('/')
+# except Payment.DoesNotExist:
+#     messages.warning(request, 'Payment not found for this ref.')
+#     return JsonResponse({'error_message': 'Payment not found.'})
 
 
 @login_required
@@ -80,7 +80,10 @@ def start_order(request):
             if error:
                 pass
 
-            item_cost = product_instance.price * quantity_in_cart
+            if product_instance.percentage_discount:
+                item_cost = product_instance.discounted_price * quantity_in_cart
+            else:
+                item_cost = product_instance.price * quantity_in_cart
 
             total_cost += item_cost
 

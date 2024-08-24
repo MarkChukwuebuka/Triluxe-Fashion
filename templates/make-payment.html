@@ -16,14 +16,16 @@
             <div class="main-content col-md-12">
                 <div class="page-main-content">
                     <div class="rustrot">
-                        <form class="track_order">
-                            <p>You're about to make a payment of <strong>&#8358;{{ amount|floatformat:2|intcomma }}</strong></p>
+<!--                        <form class="track_order">-->
+                            <p>You're about to make a payment of <strong>&#8358;{{ total_cost|floatformat:2|intcomma }}</strong></p>
 
                             <div class="clear"></div>
-                            <p class="form-row">
-                                <button onclick="payWithPaystack()" class="button" name="track" value="Track">Track</button>
-                            </p>
-                        </form>
+
+<!--                        </form>-->
+
+                        <p class="form-row">
+                                <button onclick="payWithPaystack()" class="button">Make Payment</button>
+                        </p>
                     </div>
                 </div>
             </div>
@@ -32,11 +34,6 @@
 </main>
 
 
-{% endblock content %}
-
-
-
-{% block scripts %}
 
 
 <script>
@@ -69,4 +66,12 @@
 
 <script type="application/javascript" src="https://js.paystack.co/v1/inline.js"></script>
 
-{% endblock %}
+
+
+
+{% endblock content %}
+
+
+
+
+

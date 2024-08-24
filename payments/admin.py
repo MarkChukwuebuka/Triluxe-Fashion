@@ -1,7 +1,7 @@
 from django.contrib import admin
 
 from crm.admin import BaseAdmin
-from payments.models import Order, OrderItem
+from payments.models import Order, OrderItem, Payment
 
 
 class OrderItemInline(admin.TabularInline):
@@ -26,4 +26,13 @@ class OrderItemAdmin(BaseAdmin):
     ]
     search_fields = ["price",]
     list_filter = ["product"]
+
+
+@admin.register(Payment)
+class PaymentAdmin(BaseAdmin):
+    list_display = [
+        "user", "amount", "ref", "verified"
+    ]
+    search_fields = ["amount", "ref"]
+    list_filter = ["verified"]
 

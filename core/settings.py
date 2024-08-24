@@ -195,11 +195,11 @@ STATICFILES_STORAGE = "whitenoise.storage.CompressedStaticFilesStorage"
 DEFAULT_FILE_STORAGE = 'cloudinary_storage.storage.MediaCloudinaryStorage'
 
 
-PAYSTACK_SECRET_KEY = os.getenv('PAYSTACK_KEY')
-PAYSTACK_PUBLISHABLE = os.getenv('PUBLISHABLE')
+PAYSTACK_SECRET_KEY = 'sk_test_da4cdf5fa0e7afa73342c6a0c3dc8a13f1d54beb'
+PAYSTACK_PUBLISHABLE = 'pk_test_fd63095f3f0ddbe4bf933a68e43272d4b7497c44'
 
 LOGIN_URL='login'
 LOGOUT_URL='logout'
 
-SESSION_COOKIE_AGE = 86400
+
 CART_SESSION_ID = 'cart'
