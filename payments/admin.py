@@ -1,32 +1,29 @@
 from django.contrib import admin
 
 from crm.admin import BaseAdmin
-from payments.models import ShippingAddress, Order, OrderItem
+from payments.models import Order, OrderItem
 
 
-@admin.register(ShippingAddress)
-class ShippingAddressAdmin(BaseAdmin):
-    list_display = ["user", "first_name", "last_name", "email", "state"]
-    search_fields = ["first_name", "last_name", "email", "state", "address1"]
-    list_filter = ["state", "user"]
-
+class OrderItemInline(admin.TabularInline):
+    model = OrderItem
+    raw_id_fields = ['product']
 
 
 @admin.register(Order)
 class OrderAdmin(BaseAdmin):
     list_display = [
-        "user", "email", "shipped", "amount_paid", "date_ordered", "date_shipped"
+        "user", "email", "total_cost", "paid", "status"
     ]
-    search_fields = ["full_name", "email", "state", "address1"]
-    list_filter = ["date_ordered", "shipped", "date_shipped"]
+    search_fields = ["address", "email", "state", "first_name"]
+    list_filter = ["status", "paid"]
 
 
 
 @admin.register(OrderItem)
 class OrderItemAdmin(BaseAdmin):
     list_display = [
-        "order", "product", "user", "quantity", "price"
+        "order", "product", "quantity", "price"
     ]
-    search_fields = ["price", "user"]
-    list_filter = ["user", "product"]
+    search_fields = ["price",]
+    list_filter = ["product"]
 

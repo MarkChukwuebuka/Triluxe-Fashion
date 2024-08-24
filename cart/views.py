@@ -1,60 +1,62 @@
-from django.conf import settings
-from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, redirect
 
-from cart.services.cart_service import Cart
-from product.models import Product
+from cart.services.cart_service import CartService
 
 
-def add_to_cart(request, product_id):
-    cart = Cart(request)
-    cart.add(product_id)
+def add_to_cart(request):
+    cart_service = CartService(request)
+    if request.POST.get('action') == 'add':
+        product_id = int(request.POST.get('product_id'))
+        product_qty = int(request.POST.get('product_qty'))
+
+        cart_service.add(product_id, product_qty)
 
     return redirect('shop')
 
 
 def cart(request):
-    return render(request, 'cart/cart.html')
+    context = {
+        "title": "Cart"
+    }
+    return render(request, 'cart.html', context)
 
 
-def update_cart(request, product_id):
-    cart = Cart(request)
-    action = request.GET.get('action')
-    quantity = int(request.GET.get('quantity', 1))
+def update_cart(request):
+    cart_service = CartService(request)
+    action = request.POST.get('action')
+    product_id = int(request.POST.get('product_id'))
 
-    if action == 'increment':
-        cart.add(product_id, quantity, True)
+    if action == 'update':
+        quantity = int(request.POST.get('product_qty'))
+        cart_service.add(product_id, quantity, True)
 
         return redirect('cart')
-    elif action == 'decrement':
-        cart.add(product_id, -quantity, True)
 
-        return redirect('cart')
     elif action == 'remove':
-        cart.remove(product_id)
+        cart_service.remove(product_id)
 
         return redirect('cart')
 
-    product = Product.objects.get(pk=product_id)
-    quantity = cart.get_item(product_id)
-
-    if quantity:
-        quantity = quantity['quantity']
-
-        item = {
-            'product': {
-                'id': product.id,
-                'name': product.name,
-                'image': product.image,
-                'get_thumbnail': product.get_thumbnail(),
-                'price': product.price,
-            },
-            'total_price': (quantity * product.price),
-            'quantity': quantity,
-        }
-    else:
-        item = None
-
-    response = render(request, 'cart/components/cart_item.html', {'item': item})
-
-    return response
+    # product = Product.objects.get(pk=product_id)
+    # quantity = cart_service.get_item(product_id)
+    #
+    # if quantity:
+    #     quantity = quantity['quantity']
+    #
+    #     item = {
+    #         'product': {
+    #             'id': product.id,
+    #             'name': product.name,
+    #             'image': product.image,
+    #             'get_thumbnail': product.get_thumbnail(),
+    #             'price': product.price,
+    #         },
+    #         'total_price': (quantity * product.price),
+    #         'quantity': quantity,
+    #     }
+    # else:
+    #     item = None
+    #
+    # response = render(request, 'cart/components/cart_item.html', {'item': item})
+    #
+    # return response

@@ -16,94 +16,159 @@
                 <div class="page-main-content">
                     <div class="rustrot">
                         <div class="rustrot-notices-wrapper"></div>
-                        <div class="checkout-before-top">
-                            {% include 'partials/floating-messages.html' %}
+                        {% include 'partials/floating-messages.html' %}
+
+                        <form name="checkout" method="POST" class="checkout rustrot-checkout"
+                              enctype="multipart/form-data"
+                              >
+                            {% csrf_token %}
+
+                            <div class="col2-set" id="customer_details">
+                                <div class="col-1">
+                                    <div class="rustrot-billing-fields">
+                                        <h3>Billing details</h3>
+                                        <div class="rustrot-billing-fields__field-wrapper">
+                                            <p class="form-row form-row-first validate-required"
+                                               id="billing_first_name_field" data-priority="10"><label
+                                                    for="billing_first_name" class="">First name&nbsp;<abbr
+                                                    class="required" title="required">*</abbr></label><span
+                                                    class="rustrot-input-wrapper"><input type="text"
+                                                                                        class="input-text "
+                                                                                        name="first_name"
+                                                                                        id="billing_first_name"
+                                                                                        value=""
+                                                                                        autocomplete="given-name"></span>
+                                            </p>
+                                            <p class="form-row form-row-last validate-required"
+                                               id="billing_last_name_field" data-priority="20"><label
+                                                    for="billing_last_name" class="">Last name&nbsp;<abbr
+                                                    class="required" title="required">*</abbr></label><span
+                                                    class="rustrot-input-wrapper"><input type="text"
+                                                                                        class="input-text "
+                                                                                        name="last_name"
+                                                                                        id="billing_last_name"
+                                                                                        value=""
+                                                                                        autocomplete="family-name"></span>
+                                            </p>
 
 
-                            <div class="rustrot-checkout-coupo">
-                                <div class="rustrot-notices-wrapper"></div>
-                                <div class="rustrot-form-coupon-toggle rustrot-form-toggle">
-                                    <div class="rustrot-info">
-                                        Have a coupon? <a href="#" class="showcoupon showbtn">Click here to enter your
-                                        code</a>
+                                            <p class="form-row form-row-wide address-field validate-required"
+                                               id="billing_address_1_field" data-priority="50"><label
+                                                    for="billing_address_1" class="">Address&nbsp;<abbr
+                                                    class="required" title="required">*</abbr></label><span
+                                                    class="rustrot-input-wrapper"><input type="text"
+                                                                                        class="input-text "
+                                                                                        name="address"
+                                                                                        id="billing_address_1"
+                                                                                        placeholder="House number and street name"
+                                                                                        value=""
+                                                                                        autocomplete="address-line1"
+                                                                                        data-placeholder="House number and street name"></span>
+                                            </p>
+
+                                            <p class="form-row  validate-required"
+                                               data-priority="10"><label
+                                                    for="billing_first_name" class="">LGA&nbsp;<abbr
+                                                    class="required" title="required">*</abbr></label><span
+                                                    class="rustrot-input-wrapper"><input type="text"
+                                                                                        class="input-text "
+                                                                                        name="lga"
+                                                                                        value=""
+                                                                                        autocomplete="given-name"></span>
+                                            </p>
+                                            <p class="form-row  validate-required"
+                                                data-priority="20"><label
+                                                    class="">State&nbsp;<abbr
+                                                    class="required" title="required">*</abbr></label><span
+                                                    class="rustrot-input-wrapper"><input type="text"
+                                                                                        class="input-text "
+                                                                                        name="state"
+                                                                                        value=""
+                                                                                        autocomplete="state"></span>
+                                            </p>
+
+                                            <p class="form-row  validate-required"
+                                                data-priority="10"><label
+                                                    for="email" class="">Email&nbsp;<abbr
+                                                    class="required" title="required">*</abbr></label><span
+                                                    class="rustrot-input-wrapper"><input type="email"
+                                                                                        class="input-text "
+                                                                                        name="email"
+                                                                                        id="email"
+                                                                                        value=""
+                                                                                        autocomplete="given-name"></span>
+                                            </p>
+                                            <p class="form-row  validate-required"
+                                               id="phone_field" data-priority="20"><label
+                                                    for="phone" class="">Mobile Number&nbsp;<abbr
+                                                    class="required" title="required">*</abbr></label><span
+                                                    class="rustrot-input-wrapper"><input type="tel"
+                                                                                        class="input-text "
+                                                                                        name="phone"
+                                                                                        id="phone"
+                                                                                        value=""
+                                                                                        autocomplete="phone"></span>
+                                            </p>
+                                        </div>
                                     </div>
+
                                 </div>
-                                <form class="checkout_coupon rustrot-form-coupon rustrot-form-show" method="POST"
-                                      style="display:none">
-                                    <p>If you have a coupon code, please apply it below.</p>
-                                    <p class="form-row form-row-first">
-                                        <input type="text" name="coupon_code" class="input-text"
-                                               placeholder="Coupon code" id="coupon_code" value="">
-                                    </p>
-                                    <p class="form-row form-row-last">
-                                        <button type="submit" class="button" name="apply_coupon" value="Apply coupon">
-                                            Apply coupon
-                                        </button>
-                                    </p>
-                                    <div class="clear"></div>
-                                </form>
+
                             </div>
-                        </div>
-
-
-
-
-                        <div class="col2-set" id="customer_details">
-
                             <h3 id="order_review_heading">Your order</h3>
                             <div id="order_review" class="rustrot-checkout-review-order">
                                 <table class="shop_table rustrot-checkout-review-order-table">
                                     <thead>
                                     <tr>
                                         <th class="product-name">Product</th>
-                                        <th class="product-name">Quantity</th>
                                         <th class="product-total">Total</th>
                                     </tr>
                                     </thead>
                                     <tbody>
-                                    {% for item in cart_items %}
-                                    <tr class="cart_item">
-                                        <td class="product-name">
-                                            {{ item.product.name }}
-                                        </td>
-                                        <td class="product-name">
-                                            {{item.quantity}}
-                                        </td>
-                                        <td class="product-total">
-                                            <span class="rustrot-Price-amount amount">
-                                                <span class="rustrot-Price-currencySymbol"><strike>N</strike>
-                                                </span>{{ item.total|floatformat:2|intcomma }}
-                                            </span>
-                                        </td>
-                                    </tr>
+                                    {% for item in cart %}
+                                        <tr class="cart_item">
+                                            <td class="product-name">
+                                                {{ item.product.name }}&nbsp;&nbsp; <strong class="product-quantity">×
+                                                {{ item.quantity }}</strong>
+                                            </td>
+                                            <td class="product-total">
+                                                <span class="rustrot-Price-amount amount">
+                                                    <span class="rustrot-Price-currencySymbol">&#8358;</span>
+                                                    {{ item.total_price|floatformat:2|intcomma }}
+                                                </span>
+                                            </td>
+                                        </tr>
                                     {% endfor %}
 
                                     </tbody>
                                     <tfoot>
                                     <tr class="cart-subtotal">
-                                        <th>Coupon</th>
-                                        <td></td>
-                                        <td>- <span class="rustrot-Price-amount amount"><span
-                                                class="rustrot-Price-currencySymbol"><strike>N</strike></span>0.00</span></td>
+                                        <th>Subtotal</th>
+                                        <td><span class="rustrot-Price-amount amount"><span
+                                                class="rustrot-Price-currencySymbol">&#8358;</span>{{ cart.get_total_cost|floatformat:2|intcomma }}</span></td>
                                     </tr>
                                     <tr class="order-total">
                                         <th>Total</th>
-                                        <td></td>
                                         <td><strong><span class="rustrot-Price-amount amount"><span
-                                                class="rustrot-Price-currencySymbol"><strike>N</strike></span>{{totals|floatformat:2|intcomma}}</span></strong>
+                                                class="rustrot-Price-currencySymbol">&#8358;</span>{{ cart.get_total_cost|floatformat:2|intcomma }}</span></strong>
                                         </td>
                                     </tr>
                                     </tfoot>
                                 </table>
+                                <input type="hidden" name="lang" value="en">
+                                <div id="payment" class="rustrot-checkout-payment">
 
-                                <button type="submit" onclick="makePaystackPayment()" class="button alt" name="rustrot_checkout_place_order"
-                                        value="Place order" data-value="Place order">Place
-                                    order
-                                </button>
+                                    <div class="form-row place-order">
 
+                                        <button type="submit" class="button alt" name="rustrot_checkout_place_order"
+                                                id="place_order" value="Place order" data-value="Place order">Place
+                                            order
+                                        </button>
+
+                                    </div>
                                 </div>
                             </div>
-                        </div>
+                        </form>
                     </div>
                 </div>
             </div>

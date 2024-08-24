@@ -1,9 +1,9 @@
 from django.urls import path
-from .views import CheckoutView, ShippingDetailView
+from . import views
+from payments.views import verify_payment, start_order
 
 urlpatterns = [
-
-    path('order-summary/', ShippingDetailView.as_view(), name='shipping-details'),
-    path('checkout/', CheckoutView.as_view(), name='checkout'),
+    path('order/', start_order, name='start_order'),
+    path('verify_payment<str:ref>/', verify_payment, name='verify_payment')
 
 ]

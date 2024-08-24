@@ -1,5 +1,5 @@
-from cart.services.cart_service import Cart
+from cart.services.cart_service import CartService
 
 
 def cart(request):
-    return {'cart': Cart(request)}
+    return {'cart': CartService(request)}

@@ -19,7 +19,7 @@
                         <div class="rustrot-notices-wrapper"></div>
                         <form class="rustrot-cart-form">
                             {% include 'partials/floating-messages.html' %}
-                            {% if cart_items %}
+                            {% if cart %}
                             <table class="shop_table shop_table_responsive cart rustrot-cart-form__contents">
                                 <thead>
                                 <tr>
@@ -32,10 +32,10 @@
                                 </tr>
                                 </thead>
                                 <tbody>
-                                {% for item in cart_items %}
+                                {% for item in cart %}
                                 <tr class="rustrot-cart-form__cart-item cart_item">
                                     <td class="product-remove">
-                                        <button type="button" data-url="{% url 'cart' %}" class="remove delete-product" aria-label="Remove this item"
+                                        <button type="button" data-url="{% url 'update_cart' %}" class="remove delete-product" aria-label="Remove this item"
                                            data-index="{{item.product.id}}">×</button>
                                     </td>
                                     <td class="product-thumbnail">
@@ -52,12 +52,12 @@
                                             {% if item.product.percentage_discount %}
                                             <span class="price">
                                                 <del><span class="rustrot-Price-amount amount">
-                                                    <span class="rustrot-Price-currencySymbol"><strike>N</strike></span>
+                                                    <span class="rustrot-Price-currencySymbol">&#8358;</span>
                                                     {{item.product.price|floatformat:2|intcomma}}</span>
                                                 </del>
                                                 <ins>
                                                     <span class="rustrot-Price-amount amount">
-                                                        <span class="rustrot-Price-currencySymbol"><strike>N</strike></span>
+                                                        <span class="rustrot-Price-currencySymbol">&#8358;</span>
                                                         {{ item.product.discounted_price|floatformat:2|intcomma }}
                                                     </span>
                                                 </ins>
@@ -65,7 +65,7 @@
                                             {% else %}
                                                 <span class="price">
                                                     <span class="rustrot-Price-amount amount">
-                                                        <span class="rustrot-Price-currencySymbol"><strike>N</strike></span>
+                                                        <span class="rustrot-Price-currencySymbol">&#8358;</span>
                                                         {{ item.product.price|floatformat:2|intcomma }}
                                                     </span>
                                                 </span>
@@ -75,20 +75,30 @@
                                     <td class="product-quantity" data-title="Quantity">
                                         <div class="quantity">
                                             <span class="qty-label">Quantity:</span>
-                                            <div class="control">
-                                                <a class="btn-number qtyminus quantity-minus" href="#">-</a>
+                                            <div class="quantity">
+                                                <a class="btn-number qtyminus quantity-minus update-cart"
+                                                   href="#"
+                                                   data-index="{{ item.product.id }}"
+                                                   data-url="{% url 'update_cart' %}">-</a>
 
-                                                        <input type="text" id="select{{item.product.id}}"
-                                                       value="{{ item.quantity }}" title="Qty" class="input-qty input-text qty text">
+                                                <input type="text" id="select{{ item.product.id }}"
+                                                       value="{{ item.quantity }}"
+                                                       title="Qty"
+                                                       class="input-qty input-text qty text"
+                                                        data-step="0">
 
-                                                <a class="btn-number qtyplus quantity-plus" href="#">+</a>
+                                                <a class="btn-number qtyplus quantity-plus update-cart"
+                                                   href="#"
+                                                   data-index="{{ item.product.id }}"
+                                                   data-url="{% url 'update_cart' %}">+</a>
                                             </div>
+
                                         </div>
                                     </td>
                                     <td class="product-subtotal" data-title="Total">
                                         <span class="rustrot-Price-amount amount">
-                                            <span class="rustrot-Price-currencySymbol"><strike>N</strike></span>
-                                            {{ item.total }}
+                                            <span class="rustrot-Price-currencySymbol">&#8358;</span>
+                                            {{ item.total_price|floatformat:2|intcomma }}
                                         </span>
                                     </td>
                                 </tr>
@@ -103,6 +113,7 @@
                             {% endif %}
 
                         </form>
+                        {% if cart %}
                         <div class="cart-collaterals">
                             <div class="cart_totals ">
                                 <h2>Cart total</h2>
@@ -114,8 +125,8 @@
                                         <td data-title="Total">
                                             <strong>
                                                 <span class="rustrot-Price-amount amount">
-                                                    <span class="rustrot-Price-currencySymbol"> <strike>N</strike>
-                                                    </span>{{ totals|floatformat:2|intcomma }}
+                                                    <span class="rustrot-Price-currencySymbol"> &#8358;
+                                                    </span>{{ cart.get_total_cost|floatformat:2|intcomma }}
                                                 </span>
                                             </strong>
                                         </td>
@@ -123,13 +134,14 @@
                                     </tbody>
                                 </table>
                                 <div class="rustrot-proceed-to-checkout">
-                                    <a href="{% url 'shipping-details' %}"
+                                    <a href="{% url 'start_order' %}"
                                        class="checkout-button button alt rustrot-forward">
-                                        Proceed
+                                        Proceed to checkout
                                     </a>
                                 </div>
                             </div>
                         </div>
+                        {% endif %}
                     </div>
                 </div>
             </div>

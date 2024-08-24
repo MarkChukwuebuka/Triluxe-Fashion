@@ -7,22 +7,19 @@ from services.util import CustomRequestUtil
 class OrderService(CustomRequestUtil):
 
     def create_single(self, payload):
-        order, is_created = Order.available_objects.get_or_create(
+        order = Order.available_objects.create(
             user=self.auth_user,
-            date_ordered=timezone.now(),
-            amount_paid=payload.get("amount_paid"),
-            full_name=payload.get("full_name"),
-            defaults=dict(
-                shipping_address=payload.get("shipping_address"),
-                date_shipped=payload.get("date_shipped"),
-            )
+            first_name=payload.get("first_name"),
+            last_name=payload.get("last_name"),
+            email=payload.get("email"),
+            state=payload.get("state"),
+            address=payload.get("address"),
+            phone=payload.get("phone"),
+            lga=payload.get("lga"),
 
         )
 
-        if not is_created:
-            return None, self.make_error("This order has already been created")
-
-        return order, None
+        return order
 
     def fetch_list(self):
         return self.get_base_query()

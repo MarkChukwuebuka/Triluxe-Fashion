@@ -1,13 +1,18 @@
+from itertools import product
+
 from django.conf import settings
 
 from product.models import Product
+from product.services.product_service import ProductService
 from services.util import CustomRequestUtil
 
 
-class Cart(object, CustomRequestUtil):
+class CartService(CustomRequestUtil):
+
     def __init__(self, request):
         self.session = request.session
         cart = self.session.get(settings.CART_SESSION_ID)
+        self.request = request
 
         if not cart:
             cart = self.session[settings.CART_SESSION_ID] = {}
@@ -18,18 +23,22 @@ class Cart(object, CustomRequestUtil):
         # The cart is stored in the self.cart attribute for further use.
 
     def __iter__(self):
+        product_service = ProductService(self.request)
         for p in self.cart.keys():
-            self.cart[str(p)]['product'] = Product.objects.get(pk=p)
+            self.cart[str(p)]['product'] = product_service.get_base_query().filter(pk=p).first()
 
         for item in self.cart.values():
-            item['total_price'] = int(item['product'].price * item['quantity'])
+            if item['product'].percentage_discount:
+                item['total_price'] = int(item['product'].discounted_price * item['quantity'])
+            else:
+                item['total_price'] = int(item['product'].price * item['quantity'])
 
             yield item
         # This method makes the Cart class iterable,
         # meaning you can loop through the items in the cart using a for loop.
 
     def __len__(self):
-        return sum(item['quantity'] for item in self.cart.values())
+        return len(self.cart)
         # This method returns the total number of items in the cart.
 
     def save(self):
@@ -37,15 +46,15 @@ class Cart(object, CustomRequestUtil):
         self.session.modified = True
         #  This method saves the cart back to the user's session after making changes.
 
-    def add(self, product_id, quantity=1, update_quantity=False):
+    def add(self, product_id, quantity, update_quantity=False):
         # This method is used to add products to the cart.
         product_id = str(product_id)
 
         if product_id not in self.cart:
-            self.cart[product_id] = {'quantity': 1, 'id': product_id}
+            self.cart[product_id] = {'quantity': quantity, 'id': product_id}
 
         if update_quantity:
-            self.cart[product_id]['quantity'] += int(quantity)
+            self.cart[product_id]['quantity'] = int(quantity)
 
             if self.cart[product_id]['quantity'] == 0:
                 self.remove(product_id)
@@ -70,14 +79,22 @@ class Cart(object, CustomRequestUtil):
         # This method clears the entire cart by deleting it from the session.
 
     def get_total_cost(self):
-        for p in self.cart.keys():
-            self.cart[str(p)]['product'] = Product.objects.get(pk=p)
+        total = 0
+        product_ids = self.cart.keys()
+        product_service = ProductService(self.request)
+        products = product_service.get_base_query().filter(id__in=product_ids)
 
-        total = int(sum(item['product'].price * item['quantity'] for item in self.cart.values()))
+        for value in self.cart.values():
+            key = int(value['id'])
+            qty = value['quantity']
+            for product in products:
+                if key == product.id:
+                    if product.percentage_discount:
+                        total = total + (product.discounted_price * qty)
+                    else:
+                        total = total + (product.price * qty)
 
         return total
-
-    # This method calculates the total cost of all items in the cart.
 
     def get_item(self, product_id):
         if str(product_id) in self.cart:

@@ -9,7 +9,7 @@
 
 <div class="banner-wrapper">
     <div class="container">
-        <a href="{% url 'product-create-list' %}" class="parent-title">Shop</a>
+        <a href="{% url 'shop' %}" class="parent-title">Shop</a>
         <h2 class="page-title">{{title}}</h2>
     </div>
 </div>
@@ -216,11 +216,11 @@
                                                 <span class="qty-label">Quantity:</span>
                                                 <div class="control">
                                                     <a class="btn-number qtyminus quantity-minus" href="#">-</a>
-                                                    <input id="qty-cart" type="text" data-step="1" name="quantity[25]" value="1" title="Qty" class="input-qty input-text qty text" size="4" pattern="[0-9]*">
+                                                    <input id="qty-cart" type="text" data-step="0" value="1" title="Qty" class="input-qty input-text qty text" size="4" pattern="[0-9]*">
                                                     <a class="btn-number qtyplus quantity-plus" href="#">+</a>
                                                 </div>
                                             </div>
-                                            <button type="button" value="{{ product.id }}" id="add-cart" data-url="{% url 'cart' %}"
+                                            <button type="button" value="{{ product.id }}" id="add-cart" data-url="{% url 'add_to_cart' %}"
                                                     class="single_add_to_cart_button button alt rustrot-variation-selection-needed">
                                                 Add to cart
                                             </button>

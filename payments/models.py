@@ -17,12 +17,13 @@ class StatusChoices(models.TextChoices):
 class Order(BaseModel):
 
     user = models.ForeignKey(User, related_name='orders', blank=True, null=True, on_delete=models.CASCADE)
-    first_name = models.CharField(max_length=250)
-    last_name = models.CharField(max_length=250)
-    address = models.CharField(max_length=250)
-    email = models.EmailField(max_length=250)
-    state = models.CharField(max_length=250)
-    phone = models.CharField(max_length=250)
+    first_name = models.CharField(max_length=250, default="")
+    last_name = models.CharField(max_length=250, default="")
+    address = models.CharField(max_length=250, default="")
+    email = models.EmailField(max_length=250, default="")
+    state = models.CharField(max_length=250, default="")
+    lga = models.CharField(max_length=250, default="")
+    phone = models.CharField(max_length=250, default="")
     paid = models.BooleanField(default=False)
     total_cost = models.IntegerField(default=0)
     status = models.CharField(max_length=25, choices=StatusChoices.choices, default=StatusChoices.ordered)
@@ -34,10 +35,10 @@ class Order(BaseModel):
         return f'{self.user}'
 
 
-class OrderItem(models.Model):
-    order = models.ForeignKey(Order, related_name='items', on_delete=models.CASCADE)
-    product = models.ForeignKey(Product, on_delete=models.CASCADE)
-    price = models.IntegerField()
+class OrderItem(BaseModel):
+    order = models.ForeignKey(Order, related_name='items', on_delete=models.CASCADE, null=True)
+    product = models.ForeignKey(Product, on_delete=models.CASCADE, null=True)
+    price = models.IntegerField(null=True)
     quantity = models.IntegerField(default=1)
 
     def __str__(self):
@@ -45,7 +46,7 @@ class OrderItem(models.Model):
 
 
 
-class Payment(models.Model):
+class Payment(BaseModel):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     amount = models.IntegerField(blank=True, null=True)
     ref = models.CharField(max_length=250)
