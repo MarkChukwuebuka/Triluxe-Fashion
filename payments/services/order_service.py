@@ -22,10 +22,10 @@ class OrderService(CustomRequestUtil):
         return order
 
     def fetch_list(self):
-        return self.get_base_query()
+        return self.get_base_query().filter(user=self.auth_user)
 
     def get_base_query(self):
-        qs = Order.available_objects
+        qs = Order.available_objects.select_related("user").prefetch_related("payment")
 
         return qs
 

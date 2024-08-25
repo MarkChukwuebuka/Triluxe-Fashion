@@ -28,11 +28,23 @@ class Order(BaseModel):
     total_cost = models.IntegerField(default=0)
     status = models.CharField(max_length=25, choices=StatusChoices.choices, default=StatusChoices.ordered)
 
+
     class Meta:
         ordering = ('-created_at',)
 
     def __str__(self):
         return f'{self.user}'
+
+    def save(self, *args, **kwargs):
+        if self.pk is not None:
+            old_order = Order.objects.get(pk=self.pk)
+            # Check if the status has changed to "shipped"
+            if old_order.status != self.status and self.status == StatusChoices.shipped:
+                #TODO: send mail to notify customer
+                pass
+                # print("shipped")
+
+        super().save(*args, **kwargs)
 
 
 class OrderItem(BaseModel):
@@ -53,13 +65,14 @@ class Payment(BaseModel):
     email = models.EmailField(max_length=250)
     verified = models.BooleanField(default=False)
     created_at = models.DateTimeField(auto_now_add=True)
+    order = models.OneToOneField(Order, on_delete=models.SET_NULL, null=True, blank=True, related_name='payment')
 
     def __str__(self):
         return f"{self.user} - {self.amount}"
 
     def save(self, *args, **kwargs):
         while not self.ref:
-            ref = secrets.token_urlsafe(50)
+            ref = secrets.token_urlsafe(10)
             object_with_similar_ref = Payment.objects.filter(ref=ref)
             if not object_with_similar_ref:
                 self.ref = ref
