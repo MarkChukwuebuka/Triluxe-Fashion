@@ -1,0 +1,104 @@
+{% extends 'partials/base.html' %}
+
+{% load static %}
+
+{% load humanize %}
+
+{% block content %}
+
+{% include 'partials/breadcrumb.html' %}
+
+
+
+
+
+<main class="site-main  main-container no-sidebar">
+    <div class="container">
+        <div class="row">
+            <div class="main-content col-md-12">
+                <div class="page-main-content">
+                    <div class="rustrot">
+                        {% include 'partials/dash-nav.html' %}
+                        <div class="rustrot-MyAccount-content">
+                            <div class="rustrot-notices-wrapper"></div>
+                            <div class="row">
+                                <div class="col">
+                                    <p>
+                                        <label class="text-muted">Ref</label><br>
+                                        <strong>{{ order.payment.ref }}</strong>
+                                    </p>
+                                </div>
+
+                                <div class="col">
+                                    <p >
+                                        <label class="text-muted">Date/Time</label><br>
+                                        <strong>{{ order.created_at }}</strong>
+                                    </p>
+                                </div>
+                                <div class="col">
+                                    <p>
+                                        <label class="text-muted">Status</label><br>
+                                        <strong class="text-primary">{{ order.status }}</strong>
+                                    </p>
+                                </div>
+                            </div>
+
+                            <hr>
+
+                            <div class="row mb-3">
+                                <div class="col">
+                                    <p>
+                                        <label class="text-muted">Name</label><br>
+                                        <strong>{{ order.first_name }} {{ order.last_name }}</strong>
+                                    </p>
+                                </div>
+                                <div class="col">
+                                    <p >
+                                        <label class="text-muted">Email</label><br>
+                                        <strong>{{ order.email }}</strong>
+                                    </p>
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-4">
+                                    <p>
+                                        <label class="text-muted">Phone</label><br>
+                                        <strong>{{ order.phone }}</strong>
+                                    </p>
+                                </div>
+                                <div class="col-8">
+                                    <p >
+                                        <label class="text-muted">Address</label><br>
+                                        <strong>{{ order.address }}</strong>
+                                    </p>
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-4">
+                                    <p>
+                                        <label class="text-muted">LGA</label><br>
+                                        <strong>{{ order.lga }}</strong>
+                                    </p>
+                                </div>
+                                <div class="col-8">
+                                    <p >
+                                        <label class="text-muted">State</label><br>
+                                        <strong>{{ order.state }}</strong>
+                                    </p>
+                                </div>
+                            </div>
+
+
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>
+
+
+{% endblock content %}
