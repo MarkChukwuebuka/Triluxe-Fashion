@@ -15,6 +15,7 @@ class AuthService(CustomRequestUtil):
             return None, self.make_error("Email/Password is not correct!")
 
         login(self.request, user)
+
         message = "Login successful"
 
         return message, None

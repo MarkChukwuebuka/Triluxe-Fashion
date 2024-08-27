@@ -2,6 +2,7 @@ import random
 import string
 from typing import Union, TypeVar
 
+from django.contrib.auth.hashers import check_password
 from django.contrib.auth.mixins import PermissionRequiredMixin
 from django.contrib.auth.models import AnonymousUser
 from django.shortcuts import render, redirect
@@ -148,3 +149,7 @@ def format_phone_number(phone_number, region_code=None):
         pass
 
     return None
+
+
+def compare_password(input_password, hashed_password):
+    return check_password(input_password, hashed_password)
