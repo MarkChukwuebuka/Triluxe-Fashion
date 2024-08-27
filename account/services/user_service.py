@@ -53,3 +53,17 @@ class UserService(CustomRequestUtil):
 
         return user, None
 
+    def update_single(self, payload):
+        user = self.auth_user
+        user.first_name = payload.get('first_name', user.first_name)
+        user.last_name = payload.get('last_name', user.last_name)
+        user.phone = payload.get('phone', user.phone)
+
+        current_password = payload.get('current_password')
+        new_password = payload.get('new_password')
+        confirm_password = payload.get('confirm_password')
+
+
+
+        return message, None
+

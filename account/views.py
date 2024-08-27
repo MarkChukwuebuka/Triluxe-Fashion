@@ -1,3 +1,4 @@
+from django.contrib.auth.mixins import LoginRequiredMixin
 from django.shortcuts import render
 from django.views import View
 
@@ -68,6 +69,35 @@ class UserDashboardView(View, CustomRequestUtil):
     def get(self, request, *args, **kwargs):
         return self.process_request(request)
 
+
+
+
+class UpdateUserView(LoginRequiredMixin, View, CustomRequestUtil):
+    template_name = 'settings.html'
+    extra_context_data = {
+        "title": "Settings",
+    }
+
+    def get(self, request, *args, **kwargs):
+        return self.process_request(request)
+
+    def post(self, request, *args, **kwargs):
+        user_service = UserService(self.request)
+        self.template_name = None
+        self.template_on_error = 'settings.html'
+
+        payload = {
+            'first_name': request.POST.get('first_name'),
+            'last_name': request.POST.get('last_name'),
+            'phone': request.POST.get('phone'),
+            'current_password': request.POST.get('current_password'),
+            'new_password': request.POST.get('new_password'),
+            'confirm_password': request.POST.get('confirm_password')
+        }
+
+        return self.process_request(
+            request, target_view="dashboard", target_function=user_service.update_single, payload=payload
+        )
 
 class UserLogoutView(View, CustomRequestUtil):
 
