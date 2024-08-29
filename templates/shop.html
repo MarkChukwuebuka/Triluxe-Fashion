@@ -103,8 +103,12 @@
 
                                         <a href="#" class="button yith-wcqv-button">Quick View</a>
                                         <div class="add-to-cart">
-                                            <a href="cart.html" class="button product_type_variable add_to_cart_button">Select
-                                                options</a>
+                                            <a href="#"
+                                               class="button product_type_simple add_to_cart_button"
+                                               data-url="{% url 'add_to_cart' %}"
+                                               data-product-id="{{ product.id }}">
+                                               Add to cart
+                                            </a>
                                         </div>
                                     </div>
                                 </div>
@@ -186,6 +190,41 @@
         </div>
     </div>
 </div>
+
+
+
+<script>
+
+    document.querySelectorAll('.add_to_cart_button').forEach(function(button) {
+        button.addEventListener('click', function(e) {
+            e.preventDefault();
+
+            var productId = this.getAttribute('data-product-id');
+            var url = this.getAttribute('data-url');
+
+            $.ajax({
+                type: 'POST',
+                url: url,
+                data: {
+                    product_id: productId,
+                    csrfmiddlewaretoken: '{{ csrf_token }}',
+                    action: 'add'
+                },
+                success: function(response) {
+                    // Handle the success, like updating the cart count or showing a message
+                    console.log('Product added to cart');
+                    location.reload();
+                },
+                error: function(xhr, errmsg, err) {
+                    // Handle the error
+                    console.error('An error occurred while adding the product to cart');
+                }
+            });
+        });
+    });
+
+
+</script>
 
 
 {% endblock content %}

@@ -1,0 +1,236 @@
+{% extends 'partials/base.html' %}
+
+{% load static %}
+
+{% load humanize %}
+
+{% block content %}
+
+
+{% include 'partials/breadcrumb.html' %}
+
+
+
+
+<main class="site-main  main-container no-sidebar">
+    <div class="container">
+        <div class="row">
+            <div class="main-content col-md-12">
+                <div class="page-main-content">
+                    <form id="yith-wcwl-form" class="rustrot">
+                        <!-- TITLE -->
+                        <!-- WISHLIST TABLE -->
+                            {% if wishlist_items %}
+                            <table class="table table-striped">
+                              <thead>
+                                <tr>
+                                  <th scope="col"></th>
+                                  <th scope="col"></th>
+                                  <th scope="col">Product</th>
+                                  <th scope="col">Unit Price</th>
+                                  <th scope="col">Stock Status</th>
+                                  <th scope="col"></th>
+
+                                </tr>
+                              </thead>
+                              <tbody>
+                              {% for item in wishlist_items %}
+                                <tr>
+
+                                  <td class="product-remove">
+                                        <button type="button" data-url="{% url 'update_cart' %}" class="remove delete-product" aria-label="Remove this item"
+                                           data-index="{{item.product.id}}">×</button>
+                                  </td>
+                                  <td>
+                                      <img src="{{ item.product_image.url }}" width="50" height="50">
+                                  </td>
+                                  <td>{{ item.product_name }}</td>
+                                  <td>&#8358;{{ item.product_price|floatformat:2|intcomma }}</td>
+                                  <td>{{ item.product_availability }}</td>
+                                  <td>
+                                      <button type="button" value="{{ item.product_id }}" id="add-cart" data-url="{% url 'add_to_cart' %}"
+                                                    class="single_add_to_cart_button button alt rustrot-variation-selection-needed">
+                                          Add to cart
+                                      </button>
+                                  </td>
+
+                                </tr>
+                              {% endfor %}
+
+                              </tbody>
+                            </table>
+
+                            {% else %}
+                                <h3>There are no products in your wishlist</h3>
+                            {% endif %}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!--                        <table class="shop_table cart wishlist_table" data-pagination="no" data-per-page="5"-->
+<!--                               data-page="1" data-id="" data-token="">-->
+<!--                            <thead>-->
+<!--                            <tr>-->
+<!--                                <th class="product-remove"></th>-->
+<!--                                <th class="product-thumbnail"></th>-->
+<!--                                <th class="product-name">-->
+<!--                                    <span class="nobr">Product Name</span>-->
+<!--                                </th>-->
+<!--                                <th class="product-price">-->
+<!--                    <span class="nobr">-->
+<!--                        Unit Price                    </span>-->
+<!--                                </th>-->
+<!--                                <th class="product-stock-status">-->
+<!--                    <span class="nobr">-->
+<!--                        Stock Status                    </span>-->
+<!--                                </th>-->
+<!--                                <th class="product-add-to-cart"></th>-->
+<!--                            </tr>-->
+<!--                            </thead>-->
+<!--                            <tbody>-->
+<!--                            <tr id="yith-wcwl-row-29" data-row-id="29">-->
+<!--                                <td class="product-remove">-->
+<!--                                    <div>-->
+<!--                                        <a href="#"-->
+<!--                                           class="remove remove_from_wishlist" title="Remove this product">×</a>-->
+<!--                                    </div>-->
+<!--                                </td>-->
+<!--                                <td class="product-thumbnail">-->
+<!--                                    <a href="single-product.html">-->
+<!--                                        <img src="assets/images/apro1113-600x778.jpg"-->
+<!--                                             class="attachment-rustrot_thumbnail size-rustrot_thumbnail" alt="img"-->
+<!--                                             width="600" height="778"> </a>-->
+<!--                                </td>-->
+<!--                                <td class="product-name">-->
+<!--                                    <a href="single-product.html">Short Sleeve-->
+<!--                                        Loose</a>-->
+<!--                                    <a href="#" class="button yith-wcqv-button" data-product_id="29">Quick View</a></td>-->
+<!--                                <td class="product-price">-->
+<!--                                    <span class="rustrot-Price-amount amount"><span-->
+<!--                                            class="rustrot-Price-currencySymbol">$</span>129.00</span></td>-->
+<!--                                <td class="product-stock-status">-->
+<!--                                    <span class="wishlist-in-stock">In Stock</span></td>-->
+<!--                                <td class="product-add-to-cart">-->
+<!--                                    &lt;!&ndash; Date added &ndash;&gt;-->
+<!--                                    &lt;!&ndash; Add to cart button &ndash;&gt;-->
+<!--                                    <a href="cart.html"-->
+<!--                                       data-quantity="1"-->
+<!--                                       class="button product_type_simple add_to_cart_button ajax_add_to_cart add_to_cart button alt"-->
+<!--                                       data-product_id="29" data-product_sku="003D754"-->
+<!--                                       aria-label="Add “Classic Pique Dress” to your cart" rel="nofollow"> Add to-->
+<!--                                        Cart</a>-->
+<!--                                    &lt;!&ndash; Change wishlist &ndash;&gt;-->
+<!--                                    &lt;!&ndash; Remove from wishlist &ndash;&gt;-->
+<!--                                </td>-->
+<!--                            </tr>-->
+<!--                            <tr id="yith-wcwl-row-25" data-row-id="25">-->
+<!--                                <td class="product-remove">-->
+<!--                                    <div>-->
+<!--                                        <a href="#"-->
+<!--                                           class="remove remove_from_wishlist" title="Remove this product">×</a>-->
+<!--                                    </div>-->
+<!--                                </td>-->
+<!--                                <td class="product-thumbnail">-->
+<!--                                    <a href="single-product.html">-->
+<!--                                        <img src="assets/images/apro151-1-600x778.jpg"-->
+<!--                                             class="attachment-rustrot_thumbnail size-rustrot_thumbnail" alt="img"-->
+<!--                                             width="600" height="778"> </a>-->
+<!--                                </td>-->
+<!--                                <td class="product-name">-->
+<!--                                    <a href="single-product.html">Modern Cardigans</a>-->
+<!--                                    <a href="#" class="button yith-wcqv-button" data-product_id="25">Quick View</a></td>-->
+<!--                                <td class="product-price">-->
+<!--                                    <del><span class="rustrot-Price-amount amount"><span-->
+<!--                                            class="rustrot-Price-currencySymbol">$</span>89.00</span></del>-->
+<!--                                    <ins><span class="rustrot-Price-amount amount"><span-->
+<!--                                            class="rustrot-Price-currencySymbol">$</span>79.00</span></ins>-->
+<!--                                </td>-->
+<!--                                <td class="product-stock-status">-->
+<!--                                    <span class="wishlist-in-stock">In Stock</span></td>-->
+<!--                                <td class="product-add-to-cart">-->
+<!--                                    &lt;!&ndash; Date added &ndash;&gt;-->
+<!--                                    &lt;!&ndash; Add to cart button &ndash;&gt;-->
+<!--                                    <a href="cart.html"-->
+<!--                                       data-quantity="1"-->
+<!--                                       class="button product_type_simple add_to_cart_button ajax_add_to_cart add_to_cart button alt"-->
+<!--                                       data-product_id="25" data-product_sku="018Q711"-->
+<!--                                       aria-label="Add “Modern Cardigans” to your cart" rel="nofollow"> Add to-->
+<!--                                        Cart</a>-->
+<!--                                    &lt;!&ndash; Change wishlist &ndash;&gt;-->
+<!--                                    &lt;!&ndash; Remove from wishlist &ndash;&gt;-->
+<!--                                </td>-->
+<!--                            </tr>-->
+<!--                            <tr id="yith-wcwl-row-22" data-row-id="22">-->
+<!--                                <td class="product-remove">-->
+<!--                                    <div>-->
+<!--                                        <a href="#"-->
+<!--                                           class="remove remove_from_wishlist" title="Remove this product">×</a>-->
+<!--                                    </div>-->
+<!--                                </td>-->
+<!--                                <td class="product-thumbnail">-->
+<!--                                    <a href="single-product.html">-->
+<!--                                        <img src="assets/images/apro181-2-600x778.jpg"-->
+<!--                                             class="attachment-rustrot_thumbnail size-rustrot_thumbnail" alt="img"-->
+<!--                                             width="600" height="778"> </a>-->
+<!--                                </td>-->
+<!--                                <td class="product-name">-->
+<!--                                    <a href="single-product.html">Stretch Cotton Dress</a>-->
+<!--                                    <a href="#" class="button yith-wcqv-button" data-product_id="22">Quick View</a></td>-->
+<!--                                <td class="product-price">-->
+<!--                                    <span class="rustrot-Price-amount amount"><span-->
+<!--                                            class="rustrot-Price-currencySymbol">$</span>98.00</span></td>-->
+<!--                                <td class="product-stock-status">-->
+<!--                                    <span class="wishlist-in-stock">In Stock</span></td>-->
+<!--                                <td class="product-add-to-cart">-->
+<!--                                    &lt;!&ndash; Date added &ndash;&gt;-->
+<!--                                    &lt;!&ndash; Add to cart button &ndash;&gt;-->
+<!--                                    <a href="cart.html"-->
+<!--                                       data-quantity="1"-->
+<!--                                       class="button product_type_simple add_to_cart_button ajax_add_to_cart add_to_cart button alt"-->
+<!--                                       data-product_id="22" data-product_sku="389N100"-->
+<!--                                       aria-label="Add “Stretch Cotton Dress” to your cart" rel="nofollow"> Add to Cart</a>-->
+<!--                                    &lt;!&ndash; Change wishlist &ndash;&gt;-->
+<!--                                    &lt;!&ndash; Remove from wishlist &ndash;&gt;-->
+<!--                                </td>-->
+<!--                            </tr>-->
+<!--                            </tbody>-->
+<!--                            <tfoot>-->
+<!--                            <tr>-->
+<!--                                <td colspan="6">-->
+<!--                                </td>-->
+<!--                            </tr>-->
+<!--                            </tfoot>-->
+<!--                        </table>-->
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>
+
+
+
+{% endblock content %}

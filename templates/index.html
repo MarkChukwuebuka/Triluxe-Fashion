@@ -88,18 +88,30 @@
                                     {% endif %}
                                     <span class="onnew"><span class="text">New</span></span></div>
                                 <div class="group-button">
+
+                                    {% if user.is_authenticated %}
+
                                     <div class="yith-wcwl-add-to-wishlist">
                                         <div class="yith-wcwl-add-button show">
-                                            <a href="wishlist.html" class="add_to_wishlist">Add to Wishlist</a>
+                                            <a href="#"
+                                               class="add_to_wishlist"
+                                               data-url="{% url 'add-remove-from-wishlist' %}"
+                                               data-product-id="{{ product.id }}">
+                                               Add to Wishlist
+                                            </a>
+
                                         </div>
                                     </div>
-                                    <div class="rustrot product compare-button">
-                                        <a href="compare.html" class="compare button">Compare</a>
-                                    </div>
-                                    <a href="#" class="button yith-wcqv-button">Quick View</a>
+
+                                    {% endif %}
+
                                     <div class="add-to-cart">
-                                        <a href="cart.html" class="button product_type_simple add_to_cart_button">Add to
-                                            cart</a>
+                                        <a href="#"
+                                           class="button product_type_simple add_to_cart_button"
+                                           data-url="{% url 'add_to_cart' %}"
+                                           data-product-id="{{ product.id }}">
+                                           Add to cart
+                                        </a>
                                     </div>
                                 </div>
                             </div>
@@ -786,6 +798,67 @@
     $(window).on('load', function() {
         $('#homeCarousel').carousel();
     });
+
+
+    document.querySelectorAll('.add_to_cart_button').forEach(function(button) {
+    button.addEventListener('click', function(e) {
+        e.preventDefault();
+
+        var productId = this.getAttribute('data-product-id');
+        var url = this.getAttribute('data-url');
+
+        $.ajax({
+            type: 'POST',
+            url: url,
+            data: {
+                product_id: productId,
+                csrfmiddlewaretoken: '{{ csrf_token }}',
+                action: 'add'
+            },
+            success: function(response) {
+                // Handle the success, like updating the cart count or showing a message
+                console.log('Product added to cart');
+                location.reload();
+            },
+            error: function(xhr, errmsg, err) {
+                // Handle the error
+                console.error('An error occurred while adding the product to cart');
+            }
+        });
+    });
+});
+
+
+
+
+     document.querySelectorAll('.add_to_wishlist').forEach(function(button) {
+    button.addEventListener('click', function(e) {
+        e.preventDefault();
+
+        var productId = this.getAttribute('data-product-id');
+        var url = this.getAttribute('data-url');
+
+        $.ajax({
+            type: 'POST',
+            url: url,
+            data: {
+                product_id: productId,
+                csrfmiddlewaretoken: '{{ csrf_token }}',
+                action: 'add'
+            },
+            success: function(response) {
+                // Handle the success, like updating the wishlist count or showing a message
+                console.log('Product added to wishlist');
+                location.reload();
+            },
+            error: function(xhr, errmsg, err) {
+                // Handle the error
+                console.error('An error occurred while adding the product to wishlist');
+            }
+        });
+    });
+});
+
 
 </script>
 

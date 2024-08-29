@@ -67,13 +67,27 @@ class CreateListProductView(View, CustomRequestUtil):
 
 class AddOrRemoveFromWishlistView(View, CustomRequestUtil):
     def post(self, request, *args, **kwargs):
-        product_id = request.POST.get('product_id')
+        product_id = int(request.POST.get('product_id'))
         wishlist_service = WishlistService(self.request)
 
-        message, error = wishlist_service.create_single({"product": product_id})
+        message, error = wishlist_service.add_or_remove({"product": product_id})
 
         if error:
             return JsonResponse({"error": error}, status=400)
 
         return JsonResponse({"message": message})
 
+
+class WishlistView(View, CustomRequestUtil):
+    extra_context_data = {
+        "title":"My Wishlist"
+    }
+    def get(self, request, *args, **kwargs):
+        self.template_name = "wishlist.html"
+        self.context_object_name = 'wishlist_items'
+
+        wishlist_service = WishlistService(self.request)
+
+        return self.process_request(
+            request, target_function=wishlist_service.fetch_list
+        )

@@ -7,7 +7,7 @@ def add_to_cart(request):
     cart_service = CartService(request)
     if request.POST.get('action') == 'add':
         product_id = int(request.POST.get('product_id'))
-        product_qty = int(request.POST.get('product_qty'))
+        product_qty = int(request.POST.get('product_qty', 1))
 
         cart_service.add(product_id, product_qty)
 

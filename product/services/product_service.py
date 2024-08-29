@@ -1,3 +1,4 @@
+from django.contrib.auth.mixins import LoginRequiredMixin
 from django.db.models import Count, Case, When, ExpressionWrapper, DecimalField, F, Q, Value
 from django.db.models.functions import Coalesce
 
@@ -78,29 +79,38 @@ class ProductReviewService(CustomRequestUtil):
         ).order_by('-created_at')
 
 
-class WishlistService(CustomRequestUtil):
+class WishlistService(CustomRequestUtil, LoginRequiredMixin):
 
-    def create_single(self, payload):
+    def add_or_remove(self, payload):
+        message = None
+        error = None
         product = payload.get("product")
 
-        wishlist, is_created = Wishlist.available_objects.get_or_create(
+        wishlist_item, is_created = Wishlist.available_objects.get_or_create(
             user=self.auth_user,
-            product=product,
+            product_id=product,
         )
 
         if is_created:
             message = "Added to wishlist"
         else:
-            message = "Removed from wishlist"
+            self.hard_delete(wishlist_item)
+            error = "Removed from wishlist"
 
-        return message, None
+        return message, error
 
-    def fetch_list(self, product_id):
-        q = Q(product_id=product_id)
+    def fetch_list(self):
+        q = Q(user=self.auth_user)
 
-        return ProductReview.available_objects.filter(q).values(
-            "review", "rating", "updated_at",
-            first_name=F("user__first_name"),
-            last_name=F("user__last_name")
+        return Wishlist.available_objects.filter(q).values(
+            "product_id",
+            product_name=F("product__name"), product_availability=F("product__availability"),
+            product_price=F("product__price"), product_image=F("product__cover_image")
+
         ).order_by('-created_at')
 
+
+    def hard_delete(self, wishlist_item):
+        wishlist_item.delete()
+
+        return wishlist_item, None

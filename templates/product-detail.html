@@ -147,6 +147,7 @@
                                     <p>Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac
                                         turpis egestas. Vestibulum tortor quam, feugiat vitae, ultricies eget, tempor
                                         sit amet, ante.</p>
+
                                     <ul>
                                         <li>Water-resistant fabric with soft lycra detailing inside</li>
                                         <li>CLean zip-front, and three piece hood</li>
@@ -228,40 +229,37 @@
                                         </div>
                                     </div>
                                 </form>
+                                {% if user.is_authenticated %}
                                 <div class="yith-wcwl-add-to-wishlist">
                                     <div class="yith-wcwl-add-button show">
-                                        <a  rel="nofollow"
-                                           data-product-id="{{product.id}}" data-product-type="variable" class="add_to_wishlist wishlist-button">
-                                            Add to Wishlist</a>
+                                        <a data-url="{% url 'add-remove-from-wishlist' %}"
+                                           data-product-id="{{ product.id }}"
+                                           class="add_to_wishlist wishlist-button">
+                                            Add to Wishlist
+                                        </a>
                                     </div>
                                 </div>
+                                {% endif %}
                                 <div class="clear"></div>
-                                <a href="#"
-                                   class="compare button" data-product_id="27" rel="nofollow">Compare</a>
+
                                 <div class="product_meta">
-                                    <div class="wcml-dropdown product wcml_currency_switcher">
-                                        <ul>
-                                            <li class="wcml-cs-active-currency">
-                                                <a class="wcml-cs-item-toggle">USD</a>
-                                                <ul class="wcml-cs-submenu">
-                                                    <li>
-                                                        <a>EUR</a>
-                                                    </li>
-                                                </ul>
-                                            </li>
-                                        </ul>
-                                    </div>
+
                                     <span class="sku_wrapper">SKU: <span class="sku">885B712</span></span>
-                                    <span class="posted_in">Categories:
-                                        {% for category in product.categories.all %}
-                                        <a href="#" rel="tag">{{category.name}}</a>
-                                        {% endfor %}
-                                    </span>
+                                    {% if product.categories.all %}
+                                        <span class="posted_in">Categories:
+                                            {% for category in product.categories.all %}
+                                                <a href="#" rel="tag">{{ category.name }}</a>{% if not forloop.last %},{% endif %}
+                                            {% endfor %}
+                                        </span>
+                                    {% endif %}
+                                    {% if product.tags.all %}
                                     <span class="tagged_as">Tags:
                                         {% for tag in product.tags.all %}
-                                        <a href="#" rel="tag">{{tag.name}}</a>
+                                            <a href="#" rel="tag">{{ tag.name }}</a>{% if not forloop.last %},{% endif %}
                                         {% endfor %}
                                     </span>
+                                    {% endif %}
+
                                 </div>
                                 <div class="rustrot-share-socials">
                                     <h5 class="social-heading">Share: </h5>
@@ -842,10 +840,7 @@
                                             <a href="wishlist.html" class="add_to_wishlist">Add to Wishlist</a>
                                         </div>
                                     </div>
-                                    <div class="rustrot product compare-button">
-                                        <a href="compare.html" class="compare button">Compare</a>
-                                    </div>
-                                    <a href="#" class="button yith-wcqv-button">Quick View</a>
+
                                     <div class="add-to-cart">
                                         <a href="single-product.html" class="button product_type_simple add_to_cart_button">Add to
                                             cart</a>
@@ -873,4 +868,36 @@
 </div>
 
 
+<script>
+
+     document.querySelectorAll('.add_to_wishlist').forEach(function(button) {
+    button.addEventListener('click', function(e) {
+        e.preventDefault();
+
+        var productId = this.getAttribute('data-product-id');
+        var url = this.getAttribute('data-url');
+
+        $.ajax({
+            type: 'POST',
+            url: url,
+            data: {
+                product_id: productId,
+                csrfmiddlewaretoken: '{{ csrf_token }}',
+                action: 'add'
+            },
+            success: function(response) {
+                // Handle the success, like updating the wishlist count or showing a message
+                console.log('Product added to wishlist');
+                location.reload();
+            },
+            error: function(xhr, errmsg, err) {
+                // Handle the error
+                console.error('An error occurred while adding the product to wishlist');
+            }
+        });
+    });
+});
+
+
+</script>
 {% endblock content %}
