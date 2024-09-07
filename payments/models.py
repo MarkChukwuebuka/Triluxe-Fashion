@@ -47,6 +47,7 @@ class Order(BaseModel):
         super().save(*args, **kwargs)
 
 
+
 class OrderItem(BaseModel):
     order = models.ForeignKey(Order, related_name='items', on_delete=models.CASCADE, null=True)
     product = models.ForeignKey(Product, on_delete=models.CASCADE, null=True)
