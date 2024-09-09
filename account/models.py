@@ -6,6 +6,11 @@ from django.db.models.signals import post_save
 from crm.models import BaseModel
 
 
+class UserTypes(TextChoices):
+    admin = "Admin"
+    customer = "Customer"
+
+
 class CustomUserManager(BaseUserManager):
     def create_user(self, email, password=None, **extra_fields):
         if not email:
@@ -23,13 +28,11 @@ class CustomUserManager(BaseUserManager):
         user = self.create_user(email, password)
         user.is_superuser = True
         user.is_staff = True
+        user.user_type = UserTypes.admin
         user.save(using=self._db)
         return user
 
 
-class UserTypes(TextChoices):
-    admin = "Admin"
-    customer = "Customer"
 
 
 class User(AbstractBaseUser, BaseModel):
@@ -39,7 +42,7 @@ class User(AbstractBaseUser, BaseModel):
     phone_number = models.CharField(max_length=70, null=True, blank=True)
     image_url = models.URLField(null=True)
     user_type = models.CharField(
-        max_length=255, default=UserTypes.admin, choices=UserTypes.choices
+        max_length=255, default=UserTypes.customer, choices=UserTypes.choices
     )
 
     is_active = models.BooleanField(default=True)
