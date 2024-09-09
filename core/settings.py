@@ -30,16 +30,14 @@ SECRET_KEY = os.getenv("SECRET_KEY")
 
 DEBUG = os.getenv('DEBUG')
 
-# ALLOWED_HOSTS
-# ALLOWED_HOSTS = ['*']
 ALLOWED_HOSTS = os.getenv('ALLOWED_HOSTS', '')
 
-ALLOWED_HOSTS = [host.strip() for host in ALLOWED_HOSTS.split(',')] if ALLOWED_HOSTS else []
+# ALLOWED_HOSTS = [host.strip() for host in ALLOWED_HOSTS.split(',')] if ALLOWED_HOSTS else []
 
 # CSRF_TRUSTED_ORIGINS
 CSRF_TRUSTED_ORIGINS = os.getenv('CSRF_TRUSTED_ORIGINS', '')
 
-CSRF_TRUSTED_ORIGINS = [origin.strip() for origin in CSRF_TRUSTED_ORIGINS.split(',')] if CSRF_TRUSTED_ORIGINS else []
+# CSRF_TRUSTED_ORIGINS = [origin.strip() for origin in CSRF_TRUSTED_ORIGINS.split(',')] if CSRF_TRUSTED_ORIGINS else []
 
 # Application definition
 
@@ -95,7 +93,7 @@ WSGI_APPLICATION = 'core.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/5.0/ref/settings/#databases
 
-if DEBUG:
+if DEBUG == True:
     DATABASES = {
         'default': {
             'ENGINE': 'django.db.backends.sqlite3',
