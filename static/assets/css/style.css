@@ -9304,6 +9304,11 @@ body.error404 .header {
     -o-transition: transform 0.8s ease 0s;
     transition: transform 0.8s ease 0s;
 }
+
+.banner-thumb1 img{
+    max-height: 250px !important;
+}
+
 .rustrot-banner .title {
     font-weight: 500;
     margin-top: 0;

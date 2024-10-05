@@ -10,7 +10,7 @@ from services.util import CustomRequestUtil
 class RetrieveUpdateDeleteProductView(View, CustomRequestUtil):
     template_name = "product-detail.html"
     context_object_name = 'product'
-    template_on_error = "product-detail.html#tab-reviews"
+    template_on_error = "product-detail.html"
 
     def get(self, request, *args, **kwargs):
         product_service = ProductService(self.request)
@@ -19,7 +19,7 @@ class RetrieveUpdateDeleteProductView(View, CustomRequestUtil):
         self.extra_context_data = {
             "title": product.name
         }
-        print(product.discounted_price)
+
         return self.process_request(
             request, target_function=product_service.fetch_single, product_id=kwargs.get("product_id")
         )
@@ -28,18 +28,19 @@ class RetrieveUpdateDeleteProductView(View, CustomRequestUtil):
         product_id = request.POST.get('product_id')
         rating = request.POST.get('rating')
         review = request.POST.get('review')
-        print("rating")
+
         product_service = ProductService(self.request)
         product, error = product_service.fetch_single(product_id)
 
         self.extra_context_data = {
-            "title": product.name
+            "title": product.name,
+            'product':product
         }
 
         payload = {
             "rating": rating,
             "review": review,
-            "product_id": product_id,
+            "product": product,
         }
 
         product_review_service = ProductReviewService(self.request)

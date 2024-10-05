@@ -1,5 +1,6 @@
 from cloudinary.models import CloudinaryField
 from django.db import models
+from django.utils import timezone
 
 from account.models import User
 from crm.models import BaseModel
@@ -53,11 +54,11 @@ class Product(BaseModel):
 class ProductReview(BaseModel):
     product = models.ForeignKey(Product, on_delete=models.CASCADE, related_name="reviews")
     user = models.ForeignKey(User, on_delete=models.CASCADE, related_name="product_reviews")
-    rating = models.IntegerField()
+    rating = models.IntegerField(null=True, blank=True)
     review = models.CharField(max_length=500, null=True, blank=True)
 
     def __str__(self):
-        return f"{self.user__first_name}'s Review on {self.product}"
+        return f"{self.user.first_name}'s Review on {self.product}"
 
 
 class Wishlist(BaseModel):
@@ -70,3 +71,15 @@ class Wishlist(BaseModel):
     def __str__(self):
         return f"{self.user.first_name} - {self.product.name}"
 
+
+
+class DealOfTheDay(BaseModel):
+    product = models.ForeignKey('Product', on_delete=models.CASCADE)
+    discount_percentage = models.DecimalField(max_digits=5, decimal_places=2)
+    start_time = models.DateTimeField(default=timezone.now)
+    end_time = models.DateTimeField(null=True, blank=True)
+    is_active = models.BooleanField(default=False)
+    number_of_available_stock = models.IntegerField(default=0)
+
+    def __str__(self):
+        return f"Deal for {self.product.name} - {self.discount_percentage}% off"

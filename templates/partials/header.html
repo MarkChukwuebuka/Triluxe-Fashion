@@ -1,4 +1,16 @@
 {% load static %}
+
+<style>
+    #menu-item-257 {
+        display: none; /* Hide by default */
+    }
+
+    @media (max-width: 768px) {
+        #menu-item-257 {
+            display: block; /* Show only on mobile screens */
+        }
+    }
+</style>
 <header id="header" class="header header-light header-transparent">
     <div class="header-wrap-stick">
         <div class="header-position">
@@ -44,6 +56,14 @@
                                         </li>
 
 
+                                        <li id="menu-item-257"
+                                            class="menu-item menu-item-type-post_type menu-item-object-megamenu menu-item-230">
+                                            <a class="shopcart-dropdownn block-cart-link" href="{% url 'cart' %}">
+                                                Cart<span class="count cart_quantity">{{ cart|length }}</span>
+                                            </a>
+                                        </li>
+
+
                                         {% if user.is_authenticated %}
                                             <li id="menu-item-240"
                                                 class="menu-item menu-item-type-post_type menu-item-object-megamenu menu-item-230">
@@ -63,7 +83,7 @@
                                 <ul class=" block-minicart block-dreaming rustrot-mini-cart rustrot-dropdownn">
                                     <li class="shopcart-dropdownn block-cart-link" data-rustrot="rustrot-dropdownn">
                                         <a class="block-link " href="{% url 'cart' %}">
-                                            Cart<span id="cart_quantity" class="count">{{ cart|length }}</span>
+                                            Cart<span id="cart_quantity" class="count cart_quantity">{{ cart|length }}</span>
                                         </a>
                                     </li>
 

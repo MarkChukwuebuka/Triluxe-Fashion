@@ -1,8 +1,9 @@
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.db.models import Count, Case, When, ExpressionWrapper, DecimalField, F, Q, Value
 from django.db.models.functions import Coalesce
+from django.utils import timezone
 
-from product.models import Product, ProductReview, Wishlist
+from product.models import Product, ProductReview, Wishlist, DealOfTheDay
 from services.util import CustomRequestUtil
 
 
@@ -56,14 +57,14 @@ class ProductReviewService(CustomRequestUtil):
         product_review, is_created = ProductReview.available_objects.update_or_create(
             user=self.auth_user,
             product=product,
-            default=dict(
+            defaults=dict(
                 rating=rating,
                 review=review,
             )
         )
 
         if not is_created:
-            return None, self.make_error("You've already reviewed this product")
+            return "You've updated your review on this product", None
 
         message = "You've successfully reviewed this product"
 
@@ -114,3 +115,24 @@ class WishlistService(CustomRequestUtil, LoginRequiredMixin):
         wishlist_item.delete()
 
         return wishlist_item, None
+
+
+class DOTDService(CustomRequestUtil):
+
+    def fetch_active_deals(self):
+        q = Q(is_active=True)
+
+        return self.get_base_query().filter(q)
+
+
+    def get_base_query(self):
+        return DealOfTheDay.available_objects.select_related("product")
+
+    def toggle_active_state(self):
+
+        now = timezone.now()
+        for deal in DealOfTheDay.available_objects:
+            deal.is_active = True if deal.start_time <= now <= deal.end_time else False
+            deal.save()
+
+        return None
