@@ -3,7 +3,7 @@ from django.db.models import Count, Case, When, ExpressionWrapper, DecimalField,
 from django.db.models.functions import Coalesce
 from django.utils import timezone
 
-from product.models import Product, ProductReview, Wishlist, DealOfTheDay
+from product.models import Product, ProductReview, Wishlist, DealOfTheDay, TopShopper
 from services.util import CustomRequestUtil
 
 
@@ -136,3 +136,13 @@ class DOTDService(CustomRequestUtil):
             deal.save()
 
         return None
+
+
+class TopShopperService(CustomRequestUtil):
+
+    def fetch_list(self):
+        return self.get_base_query()[:3]
+
+
+    def get_base_query(self):
+        return TopShopper.available_objects.order_by('-id')

@@ -584,81 +584,42 @@
         </div>
     </div>
 
+    {% if top_shoppers %}
+
     <div class="section-033">
         <div class="container">
+
             <div class="section-034">
+                <h2 class="title">Our Top Shoppers</h2>
                 <div class="row">
                     <div class="col-xs-12 col-sm-10 col-md-6 offset-sm-1 col-xl-5 col-lg-5">
                         <div class="rustrot-slide">
                             <div class="owl-slick equal-container better-height"
                                  data-slick="{&quot;arrows&quot;:false,&quot;slidesMargin&quot;:0,&quot;dots&quot;:true,&quot;infinite&quot;:false,&quot;speed&quot;:300,&quot;slidesToShow&quot;:1,&quot;rows&quot;:1}"
                                  data-responsive="[{&quot;breakpoint&quot;:480,&quot;settings&quot;:{&quot;slidesToShow&quot;:1,&quot;slidesMargin&quot;:&quot;0&quot;}},{&quot;breakpoint&quot;:768,&quot;settings&quot;:{&quot;slidesToShow&quot;:1,&quot;slidesMargin&quot;:&quot;0&quot;}},{&quot;breakpoint&quot;:992,&quot;settings&quot;:{&quot;slidesToShow&quot;:1,&quot;slidesMargin&quot;:&quot;0&quot;}},{&quot;breakpoint&quot;:1200,&quot;settings&quot;:{&quot;slidesToShow&quot;:1,&quot;slidesMargin&quot;:&quot;0&quot;}},{&quot;breakpoint&quot;:1500,&quot;settings&quot;:{&quot;slidesToShow&quot;:1,&quot;slidesMargin&quot;:&quot;0&quot;}}]">
-                                <div class="rustrot-testimonial style-02">
-                                    <div class="testimonial-inner">
-                                        <p class="desc">Lore ipsum dolor sit amet consectetur
-                                            elit,
-                                            facilisi viverra morbi aptent taciti hendrerit pulvinar ante</p>
-                                        <div class="testimonial-info">
-                                            <div class="intro">
-                                                <h3 class="name">
-                                                    <a href="#" target="_self" tabindex="0">
-                                                        Charley Pratt </a>
-                                                </h3>
-                                                <div class="position">
-                                                    Customer
+
+                                {% for shopper in top_shoppers %}
+                                    <div class="rustrot-testimonial style-02">
+                                        <div class="testimonial-inner">
+                                            <p class="desc">{{ shopper.review }}</p>
+                                            <div class="testimonial-info">
+                                                <div class="intro">
+                                                    <h3 class="name">
+                                                        <a tabindex="0">
+                                                            {{ shopper.full_name }} </a>
+                                                    </h3>
+                                                    <div class="position">
+                                                        {{ shopper.role }}
+                                                    </div>
                                                 </div>
+                                                <div class="thumb">
+                                                    <img src="{{ shopper.image.url }}"
+                                                         class="attachment-full size-full" alt="img" width="97"
+                                                         height="97"></div>
                                             </div>
-                                            <div class="thumb">
-                                                <img src="{% static 'assets/images/avatar1.png' %}"
-                                                     class="attachment-full size-full" alt="img" width="97"
-                                                     height="97"></div>
                                         </div>
                                     </div>
-                                </div>
-                                <div class="rustrot-testimonial style-02">
-                                    <div class="testimonial-inner">
-                                        <p class="desc">Lore ipsum dolor sit amet consectetur
-                                            elit,
-                                            facilisi viverra morbi aptent taciti hendrerit pulvinar ante</p>
-                                        <div class="testimonial-info">
-                                            <div class="intro">
-                                                <h3 class="name">
-                                                    <a href="#" target="_self" tabindex="-1">
-                                                        Nadia Pugh </a>
-                                                </h3>
-                                                <div class="position">
-                                                    Customer
-                                                </div>
-                                            </div>
-                                            <div class="thumb">
-                                                <img src="{% static 'assets/images/avatar3.png' %}"
-                                                     class="attachment-full size-full" alt="img" width="97"
-                                                     height="97"></div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="rustrot-testimonial style-02">
-                                    <div class="testimonial-inner">
-                                        <p class="desc">Lore ipsum dolor sit amet consectetur
-                                            elit,
-                                            facilisi viverra morbi aptent taciti hendrerit pulvinar ante</p>
-                                        <div class="testimonial-info">
-                                            <div class="intro">
-                                                <h3 class="name">
-                                                    <a href="#" target="_self" tabindex="-1">
-                                                        Troy Bryant </a>
-                                                </h3>
-                                                <div class="position">
-                                                    Customer
-                                                </div>
-                                            </div>
-                                            <div class="thumb">
-                                                <img src="{% static 'assets/images/avatar2.png' %}"
-                                                     class="attachment-full size-full" alt="img" width="97"
-                                                     height="97"></div>
-                                        </div>
-                                    </div>
-                                </div>
+                                {% endfor %}
                             </div>
                         </div>
                     </div>
@@ -666,6 +627,8 @@
             </div>
         </div>
     </div>
+    {% endif %}
+
     <div class="section-007">
         <div class="container">
             <div class="row">
@@ -716,23 +679,9 @@
             <div class="instagram-owl owl-slick"
                  data-slick="{&quot;arrows&quot;:false,&quot;slidesMargin&quot;:0,&quot;dots&quot;:false,&quot;infinite&quot;:false,&quot;speed&quot;:300,&quot;slidesToShow&quot;:6,&quot;rows&quot;:1}"
                  data-responsive="[{&quot;breakpoint&quot;:480,&quot;settings&quot;:{&quot;slidesToShow&quot;:2,&quot;slidesMargin&quot;:&quot;0&quot;}},{&quot;breakpoint&quot;:768,&quot;settings&quot;:{&quot;slidesToShow&quot;:3,&quot;slidesMargin&quot;:&quot;0&quot;}},{&quot;breakpoint&quot;:992,&quot;settings&quot;:{&quot;slidesToShow&quot;:3,&quot;slidesMargin&quot;:&quot;0&quot;}},{&quot;breakpoint&quot;:1200,&quot;settings&quot;:{&quot;slidesToShow&quot;:4,&quot;slidesMargin&quot;:&quot;0&quot;}},{&quot;breakpoint&quot;:1500,&quot;settings&quot;:{&quot;slidesToShow&quot;:5,&quot;slidesMargin&quot;:&quot;0&quot;}}]">
+
                 <div class="rows-space-0">
-                    <a target="_blank" href="#" class="item" tabindex="0">
-                        <img class="img-responsive lazy" src="{% static 'assets/images/insta1.jpg' %}" alt="Home 03">
-                        <span class="instagram-info">
-                             <span class="social-wrap">
-                                <span class="social-info">1
-                                    <i class="pe-7s-chat"></i>
-                                </span>
-                                <span class="social-info">0
-                                    <i class="pe-7s-like2"></i>
-                                </span>
-                            </span>
-                        </span>
-                    </a>
-                </div>
-                <div class="rows-space-0">
-                    <a target="_blank" href="#" class="item" tabindex="0">
+                    <a target="_blank" href="https://www.instagram.com/triluxe_fashion_house?igsh=MzRlODBiNWFlZA==" class="item" tabindex="0">
                         <img class="img-responsive lazy" src="{% static 'assets/images/insta2.jpg' %}" alt="Home 03">
                         <span class="instagram-info">
                                  <span class="social-wrap">
@@ -747,7 +696,7 @@
                     </a>
                 </div>
                 <div class="rows-space-0">
-                    <a target="_blank" href="#" class="item" tabindex="0">
+                    <a target="_blank" href="https://www.instagram.com/triluxe_fashion_house?igsh=MzRlODBiNWFlZA==" class="item" tabindex="0">
                         <img class="img-responsive lazy" src="{% static 'assets/images/insta3.jpg' %}" alt="Home 03">
                         <span class="instagram-info">
                                  <span class="social-wrap">
@@ -762,7 +711,7 @@
                     </a>
                 </div>
                 <div class="rows-space-0">
-                    <a target="_blank" href="#" class="item" tabindex="0">
+                    <a target="_blank" href="https://www.instagram.com/triluxe_fashion_house?igsh=MzRlODBiNWFlZA==" class="item" tabindex="0">
                         <img class="img-responsive lazy" src="{% static 'assets/images/insta4.jpg' %}" alt="Home 03">
                         <span class="instagram-info">
                                  <span class="social-wrap">
@@ -777,7 +726,7 @@
                     </a>
                 </div>
                 <div class="rows-space-0">
-                    <a target="_blank" href="#" class="item" tabindex="0">
+                    <a target="_blank" href="https://www.instagram.com/triluxe_fashion_house?igsh=MzRlODBiNWFlZA==" class="item" tabindex="0">
                         <img class="img-responsive lazy" src="{% static 'assets/images/insta5.jpg' %}" alt="Home 03">
                         <span class="instagram-info">
                                  <span class="social-wrap">
@@ -792,7 +741,7 @@
                     </a>
                 </div>
                 <div class="rows-space-0">
-                    <a target="_blank" href="#" class="item" tabindex="0">
+                    <a target="_blank" href="https://www.instagram.com/triluxe_fashion_house?igsh=MzRlODBiNWFlZA==" class="item" tabindex="0">
                         <img class="img-responsive lazy" src="{% static 'assets/images/insta6.jpg' %}" alt="Home 03">
                         <span class="instagram-info">
                              <span class="social-wrap">
@@ -814,30 +763,12 @@
             <div class="owl-slick"
                  data-slick="{&quot;arrows&quot;:false,&quot;slidesMargin&quot;:0,&quot;dots&quot;:false,&quot;infinite&quot;:false,&quot;speed&quot;:300,&quot;slidesToShow&quot;:6,&quot;rows&quot;:1}"
                  data-responsive="[{&quot;breakpoint&quot;:480,&quot;settings&quot;:{&quot;slidesToShow&quot;:2,&quot;slidesMargin&quot;:&quot;0&quot;}},{&quot;breakpoint&quot;:768,&quot;settings&quot;:{&quot;slidesToShow&quot;:3,&quot;slidesMargin&quot;:&quot;0&quot;}},{&quot;breakpoint&quot;:992,&quot;settings&quot;:{&quot;slidesToShow&quot;:3,&quot;slidesMargin&quot;:&quot;0&quot;}},{&quot;breakpoint&quot;:1200,&quot;settings&quot;:{&quot;slidesToShow&quot;:4,&quot;slidesMargin&quot;:&quot;0&quot;}},{&quot;breakpoint&quot;:1500,&quot;settings&quot;:{&quot;slidesToShow&quot;:5,&quot;slidesMargin&quot;:&quot;0&quot;}}]">
-                <a href="https://facebook.com/" target="_blank" tabindex="0">
-                    <span>Facebook</span>
-                    <i class="fa fa-facebook"></i>
-                </a>
-                <a href="https://www.instagram.com/" target="_blank" tabindex="0">
+
+                <a href="https://www.instagram.com/triluxe_fashion_house?igsh=MzRlODBiNWFlZA==" target="_blank" tabindex="0">
                     <span>Instagram</span>
                     <i class="fa fa-instagram"></i>
                 </a>
-                <a href="https://twitter.com/" target="_blank" tabindex="0">
-                    <span>Twitter</span>
-                    <i class="fa fa-twitter"></i>
-                </a>
-                <a href="https://www.pinterest.com/" target="_blank" tabindex="0">
-                    <span>Pinterest</span>
-                    <i class="fa fa-pinterest-p"></i>
-                </a>
-                <a href="https://www.behance.net/" target="_blank" tabindex="0">
-                    <span>Behance</span>
-                    <i class="fa fa-behance"></i>
-                </a>
-                <a href="https://plus.google.com/" target="_blank" tabindex="0">
-                    <span>Google+</span>
-                    <i class="fa fa-google-plus"></i>
-                </a>
+
             </div>
         </div>
     </div>

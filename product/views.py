@@ -53,7 +53,7 @@ class RetrieveUpdateDeleteProductView(View, CustomRequestUtil):
 
 class CreateListProductView(View, CustomRequestUtil):
     extra_context_data = {
-        "title": "Shop"
+        "title": "Luxe Shop"
     }
 
     def get(self, request, *args, **kwargs):

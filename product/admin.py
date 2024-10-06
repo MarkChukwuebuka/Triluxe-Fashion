@@ -1,7 +1,7 @@
 from django.contrib import admin
 
 from crm.admin import BaseAdmin
-from product.models import Tag, Category, Product, DealOfTheDay, ProductReview
+from product.models import Tag, Category, Product, DealOfTheDay, ProductReview, TopShopper
 
 
 # Register your models here.
@@ -37,3 +37,9 @@ class ProductReviewAdmin(BaseAdmin):
     list_display = ['product', 'rating', 'user', 'review', 'created_at']
     list_filter = ['rating', 'user']
     search_fields = ['product__name', 'review']
+
+@admin.register(TopShopper)
+class TopShopperAdmin(BaseAdmin):
+    list_display = ['full_name', 'review', 'role']
+    list_filter = ['review', 'full_name']
+    search_fields = ['full_name', 'review']

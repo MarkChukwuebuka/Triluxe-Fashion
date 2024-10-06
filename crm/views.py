@@ -1,7 +1,7 @@
 from django.shortcuts import render
 from django.views import View
 
-from product.services.product_service import ProductService, DOTDService
+from product.services.product_service import ProductService, DOTDService, TopShopperService
 from services.util import CustomRequestUtil
 
 
@@ -14,10 +14,15 @@ class HomeView(View, CustomRequestUtil):
 
     def get(self, request, *args, **kwargs):
         product_service = ProductService(self.request)
+
         products = product_service.fetch_list()[:10]
         deals = DOTDService(self.request).fetch_active_deals()
+        top_shoppers = TopShopperService(self.request).fetch_list()
+
         self.extra_context_data["products"] = products
         self.extra_context_data["deals"] = deals
+        self.extra_context_data["top_shoppers"] = top_shoppers
+
         return self.process_request(request)
 
 

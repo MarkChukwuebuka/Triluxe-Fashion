@@ -1,9 +1,11 @@
+from logging import basicConfig
+
 from cloudinary.models import CloudinaryField
 from django.db import models
 from django.utils import timezone
 
 from account.models import User
-from crm.models import BaseModel
+from crm.models import BaseModel, Color
 
 
 class Availability(models.TextChoices):
@@ -47,6 +49,8 @@ class Product(BaseModel):
     image5 = CloudinaryField('image5', blank=True, null=True)
     image6 = CloudinaryField('image6', blank=True, null=True)
 
+    colors = models.ManyToManyField(Color, blank=True, related_name="product_colors")
+
     def __str__(self):
         return self.name
 
@@ -83,3 +87,13 @@ class DealOfTheDay(BaseModel):
 
     def __str__(self):
         return f"Deal for {self.product.name} - {self.discount_percentage}% off"
+
+
+class TopShopper(BaseModel):
+    full_name = models.CharField(max_length=255)
+    role = models.CharField(max_length=255, default="Customer")
+    review = models.TextField()
+    image = CloudinaryField('image')
+
+    def __str__(self):
+        return self.full_name
