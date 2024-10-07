@@ -1,7 +1,7 @@
-from django.shortcuts import render
 from django.views import View
 
-from product.services.product_service import ProductService, DOTDService, TopShopperService
+from product.services.dotd_service import DOTDService, TopShopperService
+from product.services.product_service import ProductService
 from services.util import CustomRequestUtil
 
 

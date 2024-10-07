@@ -1,12 +1,15 @@
+import random
+import string
+
 from django.http import JsonResponse
-from django.shortcuts import render
 from django.views import View
 
-from product.services.product_service import ProductService, ProductReviewService, WishlistService
+from product.services.product_service import ProductService
+from product.services.review_service import ProductReviewService
+from product.services.wishlist_service import WishlistService
 from services.util import CustomRequestUtil
 
 
-# Create your views here.
 class RetrieveUpdateDeleteProductView(View, CustomRequestUtil):
     template_name = "product-detail.html"
     context_object_name = 'product'
@@ -16,8 +19,11 @@ class RetrieveUpdateDeleteProductView(View, CustomRequestUtil):
         product_service = ProductService(self.request)
         product, error = product_service.fetch_single(kwargs.get("product_id"))
 
+        related_products = product_service.get_related_products(product.id)
+
         self.extra_context_data = {
-            "title": product.name
+            "title": product.name,
+            "related_products": related_products
         }
 
         return self.process_request(
@@ -92,3 +98,12 @@ class WishlistView(View, CustomRequestUtil):
         return self.process_request(
             request, target_function=wishlist_service.fetch_list
         )
+
+def generate_sku(product_name):
+    name_part = product_name[:3].upper()
+
+    random_part = ''.join(random.choices(string.ascii_uppercase + string.digits, k=5))
+
+    sku = f"{name_part}-{random_part}"
+
+    return sku

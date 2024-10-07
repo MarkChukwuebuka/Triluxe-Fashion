@@ -6,6 +6,7 @@ from django.utils import timezone
 
 from account.models import User
 from crm.models import BaseModel, Color
+from product.views import generate_sku
 
 
 class Availability(models.TextChoices):
@@ -34,7 +35,7 @@ class Product(BaseModel):
     name = models.CharField(max_length=255)
     price = models.DecimalField(max_digits=15, decimal_places=2, default=0)
     percentage_discount = models.IntegerField(null=True, blank=True)
-    sku = models.CharField(max_length=255, null=True, blank=True)
+    sku = models.CharField(max_length=255, default=generate_sku, unique=True)
     categories = models.ManyToManyField(Category, blank=True, related_name="product_tags")
     tags = models.ManyToManyField(Tag, blank=True, related_name="product_categories")
     description = models.TextField(null=True, blank=True)
