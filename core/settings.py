@@ -169,7 +169,7 @@ cloudinary.config(
 )
 
 EMAIL_BACKEND = 'django_smtp_ssl.SSLEmailBackend'
-EMAIL_HOST = 'smtppro.zoho.com'  # zoho
+EMAIL_HOST = 'smtp.zoho.com'  # zoho
 EMAIL_HOST_USER = os.getenv('EMAIL_HOST_USER')
 EMAIL_HOST_PASSWORD = os.getenv('EMAIL_HOST_PASSWORD')
 EMAIL_PORT = 465

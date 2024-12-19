@@ -63,6 +63,8 @@ $(document).on('click', '.delete-product', function(e){
 
 
 
+
+
 document.addEventListener('DOMContentLoaded', function () {
     // Select all elements with class 'qtyminus' and 'qtyplus'
     document.querySelectorAll('.qtyminus').forEach(function (element) {
