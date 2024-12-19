@@ -10,7 +10,7 @@
         background-color: #000;
         transition: transform 0.5s ease-in-out;
         overflow: hidden;
-        height: 80vh; /* Set height to 90% of the viewport */
+        height: 80vh; /* Set height to 80% of the viewport */
         display: flex;
         align-items: center;
         justify-content: center;
@@ -24,50 +24,54 @@
 
     .carousel-caption {
         position: absolute;
-        top: 70%;
+        top: 50%;
         left: 50%;
         transform: translate(-50%, -50%);
         text-align: center;
         color: #fff;
-        padding: 5px;
-        border-radius: 8px;
-        max-width: 90%;
+        background: linear-gradient(to bottom, rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.3));
+        padding: 40px 20px;
+        border-radius: 12px;
+        max-width: 80%;
+        width: 100%;
+        box-shadow: 0 8px 15px rgba(0, 0, 0, 0.2);
     }
 
     .carousel-caption h1 {
-        font-size: 2rem;
-        font-weight: bold;
-        margin-bottom: 1rem;
+        font-size: 3.5rem;
+        font-weight: 900;
+        margin-bottom: 20px;
+        text-transform: uppercase;
+        letter-spacing: 2px;
+        text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.6);
     }
 
     .carousel-caption .btn {
-        font-size: 1.2rem;
-        padding: 10px 20px;
-        background-color: #18443b;
+        font-size: 1.5rem;
+        padding: 15px 30px;
+        background: #18443b;
         color: #fff;
         text-decoration: none;
-        border-radius: 5px;
+        border-radius: 8px;
+        text-transform: uppercase;
+        font-weight: bold;
+        box-shadow: 0 4px 10px rgba(255, 87, 34, 0.3);
+        transition: background 0.3s ease, transform 0.3s ease;
     }
 
     .carousel-caption .btn:hover {
-        background-color: #e64a19;
+        background: #e64a19;
+        transform: translateY(-2px);
     }
 
     @media (max-width: 768px) {
         .carousel-caption h1 {
-            font-size: 1.5rem;
+            font-size: 2rem;
         }
 
         .carousel-caption .btn {
-            font-size: 1rem;
-            padding: 8px 8px;
-        }
-
-        .carousel-caption {
-            position: absolute;
-            top: 50% !important;
-            left: 50%;
-
+            font-size: 1.2rem;
+            padding: 10px 20px;
         }
     }
 </style>
@@ -97,7 +101,9 @@
         <div class="carousel-item">
             <img src="{% static 'assets/images/slide2.jpg' %}" alt="Slide 2">
             <div class="carousel-caption">
-                <h1>Elevate Your Style Game. Discover the latest trends and make a statement today. Shop now and transform your wardrobe!</h1>
+                <h1>Elevate Your Style Game.<br></h1>
+                    <p style="font-size:1rem;">
+                    Discover the latest trends and make a statement today. Shop now and transform your wardrobe!</p>
                 <a href="{% url 'shop' %}" class="btn">Explore Now</a>
             </div>
         </div>
@@ -109,7 +115,7 @@
                 Your browser does not support the video tag.
             </video>
             <div class="carousel-caption">
-                <h1>Step into the Season in Style. Embrace the season’s best looks. Shop our latest collection before it’s gone!</h1>
+                <h1>Step into the Season in Style. <br></h1><p style="font-size:1rem;"> Embrace the season’s best looks. Shop our latest collection before it’s gone!</p>
                 <a href="{% url 'shop' %}" class="btn">Shop Now</a>
             </div>
         </div>
@@ -118,21 +124,14 @@
         <div class="carousel-item">
             <img src="{% static 'assets/images/slide3.jpg' %}" alt="Slide 4">
             <div class="carousel-caption">
-                <h1>Find Your Perfect Fit. The perfect look starts with the perfect fit. Explore our size-inclusive collection today!</h1>
+                <h1>Find Your Perfect Fit.<br></h1>
+                <p style="font-size:1rem;">The perfect look starts with the perfect fit. Explore our size-inclusive collection today!</p>
                 <a href="{% url 'shop' %}" class="btn">Explore Now</a>
             </div>
         </div>
     </div>
 
-    <!-- Controls for navigation -->
-    <a class="carousel-control-prev" href="#carouselExampleCaptions" role="button" data-bs-slide="prev">
-        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-        <span class="visually-hidden">Previous</span>
-    </a>
-    <a class="carousel-control-next" href="#carouselExampleCaptions" role="button" data-bs-slide="next">
-        <span class="carousel-control-next-icon" aria-hidden="true"></span>
-        <span class="visually-hidden">Next</span>
-    </a>
+
 </div>
 
 
