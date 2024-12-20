@@ -18,7 +18,7 @@
                     <div class="grid-view-mode">
                         <form>
                             <a href="#" data-toggle="tooltip" data-placement="top"
-                               class="modes-mode mode-grid display-mode active">
+                               class="modes-mode mode-grid display-mode">
                                 <span class="button-inner">
                                     Shop Grid
                                     <span></span>
@@ -27,7 +27,7 @@
                                 </span>
                             </a>
                             <a href="#" data-toggle="tooltip" data-placement="top"
-                               class="modes-mode mode-list display-mode">
+                               class="modes-mode mode-list display-mode active">
                                 <span class="button-inner">
                                     Shop List
                                     <span></span>
@@ -148,16 +148,18 @@
                                 </div>
                                 <div class="group-button">
                                     <div class="group-button-inner">
+                                        {% if user.is_authenticated %}
                                         <div class="yith-wcwl-add-to-wishlist">
                                             <div class="yith-wcwl-add-button show">
                                                 <a href="#"  class="add_to_wishlist wishlist-btn" data-product-id="{{ product.id }}">Add to Wishlist</a>
                                             </div>
                                         </div>
+                                        {% endif %}
 
-                                        <a href="#" class="button yith-wcqv-button">Quick View</a>
                                         <div class="add-to-cart">
-                                            <a href="cart.html" class="button product_type_variable add_to_cart_button">Select
-                                                options</a>
+                                            <a href="#" class="button product_type_variable add_to_cart_button"
+                                               data-url="{% url 'add_to_cart' %}"
+                                               data-product-id="{{ product.id }}">Add to Cart</a>
                                         </div>
                                     </div>
                                 </div>
