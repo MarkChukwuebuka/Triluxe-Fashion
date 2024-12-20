@@ -1,3 +1,6 @@
+from lib2to3.fixes.fix_input import context
+
+import cloudinary
 from django.conf import settings
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, get_object_or_404, redirect
@@ -7,7 +10,7 @@ from django.views import View
 from cart.services.cart_service import CartService
 from product.services.product_service import ProductService
 from services.util import CustomRequestUtil
-from .models import Payment, OrderItem, Order
+from .models import Payment, OrderItem, Order, BankAccount
 
 from django.http import JsonResponse
 
@@ -53,7 +56,7 @@ def verify_payment(request, ref):
 @login_required
 def start_order(request):
     context = {
-        "title":"Checkout"
+        "title" : "Checkout"
     }
     cart = CartService(request)
     user = request.user
@@ -69,6 +72,11 @@ def start_order(request):
             state = request.POST.get("state"),
             phone = request.POST.get("phone"),
         )
+
+        try:
+            receipt = request.FILES['screenshot']
+        except:
+            receipt = None
 
         order = OrderService(request).create_single(payload)
 
@@ -96,23 +104,19 @@ def start_order(request):
                                                  )
 
         payment = Payment.available_objects.create(
-            amount=total_cost, email=user.email, user=user, order=order
+            amount=total_cost, email=user.email, user=user, order=order, receipt=receipt
         )
 
         order.total_cost = total_cost
         order.save()
 
-        pub_key = settings.PAYSTACK_PUBLISHABLE
 
         context = {
-
-            'order': order,
-            'total_cost': total_cost,
-            'payment': payment,
-            'paystack_pub_key': pub_key,
-            'amount': payment.amount_value()
+            'title': 'Thank you',
+            'ref': payment.ref
         }
-        return render(request, 'make-payment.html', context)
+        cart.clear()
+        return render(request, "thank-you.html", context)
 
     return render(request, 'checkout.html', context)
 

@@ -16,16 +16,29 @@
             <div class="main-content col-md-12">
                 <div class="page-main-content">
                     <div class="rustrot">
-<!--                        <form class="track_order">-->
+                        <form class="track_order" method="POST" enctype="multipart/form-data">
+                            {% csrf_token %}
+
+                            <p>Bank Name : {{bank.bank_name}}</p>
+                            <p>Account Name : {{bank.account_name}}</p>
+                            <p>Account Number : {{bank.account_number}}</p>
+
                             <p>You're about to make a payment of <strong>&#8358;{{ total_cost|floatformat:2|intcomma }}</strong></p>
 
+                            <p class="rustrot-form-row rustrot-form-row--wide form-row form-row-wide">
+                                <label for="last-name">Please Upload a screenshot of your payment receipt <span
+                                        class="required">*</span></label>
+                                <input type="file" class="rustrot-Input rustrot-Input--text input-text"
+                                       name="screenshot" id="last-name" value="">
+                            </p>
+
                             <div class="clear"></div>
+                            <p class="form-row">
+                                <button type="submit" class="button">I have made payment</button>
+                            </p>
 
-<!--                        </form>-->
+                        </form>
 
-                        <p class="form-row">
-                                <button onclick="payWithPaystack()" class="button">Make Payment</button>
-                        </p>
                     </div>
                 </div>
             </div>
@@ -33,38 +46,6 @@
     </div>
 </main>
 
-
-
-
-<script>
-    function payWithPaystack() {
-        let currency = 'NGN';
-        let plan = '';
-        let ref = '{{payment.ref}}';
-        let amount = '{{payment.amount}}';
-        let pubKey = '{{paystack_pub_key}}';
-        let obj = {
-            key: pubKey,
-            email: '{{payment.email}}',
-            amount: '{{amount}}',
-            ref: ref,
-            callback: function (response) {
-                window.location.href = "{% url 'verify_payment' payment.ref %}";
-            },
-        };
-        if (Boolean(currency)) {
-            obj.currency = currency.toUpperCase();
-        }
-        if (Boolean(plan)) {
-            obj.plan = plan;
-        }
-        var handler = PaystackPop.setup(obj);
-        handler.openIframe();
-    }
-
-</script>
-
-<script type="application/javascript" src="https://js.paystack.co/v1/inline.js"></script>
 
 
 

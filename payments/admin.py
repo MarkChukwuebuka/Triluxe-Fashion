@@ -31,8 +31,8 @@ class OrderItemAdmin(BaseAdmin):
 @admin.register(Payment)
 class PaymentAdmin(BaseAdmin):
     list_display = [
-        "user", "amount", "ref", "verified"
+        "user", "amount", "ref", "verified" "receipt"
     ]
-    search_fields = ["amount", "ref"]
+    search_fields = ["amount", "ref", "user"]
     list_filter = ["verified"]
 

@@ -1,3 +1,4 @@
+from cloudinary.models import CloudinaryField
 from django.db import models
 from django.db.models.signals import post_save
 
@@ -67,6 +68,7 @@ class Payment(BaseModel):
     verified = models.BooleanField(default=False)
     created_at = models.DateTimeField(auto_now_add=True)
     order = models.OneToOneField(Order, on_delete=models.SET_NULL, null=True, blank=True, related_name='payment')
+    receipt = CloudinaryField('receipt', blank=True, null=True)
 
     def __str__(self):
         return f"{self.user} - {self.amount}"
@@ -79,17 +81,13 @@ class Payment(BaseModel):
                 self.ref = ref
         super().save(*args, **kwargs)
 
-    def amount_value(self):
-        return int(self.amount) * 100
 
-    def verify_payment(self):
-        paystack = Paystack()
-        status, result = paystack.verify_payment(self.ref, self.amount)
-        if status:
-            if result['amount'] / 100 == self.amount:
-                self.verified = True
-                self.save()
-        if self.verified:
-            return True
-        else:
-            return False
+
+
+class BankAccount(models.Model):
+    bank_name = models.CharField(max_length=255)
+    account_name = models.CharField(max_length=255)
+    account_number = models.CharField(max_length=255)
+
+    def __str__(self):
+        return self.bank_name

@@ -28,8 +28,9 @@
                                     </svg>
                                   </span>
                                   <h2 class="display-3 text-black">Thank you!</h2>
-                                  <p class="lead mb-5">Your order was successfully received, we'll begin processing ASAP. Here's your ref NO: <br>{{payment.ref}}</p>
-                                  <p><a href="{% url 'shop' %}" class="btn btn-sm btn-outline-black">Back to shop</a></p>
+                                  <p class="lead mb-5">Your order was successfully received, we'll begin processing ASAP. Here's your ref NO: <br><span style="font-weight:bold;">
+                                      {{ref}}</span></p>
+                                  <a href="{% url 'shop' %}" class="btn btn-sm btn-outline-black">Back to shop</a>
                                 </div>
                               </div>
                             </div>
@@ -41,41 +42,6 @@
         </div>
     </div>
 </main>
-
-
-
-
-<script>
-    function payWithPaystack() {
-        let currency = 'NGN';
-        let plan = '';
-        let ref = '{{payment.ref}}';
-        let amount = '{{payment.amount}}';
-        let pubKey = '{{paystack_pub_key}}';
-        let obj = {
-            key: pubKey,
-            email: '{{payment.email}}',
-            amount: '{{amount}}',
-            ref: ref,
-            callback: function (response) {
-                window.location.href = "{% url 'verify_payment' payment.ref %}";
-            },
-        };
-        if (Boolean(currency)) {
-            obj.currency = currency.toUpperCase();
-        }
-        if (Boolean(plan)) {
-            obj.plan = plan;
-        }
-        var handler = PaystackPop.setup(obj);
-        handler.openIframe();
-    }
-
-</script>
-
-<script type="application/javascript" src="https://js.paystack.co/v1/inline.js"></script>
-
-
 
 
 {% endblock content %}
