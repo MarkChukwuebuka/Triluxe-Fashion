@@ -108,6 +108,7 @@ def start_order(request):
         )
 
         order.total_cost = total_cost
+        order.ref = payment.ref
         order.save()
 
 
