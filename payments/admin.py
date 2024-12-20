@@ -31,14 +31,14 @@ class OrderItemAdmin(BaseAdmin):
 @admin.register(Payment)
 class PaymentAdmin(BaseAdmin):
     list_display = [
-        "user", "amount", "ref", "verified" "receipt"
+        "user", "amount", "ref", "verified", "receipt"
     ]
     search_fields = ["amount", "ref", "user"]
     list_filter = ["verified"]
 
 
 @admin.register(BankAccount)
-class PaymentAdmin(BaseAdmin):
+class PaymentAdmin(admin.ModelAdmin):
     list_display = [
         "bank_name", "account_number", "account_name"
     ]
