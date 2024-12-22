@@ -97,11 +97,12 @@ def start_order(request):
 
             total_cost += item_cost
 
-            order_item = OrderItem.objects.create(order=order,
-                                                 product=product_instance,
-                                                 price=item_cost,
-                                                 quantity=quantity_in_cart
-                                                 )
+            order_item = OrderItem.objects.create(
+                order=order,
+                product=product_instance,
+                price=item_cost,
+                quantity=quantity_in_cart
+            )
 
         payment = Payment.available_objects.create(
             amount=total_cost, email=user.email, user=user, order=order, receipt=receipt
@@ -113,11 +114,11 @@ def start_order(request):
 
 
         context = {
-            'title': 'Thank you',
-            'ref': payment.ref
+            'order': order,
+            'items': OrderItem.objects.filter(order=order),
         }
         cart.clear()
-        return render(request, "thank-you.html", context)
+        return render(request, "receipt.html", context)
 
     return render(request, 'checkout.html', context)
 

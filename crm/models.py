@@ -104,3 +104,12 @@ class Color(models.Model):
 
     def __str__(self):
         return self.name
+
+
+class Subscriber(models.Model):
+    email = models.EmailField(unique=True)
+    subscribed_on = models.DateTimeField(default=timezone.now)
+    is_active = models.BooleanField(default=True)
+
+    def __str__(self):
+        return self.email
