@@ -27,7 +27,7 @@ class ProductAdmin(BaseAdmin):
 
 @admin.register(DealOfTheDay)
 class DealOfTheDayAdmin(BaseAdmin):
-    list_display = ['product', 'discount_percentage', 'start_time', 'end_time', 'is_active']
+    list_display = ['product', 'start_time', 'end_time', 'is_active']
     list_filter = ['is_active', 'start_time', 'end_time']
     search_fields = ['product__name',]
 

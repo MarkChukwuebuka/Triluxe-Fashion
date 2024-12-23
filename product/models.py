@@ -86,14 +86,22 @@ class Wishlist(BaseModel):
 
 class DealOfTheDay(BaseModel):
     product = models.ForeignKey('Product', on_delete=models.CASCADE)
-    discount_percentage = models.DecimalField(max_digits=5, decimal_places=2)
     start_time = models.DateTimeField(default=timezone.now)
     end_time = models.DateTimeField(null=True, blank=True)
     is_active = models.BooleanField(default=False)
-    number_of_available_stock = models.IntegerField(default=0)
 
     def __str__(self):
-        return f"Deal for {self.product.name} - {self.discount_percentage}% off"
+        return f"Deal for {self.product.name} - {self.product.percentage_discount}% off"
+
+    def save(self, *args, **kwargs):
+        now = timezone.now()
+
+        if self.start_time <= now and (self.end_time is None or now <= self.end_time):
+            self.is_active = True
+        else:
+            self.is_active = False
+
+        super().save(*args, **kwargs)
 
 
 class TopShopper(BaseModel):

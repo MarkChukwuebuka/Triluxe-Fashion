@@ -1,3 +1,4 @@
+from django.shortcuts import render
 from django.views import View
 
 from crm.models import Subscriber
@@ -7,7 +8,6 @@ from product.services.product_service import ProductService
 from services.util import CustomRequestUtil
 
 
-# Create your views here.
 class HomeView(View, CustomRequestUtil):
     template_name = "index.html"
     extra_context_data = {
@@ -34,7 +34,7 @@ class HomeView(View, CustomRequestUtil):
 
 
         payload = {
-            'email': request.POST.get('first_name')
+            'email': request.POST.get('email')
         }
 
         return self.process_request(
@@ -72,3 +72,11 @@ class AboutView(View, CustomRequestUtil):
 
     def get(self, request, *args, **kwargs):
         return self.process_request(request)
+
+
+def page_not_found(request, exception):
+    return render(request, '404.html')
+
+
+def server_error(request):
+    return render(request, '500.html')

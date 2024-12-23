@@ -1,4 +1,4 @@
-from django.db.models import Q
+from django.db.models import Q, F, DecimalField, ExpressionWrapper, When, Case
 from django.utils import timezone
 
 from product.models import DealOfTheDay, TopShopper
@@ -16,7 +16,24 @@ class DOTDService(CustomRequestUtil):
 
 
     def get_base_query(self):
-        return DealOfTheDay.available_objects.select_related("product")
+        qs = DealOfTheDay.available_objects.select_related("product")
+
+        qs = qs.annotate(
+            discounted_price=Case(
+                When(
+                    product__percentage_discount__isnull=False,
+                    product__percentage_discount__gt=0,
+                    then=ExpressionWrapper(
+                        F('product__price') - (F('product__price') * F('product__percentage_discount') / 100),
+                        output_field=DecimalField(max_digits=15, decimal_places=2),
+                    )
+                ),
+                default=F('product__price'),
+                output_field=DecimalField(max_digits=15, decimal_places=2),
+            )
+        )
+
+        return qs
 
     def toggle_active_state(self):
 

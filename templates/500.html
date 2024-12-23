@@ -1,0 +1,20 @@
+{% extends 'partials/base.html' %}
+
+{% load static %}
+
+{% block content %}
+
+{% include 'partials/breadcrumb.html' %}
+
+
+<div class="main-container text-center error-404 not-found">
+    <div class="container">
+        <h1 class="title-404">error<span>500</span></h1>
+        <h3 class="title">Server Error</h3>
+        <p>If difficulties persist, please contact support.</p>
+        <h5 class="subtitle">Please head back home</h5>
+        <a href="{% url 'home' %}" class="button">Home</a>
+    </div>
+</div>
+
+{% endblock content %}
