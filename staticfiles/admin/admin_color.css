@@ -1,0 +1,35 @@
+#branding h1, #branding h1 a:link, #branding h1 a:visited {
+    color: #fff;
+    }
+    #branding h1{
+    font-size: x-large;
+    }
+    h1{
+    color: white;
+    }
+    body{
+    background: white;
+    /* background-image: url("https://wallpapercave.com/wp/wp2508260.jpg"); */
+    /*  background-image: url(../images/Admin.jpg);  */
+    }
+    #header {
+    background:#18443A;
+    color: #fff;
+    height: 78px
+    }
+
+    #header a:link, #header a:visited {
+    color: #fff;
+    }
+    #header a:hover {
+    color: #fff;
+    }
+    div.breadcrumbs {
+    /* color: #c4dce8; */
+    background: #18443A;
+    }
+ 
+    .module caption{
+    background: #18443A;
+    }
+    

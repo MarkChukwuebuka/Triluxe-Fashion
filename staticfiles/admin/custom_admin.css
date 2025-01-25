@@ -1,0 +1,32 @@
+/* custom_admin.css */
+body {
+    background-color: #2d2dd6;  /* Change the background color */
+}
+
+.module {
+    background-color: #e0f7fa;  /* Change the background color of each module */
+}
+
+.dashboard-module h2 {
+    color: #004d40;  /* Change the title color */
+}
+
+/* Change the navigation bar background color */
+#header {
+    background-color: #004d40;
+}
+
+/* Change the text color of the navigation bar */
+#header h1 {
+    color: white;
+}
+
+/* Customizing button colors */
+.button {
+    background-color: #004d40;
+    color: white;
+}
+
+.button:hover {
+    background-color: #00796b;
+}
