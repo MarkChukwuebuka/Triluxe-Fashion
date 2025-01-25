@@ -26,7 +26,7 @@ def login_view(request):
             if user.check_password(password):
                 login(request, user)
                 next_url = request.POST.get('next', '/dashboard/')
-                print(f'fjfnjfnfjff nf jfjff ffjf{next_url}')
+               
                 return redirect(next_url)
             else:
                 messages.error(request, "Invalid password.")
