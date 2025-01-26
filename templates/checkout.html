@@ -9,7 +9,75 @@
 {% include 'partials/breadcrumb.html' %}
 
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+<style>
+    .uppercase{
+text-transform: uppercase;
+    }
+    body {
+        font-family: Arial, sans-serif;
+     
+        background-color: #f9f9f9;
+    }
 
+    h1 {
+        font-size: 24px;
+        color: #333;
+    }
+
+    select {
+        padding: 10px;
+        font-size: 16px;
+        border: 1px solid #ddd;
+        border-radius: 5px;
+        width: 100%;
+        max-width: 400px;
+    }
+
+    #bankDetails {
+        margin-top: 20px;
+        padding: 15px;
+        border: 1px solid #ddd;
+        border-radius: 8px;
+        background-color: #fff;
+        max-width: 400px;
+        box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
+    }
+
+    #bankDetails p {
+        margin: 8px 0;
+        font-size: 16px;
+    }
+
+    .copy-container {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+    }
+
+    .copy-button {
+        padding: 8px 15px;
+        font-size: 14px;
+        color: #fff;
+        background-color: #007bff;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+    }
+
+    .copy-button:hover {
+        background-color: #0056b3;
+    }
+
+    .message {
+        font-size: 14px;
+        color: green;
+        display: none;
+    }
+
+
+
+
+</style>
 <main class="site-main  main-container no-sidebar">
     <div class="container">
         <div class="row">
@@ -20,7 +88,7 @@
 
                         <form name="checkout" method="POST" class="checkou rustrot-checkou"
                               enctype="multipart/form-data"
-                              >
+                             >
                             {% csrf_token %}
 
                     <!-- Scrollable modal -->
@@ -33,20 +101,55 @@
                                                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                                                   </div>
                                               <div class="modal-body">
+                                                <select id="bankSelect">
+                                                    <option value="">Select Bank</option>
+                                                    {% for bank in banks %}
+                                                        <option value="{{ bank.id }}">{{ bank.bank_name|upper }}</option>
+                                                    {% endfor %}
+                                                </select>
+                                            
+                                                <div id="bankDetails" style="display: none;">
+                                                    <p><strong>Bank Name:</strong> <span id="BankName" class="uppercase">N/A</span></p>
+                                                    <p><strong>Account Name:</strong> <span id="accountName" class="uppercase">N/A</span></p>
+                                                    <div class="copy-container">
+                                                        <p><strong>Account Number:</strong> <span id="accountNumber">N/A</span></p>
+                                                        <button type="button" class="copy-button" id="copyButton" style="background-color:#18443b; color:white;">Copy</button>
+                                                    </div>
+                                                    <span class="message" id="copyMessage">Copied!</span>
+                                                </div>
+                                            
 
-                                                <p>Bank Name : {{bank.bank_name}}</p>
-                                                <p>Account Name : {{bank.account_name}}</p>
-                                                <p>Account Number : {{bank.account_number}}</p>
 
+
+
+                                           
+
+
+
+
+{% comment %} 
+
+                                                <select id="bankSelect">
+                                                    <option value="">Select Bank</option>
+                                                    {% for bank in banks %}
+                                                        <option value="{{ bank.id }}">{{ bank.bank_name }}</option>
+                                                    {% endfor %}
+                                                </select>
+                                            
+                                                <div id="bankDetails" style="margin-top: 20px;">
+                                                    <p><strong>Account Name:</strong> <span id="accountName">N/A</span></p>
+                                                    <p><strong>Account Number:</strong> <span id="accountNumber">N/A</span></p>
+                                                </div> {% endcomment %}
+                                             
                                                   <div class="my-3">
                                                       <label for="formFile" class="form-label">Payment Receipt</label>
-                                                      <input class="form-control" name="screenshot" type="file" id="formFile">
+                                                      <input class="form-control" name="screenshot" type="file" id="formFile" required>
                                                     </div>
 
                                               </div>
                                               <div class="modal-footer">
                                                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                                                <button type="submit" class="btn" style="background-color:#18443b; color:white;">I have Made Payment</button>
+                                                <button  type="submit" class="btn" style="background-color:#18443b; color:white;">I have Made Payment</button>
                                               </div>
                                             </div>
                                           </div>
@@ -73,6 +176,7 @@
                                                                                         name="first_name"
                                                                                         id="billing_first_name"
                                                                                         value=""
+                                                                                        autofocus
                                                                                         autocomplete="given-name"></span>
                                             </p>
                                             <p class="form-row form-row-last validate-required"
@@ -98,6 +202,7 @@
                                                                                         id="billing_address_1"
                                                                                         placeholder="House number and street name"
                                                                                         value=""
+                                                                                       
                                                                                         autocomplete="address-line1"
                                                                                         data-placeholder="House number and street name"></span>
                                             </p>
@@ -110,6 +215,7 @@
                                                                                         class="input-text "
                                                                                         name="lga"
                                                                                         value=""
+                                                                                       
                                                                                         autocomplete="LGA"></span>
                                             </p>
                                             <p class="form-row  validate-required"
@@ -120,6 +226,7 @@
                                                                                         class="input-text "
                                                                                         name="state"
                                                                                         value=""
+                                                                                       
                                                                                         autocomplete="state"></span>
                                             </p>
 
@@ -132,6 +239,7 @@
                                                                                         name="email"
                                                                                         id="email"
                                                                                         value=""
+                                                                                       
                                                                                         autocomplete="email"></span>
                                             </p>
                                             <p class="form-row  validate-required"
@@ -143,6 +251,7 @@
                                                                                         name="phone"
                                                                                         id="phone"
                                                                                         value=""
+                                                                                       
                                                                                         autocomplete="phone"></span>
                                             </p>
                                         </div>
@@ -221,6 +330,49 @@
 </main>
 
 
+
+
+
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+<script>
+    $(document).ready(function () {
+        // Handle dropdown change
+        $('#bankSelect').on('change', function () {
+            const bankId = $(this).val();
+            if (bankId) {
+                $.ajax({
+                    url: "{% url 'get_bank_details' %}",
+                    data: { bank_id: bankId },
+                    dataType: 'json',
+                    success: function (response) {
+                        if (response.status === 'success') {
+                            $('#BankName').text(response.data.bankName);
+                            $('#accountName').text(response.data.account_name);
+                            $('#accountNumber').text(response.data.account_number);
+                            $('#bankDetails').fadeIn();
+                        } else {
+                            alert(response.message);
+                        }
+                    },
+                    error: function () {
+                        alert('Error fetching bank details');
+                    }
+                });
+            } else {
+                $('#bankDetails').fadeOut();
+            }
+        });
+
+        // Copy button functionality
+        $('#copyButton').on('click', function () {
+            const accountNumber = $('#accountNumber').text();
+            navigator.clipboard.writeText(accountNumber).then(function () {
+                const message = $('#copyMessage');
+                message.fadeIn().delay(1000).fadeOut(); // Show message temporarily
+            });
+        });
+    });
+</script>
+
 
 {% endblock content %}

@@ -55,8 +55,12 @@ def verify_payment(request, ref):
 
 @login_required
 def start_order(request):
+    #looping through banks
+    banks = BankAccount.objects.all()
+  
     context = {
-        "title" : "Checkout"
+        "title" : "Checkout",
+        'banks': banks
     }
     cart = CartService(request)
     user = request.user
@@ -157,3 +161,26 @@ class RetrieveUpdateDeleteOrderView(View, CustomRequestUtil):
             request, target_function=order_service.fetch_single, order_id=kwargs.get("order_id")
         )
 
+
+
+
+
+
+
+
+
+
+#get banking details
+def get_bank_details(request):
+    if request.method == 'GET':
+        bank_id = request.GET.get('bank_id')  # Get the bank ID from the request
+        try:
+            bank = BankAccount.objects.get(id=bank_id)
+            data = {
+                'bankName':bank.bank_name,
+                'account_name': bank.account_name,
+                'account_number': bank.account_number
+            }
+            return JsonResponse({'status': 'success', 'data': data})
+        except BankAccount.DoesNotExist:
+            return JsonResponse({'status': 'error', 'message': 'Bank not found'})
