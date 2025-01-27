@@ -17,6 +17,9 @@ class OrderService(CustomRequestUtil):
             phone=payload.get("phone"),
             lga=payload.get("lga"),
 
+            #michael added this
+            specifications=payload.get("specifications"),
+
         )
 
         return order

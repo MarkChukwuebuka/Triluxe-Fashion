@@ -75,6 +75,8 @@ def start_order(request):
             address = request.POST.get("address"),
             state = request.POST.get("state"),
             phone = request.POST.get("phone"),
+            #michael added this
+            specifications= request.POST.get("specifications"),
         )
 
         try:
