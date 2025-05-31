@@ -7,6 +7,8 @@ urlpatterns = [
     path('my-orders/', CreateListOrderView.as_view(), name='my-orders'),
     path('order/<int:order_id>/', RetrieveUpdateDeleteOrderView.as_view(), name='order-detail'),
 
-    path('verify_payment<str:ref>/', verify_payment, name='verify_payment')
+    path('verify_payment<str:ref>/', verify_payment, name='verify_payment'),
+        path('get-bank-details/', views.get_bank_details, name='get_bank_details'),
+
 
 ]

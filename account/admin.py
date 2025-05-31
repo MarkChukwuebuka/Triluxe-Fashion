@@ -2,7 +2,13 @@ from django.contrib import admin
 
 from account.models import User, Role, Profile
 from crm.admin import BaseAdmin
+from django.templatetags.static import static
 
+
+
+admin.site.site_header = 'Triluxe'
+admin.site.site_title = 'Triluxe'
+admin.site.index_title = 'Triluxe Admin'
 
 # Register your models here.
 

@@ -4,60 +4,90 @@
 
 {% block content %}
 
-
 {% include 'partials/breadcrumb.html' %}
 
-<main class="site-main  main-container no-sidebar">
-    <div class="container">
-        <div class="row">
-            <div class="main-content col-md-12">
-                <div class="page-main-content">
-                    <div class="rustrot">
-                        <div class="rustrot-notices-wrapper"></div>
-                        <div class="u-columns col2-set" id="customer_login">
-                            <div class="u-column col-1" style="margin-left:30%;">
-                                <h2>Login</h2>
+<main class="site-main main-container no-sidebar">
+    <div class="container d-flex  justify-content-center ">
+        <div class="row justify-content-center w-100">
+            <div class="col-md-6 col-lg-4">
+                <div class="main-content">
+                    <div class="page-main-content">
+                        <div class="rustrot">
+                            <div class="rustrot-notices-wrapper"></div>
+                            <div class="u-columns col2-set" id="customer_login">
+                                <div>
+                                    <h2>Login</h2>
+                                    {% if messages %}
+                                    <ul class="messages">
+                                        {% for message in messages %}
+                                            <li class="{{ message.tags }}">{{ message }}</li>
+                                        {% endfor %}
+                                    </ul>
+                                {% endif %}
+                                
+                                    {% include 'partials/messages.html' %}
+                                    <form class="rustrot-form rustrot-form-login login" method="POST">
+                                        {% csrf_token %}
+                                        <!-- Hidden input for next page -->
+      <input type="hidden" name="next" value="{{ request.GET.next }}"> 
+                                 
+      <input type="hidden" name="next" value="{{ request.GET.next|default:'/dashboard/' }}">
+      
 
-                                {% include 'partials/messages.html' %}
-
-                                <form class="rustrot-form rustrot-form-login login" method="POST">
-                                    {% csrf_token %}
-                                    <input type="hidden" name="next" value="{{ request.GET.next }}">
-                                    <p class="rustrot-form-row rustrot-form-row--wide form-row form-row-wide">
-                                        <label for="username">Email address&nbsp;<span
-                                                class="required">*</span></label>
-                                        <input type="text" class="rustrot-Input rustrot-Input--text input-text"
-                                               name="email" id="username" autocomplete="username" value=""></p>
-                                    <p class="rustrot-form-row rustrot-form-row--wide form-row form-row-wide">
-                                        <label for="password">Password&nbsp;<span class="required">*</span></label>
-                                        <input class="rustrot-Input rustrot-Input--text input-text"
-                                               type="password" name="password" id="password"
-                                               autocomplete="current-password">
-                                    </p>
-                                    <p class="form-row">
-                                        <input type="hidden" id="rustrot-login-nonce" name="rustrot-login-nonce"
-                                               value="832993cb93"><input type="hidden" name="_wp_http_referer"
-                                                                         value="/rustrot/my-account/">
-                                        <button type="submit" class="rustrot-Button button" name="login"
-                                                value="Log in">Log in
-                                        </button>
-                                        <label class="rustrot-form__label rustrot-form__label-for-checkbox inline">
-                                            <input class="rustrot-form__input rustrot-form__input-checkbox"
-                                                   name="rememberme" type="checkbox" id="rememberme" value="forever">
-                                            <span>Remember me</span>
-                                        </label>
-                                    </p>
-                                    <p class="rustrot-LostPassword lost_password">
-                                        <a href="#">Lost your
-                                            password?</a>
-                                    </p>
-                                    <div class="rustrot-social-login">
-                                        <h6>Don't have an account?</h6>
-                                        <a href="{% url 'signup' %}">Sign Up</a>
-                                    </div>
-                                </form>
+                                        <p class="rustrot-form-row rustrot-form-row--wide form-row form-row-wide">
+                                            <label for="username">Email address&nbsp;<span class="required">*</span></label>
+                                            <input type="email" class="rustrot-Input rustrot-Input--text input-text" name="email" id="username" autocomplete="username" value="">
+                                        </p>
+                                        <p class="rustrot-form-row rustrot-form-row--wide form-row form-row-wide">
+                                            <label for="password">Password&nbsp;<span class="required">*</span></label>
+                                            <input class="rustrot-Input rustrot-Input--text input-text" type="password" name="password" id="password" autocomplete="current-password">
+                                        </p>
+                                        <p class="form-row">
+                                            <button type="submit" class="rustrot-Button button" name="login" value="Log in">Log in</button>
+                                            <label class="rustrot-form__label rustrot-form__label-for-checkbox inline">
+                                                <input class="rustrot-form__input rustrot-form__input-checkbox" name="rememberme" type="checkbox" id="rememberme" value="forever">
+                                                <span>Remember me</span>
+                                            </label>
+                                        </p>
+                                        <p class="rustrot-LostPassword lost_password">
+                                            <a href="#">Lost your password?</a>
+                                        </p>
+                                        <div class="rustrot-social-login">
+                                            <h6>Don't have an account?</h6>
+                                            <a href="{% url 'signup' %}">Sign Up</a>
+                                        </div>
+                                    </form>
+                                    
+                                    {% comment %} <form class="rustrot-form rustrot-form-login login" method="POST">
+                                        {% csrf_token %}
+                                        <input type="hidden" name="next" value="{{ request.GET.next }}">
+                                        <p class="rustrot-form-row rustrot-form-row--wide form-row form-row-wide">
+                                            <label for="username">Email address&nbsp;<span class="required">*</span></label>
+                                            <input type="text" class="rustrot-Input rustrot-Input--text input-text" name="email" id="username" autocomplete="username" value="">
+                                        </p>
+                                        <p class="rustrot-form-row rustrot-form-row--wide form-row form-row-wide">
+                                            <label for="password">Password&nbsp;<span class="required">*</span></label>
+                                            <input class="rustrot-Input rustrot-Input--text input-text" type="password" name="password" id="password" autocomplete="current-password">
+                                        </p>
+                                        <p class="form-row">
+                                            <input type="hidden" id="rustrot-login-nonce" name="rustrot-login-nonce" value="832993cb93">
+                                            <input type="hidden" name="_wp_http_referer" value="/rustrot/my-account/">
+                                            <button type="submit" class="rustrot-Button button" name="login" value="Log in">Log in</button>
+                                            <label class="rustrot-form__label rustrot-form__label-for-checkbox inline">
+                                                <input class="rustrot-form__input rustrot-form__input-checkbox" name="rememberme" type="checkbox" id="rememberme" value="forever">
+                                                <span>Remember me</span>
+                                            </label>
+                                        </p>
+                                        <p class="rustrot-LostPassword lost_password">
+                                            <a href="#">Lost your password?</a>
+                                        </p>
+                                        <div class="rustrot-social-login">
+                                            <h6>Don't have an account?</h6>
+                                            <a href="{% url 'signup' %}">Sign Up</a>
+                                        </div>
+                                    </form> {% endcomment %}
+                                </div>
                             </div>
-
                         </div>
                     </div>
                 </div>
@@ -65,6 +95,5 @@
         </div>
     </div>
 </main>
-
 
 {% endblock content %}

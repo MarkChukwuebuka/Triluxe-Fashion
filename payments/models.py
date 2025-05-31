@@ -29,6 +29,8 @@ class Order(BaseModel):
     total_cost = models.FloatField(default=0.00)
     status = models.CharField(max_length=25, choices=StatusChoices.choices, default=StatusChoices.ordered)
     ref = models.CharField(max_length=250, null=True, blank=True)
+    #michael added this
+    specifications=models.TextField(max_length=250,default="")
 
     class Meta:
         ordering = ('-created_at',)

@@ -23,6 +23,8 @@ class ProductAdmin(BaseAdmin):
                     ] + BaseAdmin.list_display
     search_fields = ["name", "description"]
     list_filter = ["rating", "price"]
+    readonly_fields = ("sku",)  # Display the SKU as read-only added this
+
 
 
 @admin.register(DealOfTheDay)

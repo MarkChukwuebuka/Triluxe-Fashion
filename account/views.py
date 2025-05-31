@@ -2,36 +2,67 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 from django.shortcuts import render
 from django.views import View
 
+from account.forms import LoginForm
+from account.models import User
 from account.services.auth_service import AuthService
 from account.services.user_service import UserService
 from services.util import CustomRequestUtil
 
+# views.py
+from django.shortcuts import render, redirect
+from django.contrib.auth import authenticate, login
+from django.contrib import messages
 
-class UserLoginView(View, CustomRequestUtil):
-    template_name = 'login.html'
-    extra_context_data = {
-        "title": "Sign In",
-    }
 
-    def get(self, request, *args, **kwargs):
-        return self.process_request(request)
 
-    def post(self, request, *args, **kwargs):
-        auth_service = AuthService(self.request)
+def login_view(request):
+    if request.method == 'POST':
+        email = request.POST.get('email')
+        password = request.POST.get('password')
+  
+        
+        try:
+            user = User.objects.get(email=email)
+            if user.check_password(password):
+                login(request, user)
+                next_url = request.POST.get('next', '/dashboard/')
+               
+                return redirect(next_url)
+            else:
+                messages.error(request, "Invalid password.")
+        except User.DoesNotExist:
+            messages.error(request, "User does not exist.")
+    
+    return render(request, 'login.html')
 
-        self.template_name = None
-        self.template_on_error = 'login.html'
 
-        payload = {
-            'email': request.POST.get('email'),
-            'password': request.POST.get('password'),
-        }
 
-        next_url = request.POST.get('next', request.GET.get('next', '/'))
 
-        return self.process_request(
-            request, target_view=next_url, target_function=auth_service.login, payload=payload
-        )
+# class UserLoginView(View, CustomRequestUtil):
+#     template_name = 'login.html'
+#     extra_context_data = {
+#         "title": "Sign In",
+#     }
+
+#     def get(self, request, *args, **kwargs):
+#         return self.process_request(request)
+
+#     def post(self, request, *args, **kwargs):
+#         auth_service = AuthService(self.request)
+
+#         self.template_name = None
+#         self.template_on_error = 'login.html'
+
+#         payload = {
+#             'email': request.POST.get('email'),
+#             'password': request.POST.get('password'),
+#         }
+
+#         next_url = request.POST.get('next', request.GET.get('next', '/'))
+
+#         return self.process_request(
+#             request, target_view=next_url, target_function=auth_service.login, payload=payload
+#         )
 
 
 class UserSignupView(View, CustomRequestUtil):
